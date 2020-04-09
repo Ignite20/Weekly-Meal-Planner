@@ -1,23 +1,18 @@
 package com.emberestudio.project.ui.domain
 
-import com.emberestudio.project.ui.planner.model.Meal
-
-
 interface DataSource<Response, DomainItem>{
 
-    var items : MutableMap<Int, List<DomainItem>>
+    var items : MutableMap<Int, MutableList<DomainItem>>
 
-    fun getItem(position: Int)
+    fun getGroupItems(position: Int) : MutableList<DomainItem>?
 
-    fun getItem(key : String) : List<DomainItem>
+    fun getChildItem(group : Int, child : Int) : DomainItem?
 
-    fun addItem(key : String, item : Response)
+    fun deleteItem(group: Int, item : DomainItem) : Boolean?
 
-    fun getItems(position: Int) : List<DomainItem>?
+    fun updateItem(group: Int, item : DomainItem) : Boolean?
 
-    fun getMap() : MutableMap<Int, List<DomainItem>>
+    fun getMap() : MutableMap<Int, MutableList<DomainItem>>?
 
-    fun removeItem(item : Response)
 
-    fun removeItemWithKey(key : String)
 }

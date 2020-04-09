@@ -1,26 +1,41 @@
 package com.emberestudio.project.ui.planner.ui
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import com.emberestudio.project.ui.base.BaseViewModel
-import com.emberestudio.project.ui.domain.MealsDataSource
 import com.emberestudio.project.ui.planner.model.Meal
-import com.emberestudio.project.ui.planner.model.MealDays
-import com.emberestudio.project.ui.planner.model.MealType
+import com.emberestudio.project.ui.planner.usecase.MealUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MealPlannerViewModel @Inject constructor() : BaseViewModel() {
+class MealPlannerViewModel @Inject constructor(private val mealUseCase: MealUseCase) : BaseViewModel() {
 
-    lateinit var dataSource : MealsDataSource
-    private fun createMeals() {
-        dataSource = MealsDataSource()
-        for (day in MealDays.values()){
-            dataSource.items[day.ordinal] = listOf( Meal(MealType.LUNCH, "Plate 1"), Meal(MealType.DINNER, "Plate 2") )
+    val uiData = MediatorLiveData<MutableMap<Int, MutableList<Meal>>>()
+    var plan : LiveData<MutableMap<Int, MutableList<Meal>>> = uiData
+
+    init {
+        setupObservers()
+    }
+
+    fun getMeals() {
+        viewModelScope.launch(Dispatchers.IO) {
+            mealUseCase.getPlan()
+        }
+
+    }
+
+    private fun setupObservers(){
+        uiData.apply {
+            addSource(mealUseCase.planResponse.data){ response ->
+                createAndPostUiModel(response)
+            }
         }
     }
 
-    fun getMeals() : MutableMap<Int, List<Meal>> {
-        createMeals()
-        return dataSource.getMap()
+    private fun createAndPostUiModel(response: MutableMap<Int, MutableList<Meal>>) {
+        viewModelScope.launch {
+            uiData.postValue(response)
+        }
     }
-
-
 }

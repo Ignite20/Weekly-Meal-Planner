@@ -6,12 +6,11 @@ import android.widget.BaseExpandableListAdapter
 import com.emberestudio.project.ui.planner.holder.DayViewHolder
 import com.emberestudio.project.ui.planner.holder.MealViewHolder
 import com.emberestudio.project.ui.planner.model.Meal
-import com.emberestudio.project.ui.planner.model.MealDays
 
 
 class MealPlannerAdapter(
     var listDays: List<String>,
-    var listMeals: HashMap<Int, List<Meal>>)
+    var listMeals: MutableMap<Int, MutableList<Meal>>)
     : BaseExpandableListAdapter() {
 
 
