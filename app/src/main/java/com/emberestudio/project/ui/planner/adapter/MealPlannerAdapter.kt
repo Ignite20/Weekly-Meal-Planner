@@ -3,9 +3,9 @@ package com.emberestudio.project.ui.planner.adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.planner.holder.DayViewHolder
 import com.emberestudio.project.ui.planner.holder.MealViewHolder
-import com.emberestudio.project.ui.planner.model.Meal
 
 
 class MealPlannerAdapter(

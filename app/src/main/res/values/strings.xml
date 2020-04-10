@@ -1,3 +1,34 @@
 <resources>
 	<string name="app_name">My Weekly Meal Planner</string>
+	<string name="meal_plan">Meal Plan</string>
+	<string name="meal_detail">Meal Detail</string>
+
+
+	<!-- ADD MEAL TO PLAN DIALOG-->
+	<string name="add_meal">Add Meal to Plan</string>
+	<string name="meal_name">Meal name</string>
+	<string name="meal_name_hint">Write the name of the meal</string>
+	<string name="meal_day">Meal day</string>
+	<string name="meal_type">Meal type</string>
+	<string name="save_meal_button_text">Save Meal</string>
+	<string name="cancel">Cancel</string>
+
+
+	<string name="exit">Close</string>
+
+	<string-array name="meal_types">
+		<item>Breakfast</item>
+		<item>Lunch</item>
+		<item>Dinner</item>
+	</string-array>
+
+	<string-array name="meal_days">
+		<item>Monday</item>
+		<item>Tuesday</item>
+		<item>Wednesday</item>
+		<item>Thursday</item>
+		<item>Friday</item>
+		<item>Saturday</item>
+		<item>Sunday</item>
+	</string-array>
 </resources>

@@ -1,9 +1,9 @@
 package com.emberestudio.project.ui.domain
 
+import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.domain.model.MealDays
+import com.emberestudio.project.ui.domain.model.MealType
 import com.emberestudio.project.ui.domain.model.MealsResponse
-import com.emberestudio.project.ui.planner.model.Meal
-import com.emberestudio.project.ui.planner.model.MealDays
-import com.emberestudio.project.ui.planner.model.MealType
 import dagger.Module
 import javax.inject.Inject
 
@@ -14,7 +14,18 @@ class MealsDataSource @Inject constructor() : DataSource<MealsResponse, Meal> {
 
     init {
         for (day in MealDays.values()){
-            items[day.ordinal] = mutableListOf( Meal( MealType.LUNCH, "Plate 1"), Meal(MealType.DINNER, "Plate 2") )
+            items[day.ordinal] = mutableListOf(
+                Meal(
+                    MealType.LUNCH,
+                    "Plate 1",
+                    "Description plate 1"
+                ),
+                Meal(
+                    MealType.DINNER,
+                    "Plate 2",
+                    "Description plate 2"
+                )
+            )
         }
     }
 
@@ -40,5 +51,9 @@ class MealsDataSource @Inject constructor() : DataSource<MealsResponse, Meal> {
             return items[group]?.add(item)
         }
         return false
+    }
+
+    override fun addItem(group: Int, item: Meal): Boolean? {
+        return items[group]?.add(item)
     }
 }

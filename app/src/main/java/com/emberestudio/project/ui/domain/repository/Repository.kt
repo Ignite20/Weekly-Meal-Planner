@@ -2,8 +2,8 @@ package com.emberestudio.project.ui.domain.repository
 
 import com.emberestudio.project.ui.domain.MealsDataSource
 import com.emberestudio.project.ui.domain.api.ApiCallback
+import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.usecase.error.Error
-import com.emberestudio.project.ui.planner.model.Meal
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,5 +20,9 @@ class Repository @Inject constructor(private val dataSource: MealsDataSource){
         dataSource.getMap().let {
             callback.onResponse("", it)
         }
+    }
+
+    fun saveMeal(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>, day: Int, item : Meal){
+        dataSource.addItem(day, item)
     }
 }

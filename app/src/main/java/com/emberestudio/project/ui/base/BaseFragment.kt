@@ -28,7 +28,6 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val klass = (this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
         viewModel = ViewModelProvider(this, viewModelFactory.get()).get(klass)
     }
