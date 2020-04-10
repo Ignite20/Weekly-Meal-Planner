@@ -2,5 +2,7 @@
 <resources>
 	<color name="colorPrimary">#6200EE</color>
 	<color name="colorPrimaryDark">#3700B3</color>
-	<color name="colorAccent">#03DAC5</color>
+	<color name="colorAccent">#00AC09</color>
+	<color name="colorSaveMealButton">#0EC701</color>
+	<color name="colorCancel">#DA0303</color>
 </resources>

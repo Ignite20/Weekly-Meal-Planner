@@ -1,6 +1,8 @@
 package com.emberestudio.project.ui.base.di
 
 import com.emberestudio.project.ui.base.MealApplication
+import com.emberestudio.project.ui.domain.MealsDataSource
+import com.emberestudio.project.ui.mealdetail.di.MealDetailModule
 import com.emberestudio.project.ui.planner.di.MealPlannerModule
 import dagger.BindsInstance
 import dagger.Component
@@ -17,7 +19,9 @@ import javax.inject.Singleton
     modules = [
         AndroidInjectionModule::class,
         MainModule::class,
-        MealPlannerModule::class
+        MealsDataSource::class,
+        MealPlannerModule::class,
+        MealDetailModule::class
     ]
 )
 interface AppComponent {
