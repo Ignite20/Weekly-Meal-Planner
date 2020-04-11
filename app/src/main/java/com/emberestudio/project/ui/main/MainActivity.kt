@@ -6,13 +6,17 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.emberestudio.project.R
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.android.synthetic.main.main_activity.*
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
@@ -24,10 +28,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         setContentView(R.layout.main_activity)
         AndroidInjection.inject(this)
         setupActionBar()
+        setUpNavigation()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -41,6 +46,14 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             }
             else -> false
         }
+    }
+
+    private fun setUpNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment?
+        NavigationUI.setupWithNavController(
+            bottom_navigation,
+            navHostFragment!!.navController
+        )
     }
 
     private fun setupActionBar() {

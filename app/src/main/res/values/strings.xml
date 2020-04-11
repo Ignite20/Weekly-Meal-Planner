@@ -1,6 +1,8 @@
 <resources>
 	<string name="app_name">My Weekly Meal Planner</string>
-	<string name="meal_plan">Meal Plan</string>
+	<string name="weekly_plan">Meal Plan</string>
+	<string name="grocery_list">Grocery List</string>
+	<string name="meals_list">Meals</string>
 	<string name="meal_detail">Meal Detail</string>
 
 

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#6200EE</color>
-	<color name="colorPrimaryDark">#3700B3</color>
-	<color name="colorAccent">#00AC09</color>
+	<color name="colorPrimary">#00C50A</color>
+	<color name="colorPrimaryDark">#0E5B00</color>
+	<color name="colorAccent">#35B33B</color>
 	<color name="colorSaveMealButton">#0EC701</color>
 	<color name="colorCancel">#DA0303</color>
+	<color name="textActive">#E8F5E9</color>
+	<color name="textInactive">#33691E</color>
 </resources>
