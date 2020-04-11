@@ -6,9 +6,23 @@
     app:startDestination="@id/planner">
 
     <fragment
+        android:id="@+id/grocery"
+        android:name="com.emberestudio.project.ui.grocery.ui.GroceryShopListFragment"
+        android:label="@string/grocery_list"
+        tools:layout="@layout/fragment_grocery_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/meals"
+        android:label="@string/meals_list"
+        android:name="com.emberestudio.project.ui.meals.ui.MealsFragment"
+        tools:layout="@layout/fragment_meals_list">
+    </fragment>
+
+    <fragment
         android:id="@+id/planner"
         android:name="com.emberestudio.project.ui.planner.ui.MealPlannerFragment"
-        android:label="@string/meal_plan"
+        android:label="@string/weekly_plan"
         tools:layout="@layout/fragment_meal_planner">
         <action
             android:id="@+id/action_planner_to_meal_detail"

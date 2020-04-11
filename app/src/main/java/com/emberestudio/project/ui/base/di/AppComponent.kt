@@ -2,7 +2,9 @@ package com.emberestudio.project.ui.base.di
 
 import com.emberestudio.project.ui.base.MealApplication
 import com.emberestudio.project.ui.domain.MealsDataSource
+import com.emberestudio.project.ui.grocery.di.GroceryShopListModule
 import com.emberestudio.project.ui.mealdetail.di.MealDetailModule
+import com.emberestudio.project.ui.meals.di.MealsModule
 import com.emberestudio.project.ui.planner.di.MealPlannerModule
 import dagger.BindsInstance
 import dagger.Component
@@ -21,7 +23,9 @@ import javax.inject.Singleton
         MainModule::class,
         MealsDataSource::class,
         MealPlannerModule::class,
-        MealDetailModule::class
+        MealDetailModule::class,
+        GroceryShopListModule::class,
+        MealsModule::class
     ]
 )
 interface AppComponent {
