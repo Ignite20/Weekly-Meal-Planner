@@ -8,9 +8,13 @@ interface MealsUseCaseContract{
 
     val planResponse : SingleUseCase<MutableMap<Int, MutableList<Meal>>>
 
+    val changeResponse : SingleUseCase<Boolean>
+
     fun getMeal(day: Int, meal: Int)
 
     fun getPlan()
 
     fun saveMeal(day: Int, meal: Meal)
+
+    fun updateMeal(from : IntArray, to : IntArray)
 }

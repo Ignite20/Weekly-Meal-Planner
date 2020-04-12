@@ -13,6 +13,8 @@ class MealPlannerViewModel @Inject constructor(private val mealUseCase: MealUseC
 
     val uiData = MediatorLiveData<MutableMap<Int, MutableList<Meal>>>()
     var plan : LiveData<MutableMap<Int, MutableList<Meal>>> = uiData
+    val change = MediatorLiveData<Boolean>()
+    var _change : LiveData<Boolean> = change
     var groupState : ArrayList<Int> = arrayListOf()
 
     init {
@@ -28,10 +30,21 @@ class MealPlannerViewModel @Inject constructor(private val mealUseCase: MealUseC
     fun saveMeal(day: Int, item : Meal){
         mealUseCase.saveMeal(day, item)
     }
+
+    fun updateOrder(from: IntArray?, to: IntArray?){
+        mealUseCase.updateMeal(from!!, to!!)
+    }
+
     private fun setupObservers(){
         uiData.apply {
             addSource(mealUseCase.planResponse.data){ response ->
                 createAndPostUiModel(response)
+            }
+        }
+
+        change.apply {
+            addSource(mealUseCase.changeResponse.data){ response ->
+                postChangeSuccessful(response)
             }
         }
     }
@@ -39,6 +52,12 @@ class MealPlannerViewModel @Inject constructor(private val mealUseCase: MealUseC
     private fun createAndPostUiModel(response: MutableMap<Int, MutableList<Meal>>) {
         viewModelScope.launch {
             uiData.postValue(response)
+        }
+    }
+
+    private fun postChangeSuccessful(response : Boolean){
+        viewModelScope.launch {
+            change.postValue(response)
         }
     }
 

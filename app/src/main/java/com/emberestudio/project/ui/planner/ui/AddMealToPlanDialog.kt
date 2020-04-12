@@ -1,4 +1,4 @@
-package com.emberestudio.project.ui.mealdetail.ui
+package com.emberestudio.project.ui.planner.ui
 
 import android.view.LayoutInflater
 import android.view.View

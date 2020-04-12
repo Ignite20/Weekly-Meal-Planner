@@ -56,4 +56,14 @@ class MealsDataSource @Inject constructor() : DataSource<MealsResponse, Meal> {
     override fun addItem(group: Int, item: Meal): Boolean? {
         return items[group]?.add(item)
     }
+
+    override fun updateItemPosition(from: IntArray, to: IntArray): Boolean? {
+        val item = items[from[0]]?.get(from[1])!!
+        val isDeleted = deleteItem(from[0], item)
+        if ( isDeleted != null && isDeleted) {
+            items[to[0]]?.add(to[1],item)
+            return true
+        }
+        return false
+    }
 }

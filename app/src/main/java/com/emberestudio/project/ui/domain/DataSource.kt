@@ -15,4 +15,6 @@ interface DataSource<Response, DomainItem>{
     fun getMap() : MutableMap<Int, MutableList<DomainItem>>?
 
     fun addItem(group : Int, item : DomainItem) : Boolean?
+
+    fun updateItemPosition(from : IntArray, to : IntArray) : Boolean?
 }

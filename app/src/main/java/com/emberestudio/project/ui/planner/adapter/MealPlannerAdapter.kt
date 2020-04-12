@@ -29,7 +29,7 @@ class MealPlannerAdapter(
     }
 
     override fun hasStableIds(): Boolean {
-        return true
+        return false
     }
 
     override fun getGroupView(
