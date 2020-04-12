@@ -43,6 +43,12 @@ class CustomExpandableListView(context: Context, attrs: AttributeSet) :
         screenHeight = DisplayMetrics().heightPixels.toFloat()
     }
 
+    private fun expandAll(){
+        adapter!!.listMeals.forEach{
+            expandGroup(it.key)
+        }
+    }
+
     override fun onTouchEvent(ev: MotionEvent?): Boolean {
         return touchHandler(ev)
     }
@@ -50,6 +56,11 @@ class CustomExpandableListView(context: Context, attrs: AttributeSet) :
     override fun setAdapter(adapter: ExpandableListAdapter?) {
         super.setAdapter(adapter)
         this.adapter = adapter as MealPlannerAdapter
+//        expandAll()
+    }
+
+    fun setDragListener(listener : DragNDropListeners){
+        this.listeners = listener
     }
 
 

@@ -15,6 +15,8 @@ class MealUseCaseImplementation @Inject constructor(private val repository: Repo
 
     override val planResponse = SingleUseCaseImplementation<MutableMap<Int, MutableList<Meal>>>()
 
+    override val changeResponse = SingleUseCaseImplementation<Boolean>()
+
     override fun getMeal(day: Int, meal: Int) = repository.getMeal(day, meal, mealResponse)
 
     override fun getPlan() = repository.getPlan(planResponse)
@@ -23,5 +25,7 @@ class MealUseCaseImplementation @Inject constructor(private val repository: Repo
         repository.saveMeal(planResponse, day, meal)
     }
 
-
+    override fun updateMeal(from: IntArray, to: IntArray) {
+        repository.updateMealPosition(changeResponse, from, to)
+    }
 }

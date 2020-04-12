@@ -25,4 +25,8 @@ class Repository @Inject constructor(private val dataSource: MealsDataSource){
     fun saveMeal(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>, day: Int, item : Meal){
         dataSource.addItem(day, item)
     }
+
+    fun updateMealPosition(callback : ApiCallback<Boolean, Error>, from : IntArray, to : IntArray){
+        dataSource.updateItemPosition(from, to)
+    }
 }
