@@ -12,7 +12,7 @@
 		android:layout_height="match_parent"
 		tools:context=".ui.base.BaseFragment">
 
-		<ExpandableListView
+		<com.emberestudio.project.ui.components.customexpandablelist.CustomExpandableListView
 			android:id="@+id/elv_meals_week"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"

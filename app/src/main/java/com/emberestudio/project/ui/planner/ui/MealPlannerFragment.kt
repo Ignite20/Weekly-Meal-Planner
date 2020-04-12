@@ -14,6 +14,7 @@ import com.emberestudio.project.ui.domain.model.MealDays
 import com.emberestudio.project.ui.mealdetail.ui.AddMealToPlanDialog
 import com.emberestudio.project.ui.planner.adapter.MealPlannerAdapter
 
+
 class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
     ExpandableListView.OnChildClickListener,
     ExpandableListView.OnGroupCollapseListener,
@@ -48,6 +49,7 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
     private fun prepareRecyclerView(items: MutableMap<Int, MutableList<Meal>>){
         binding.elvMealsWeek.apply {
             setAdapter(MealPlannerAdapter(MealDays.values().map { it.name }, items))
+            setDragOnLongPress(true)
             setOnChildClickListener(this@MealPlannerFragment)
             setOnGroupExpandListener(this@MealPlannerFragment)
             setOnGroupCollapseListener(this@MealPlannerFragment)

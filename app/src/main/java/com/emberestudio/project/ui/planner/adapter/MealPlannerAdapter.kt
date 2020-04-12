@@ -13,9 +13,15 @@ class MealPlannerAdapter(
     var listMeals: MutableMap<Int, MutableList<Meal>>)
     : BaseExpandableListAdapter() {
 
+    var selectedGroup = 0
+    private var selectedChild = 0
 
     override fun getGroup(groupPosition: Int): Any {
         return listDays[groupPosition]
+    }
+
+    private fun getGroupSize(groupPosition: Int) : Int{
+        return listMeals[groupPosition]!!.size
     }
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
@@ -73,5 +79,23 @@ class MealPlannerAdapter(
         return listMeals.size
     }
 
+    fun onPick(position: IntArray) {
+        selectedGroup = position[0]
+        selectedChild = position[1]
+    }
+
+    fun onDrop(from: IntArray, to: IntArray) {
+        if (to[0] > listDays.size || to[0] < 0 || to[1] < 0) return
+        val tValue = getValue(from) as Meal
+        listMeals[listMeals.keys.toTypedArray()[from[0]]]!!.remove(tValue)
+        listMeals[listMeals.keys.toTypedArray()[to[0]]]!!.add(to[1], tValue)
+        selectedGroup = -1
+        selectedChild = -1
+        notifyDataSetChanged()
+    }
+
+    private fun getValue(id: IntArray): Any {
+        return listMeals[listMeals.keys.toTypedArray()[id[0]]]!![id[1]]
+    }
 
 }

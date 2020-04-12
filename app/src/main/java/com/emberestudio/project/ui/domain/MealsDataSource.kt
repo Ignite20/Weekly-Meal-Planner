@@ -17,12 +17,12 @@ class MealsDataSource @Inject constructor() : DataSource<MealsResponse, Meal> {
             items[day.ordinal] = mutableListOf(
                 Meal(
                     MealType.LUNCH,
-                    "Plate 1",
+                    day.name.plus(" Plate 1"),
                     "Description plate 1"
                 ),
                 Meal(
                     MealType.DINNER,
-                    "Plate 2",
+                    day.name.plus(" Plate 2"),
                     "Description plate 2"
                 )
             )
