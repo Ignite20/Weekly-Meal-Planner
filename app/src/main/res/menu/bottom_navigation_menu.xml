@@ -29,4 +29,13 @@
         android:checked="false"
         app:showAsAction="ifRoom"
         />
+
+    <item
+        android:id="@+id/profile"
+        android:title="@string/profile"
+        android:icon="@drawable/ic_perm_identity_black_24dp"
+        android:orderInCategory="4"
+        android:checked="false"
+        app:showAsAction="ifRoom"
+        />
 </menu>

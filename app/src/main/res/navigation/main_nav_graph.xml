@@ -20,6 +20,13 @@
     </fragment>
 
     <fragment
+        android:id="@+id/profile"
+        android:label="@string/profile"
+        android:name="com.emberestudio.project.ui.profile.ui.ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+    </fragment>
+
+    <fragment
         android:id="@+id/planner"
         android:name="com.emberestudio.project.ui.planner.ui.MealPlannerFragment"
         android:label="@string/weekly_plan"

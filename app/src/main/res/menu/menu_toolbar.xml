@@ -2,10 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/exit"
-        android:icon="@drawable/ic_close_black_24dp"
+    <item
+        android:id="@+id/sing_in"
+        android:icon="@drawable/ic_face_black_24dp"
         app:showAsAction="always"
-        android:title="@string/exit"
+        android:title="@string/sign_in"
         android:visible="false"/>
 
 </menu>

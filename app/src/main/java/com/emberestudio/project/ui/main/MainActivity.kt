@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.emberestudio.project.R
+import com.emberestudio.project.ui.managers.AuthenticationManager
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -18,10 +19,13 @@ import kotlinx.android.synthetic.main.main_activity.*
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class MainActivity : AppCompatActivity(), HasSupportFragmentInjector{
 
     @Inject
     lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
+
+    @Inject
+    lateinit var authManager : AuthenticationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,21 +43,18 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         return when (item?.itemId) {
-            R.id.exit -> false
             android.R.id.home -> {
                 onBackPressed()
                 return true
             }
-            else -> false
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
+
     private fun setUpNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment?
-        NavigationUI.setupWithNavController(
-            bottom_navigation,
-            navHostFragment!!.navController
-        )
+        NavigationUI.setupWithNavController(bottom_navigation, navHostFragment!!.navController)
     }
 
     private fun setupActionBar() {
@@ -61,4 +62,5 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
+
 }
