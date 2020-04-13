@@ -6,6 +6,7 @@
         android:id="@+id/sing_in"
         android:icon="@drawable/ic_face_black_24dp"
         app:showAsAction="always"
-        android:title="@string/sign_in"/>
+        android:title="@string/sign_in"
+        android:visible="false"/>
 
 </menu>
