@@ -8,6 +8,10 @@ buildscript {
         viewpager_version = "1.0.0"
         //Dependency Injection
         dagger2_version = '2.23.1'
+        google_gms_version = "4.3.3"
+        firebase_version = "17.3.0"
+        firebase_auth_version = "19.3.0"
+        firebase_cloud_firestore_version = "21.4.2"
 
     }
     repositories {
@@ -19,6 +23,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.6.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$nav_safe_args_version"
+        classpath "com.google.gms:google-services:$google_gms_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

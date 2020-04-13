@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1026243711670",
+    "firebase_url": "https://my-weekly-planner-1b20c.firebaseio.com",
+    "project_id": "my-weekly-planner-1b20c",
+    "storage_bucket": "my-weekly-planner-1b20c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1026243711670:android:25cd68c0e32a45e794cc17",
+        "android_client_info": {
+          "package_name": "com.emberestudio.project.weeklyplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1026243711670-hqvqh71stj8mga11fbfbn08ovnov4i8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.emberestudio.project.weeklyplanner",
+            "certificate_hash": "b8b33ebe89bbd63d475c3cacb35c8d137c73763a"
+          }
+        },
+        {
+          "client_id": "1026243711670-j0ikd2bit1c49897hm2tsq2gqska54ur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARIodoMiijkwrIpxVIX2lZwHjlING3eoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1026243711670-j0ikd2bit1c49897hm2tsq2gqska54ur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
