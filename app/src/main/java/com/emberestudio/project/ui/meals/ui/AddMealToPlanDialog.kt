@@ -1,4 +1,4 @@
-package com.emberestudio.project.ui.planner.ui
+package com.emberestudio.project.ui.meals.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,10 +7,11 @@ import android.widget.ArrayAdapter
 import com.emberestudio.project.R
 import com.emberestudio.project.databinding.DialogAddMealToPlanBinding
 import com.emberestudio.project.ui.base.BaseDialogFragment
+import com.emberestudio.project.ui.domain.model.Ingredient
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.MealDays
-import com.emberestudio.project.ui.domain.model.MealType
-import kotlinx.android.synthetic.main.dialog_add_meal_to_plan.*
+import com.emberestudio.project.ui.domain.model.Step
+import java.util.*
 
 class AddMealToPlanDialog (var callback: Actions) : BaseDialogFragment() {
 
@@ -68,7 +69,14 @@ class AddMealToPlanDialog (var callback: Actions) : BaseDialogFragment() {
     private fun prepareSaveMealAction(){
         binding.btnSaveMeal.setOnClickListener {
             callback.onSaveMeal(
-                Meal(MealType.valueOf(spnr_meal_types.selectedItem.toString().toUpperCase()), binding.tiMealName.text.toString(), "" ),
+                Meal( UUID.randomUUID().toString() + Calendar.getInstance().timeInMillis,
+                    binding.tiMealName.text.toString(),
+                    "" ,
+                    listOf(Ingredient(),Ingredient()),
+                    listOf(
+                        Step(order = 1,description = "description 1"),
+                        Step(order = 2, description = "description 2")
+                )),
                 MealDays.valueOf(binding.spnrMealDays.selectedItem.toString().toUpperCase()).ordinal)
             dismiss()
         }

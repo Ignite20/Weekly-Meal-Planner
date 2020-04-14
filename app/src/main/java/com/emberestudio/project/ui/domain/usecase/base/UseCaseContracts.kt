@@ -6,6 +6,8 @@ import com.emberestudio.project.ui.domain.model.Meal
 interface MealsUseCaseContract{
     val mealResponse : SingleUseCase<Meal>
 
+    val mealsResponse : SingleUseCase<MutableList<Meal>>
+
     val planResponse : SingleUseCase<MutableMap<Int, MutableList<Meal>>>
 
     val changeResponse : SingleUseCase<Boolean>
@@ -17,4 +19,10 @@ interface MealsUseCaseContract{
     fun saveMeal(day: Int, meal: Meal)
 
     fun updateMeal(from : IntArray, to : IntArray)
+
+    fun saveMeal(meal: Meal)
+
+    fun getMeals()
+
+    fun getMeal(uidMeal : String)
 }

@@ -24,7 +24,7 @@ class MealDetailFragment : BaseFragment<MealDetailViewModel>() {
 
     private fun retrieveArgs(){
         args.let {
-            viewModel.getMeal(it.groupId, it.childId)
+            viewModel.getMeal(it.meal)
         }
     }
 

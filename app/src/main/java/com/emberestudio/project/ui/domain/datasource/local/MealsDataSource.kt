@@ -1,31 +1,20 @@
-package com.emberestudio.project.ui.domain
+package com.emberestudio.project.ui.domain.datasource.local
 
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.MealDays
-import com.emberestudio.project.ui.domain.model.MealType
 import com.emberestudio.project.ui.domain.model.MealsResponse
 import dagger.Module
 import javax.inject.Inject
 
 @Module
-class MealsDataSource @Inject constructor() : DataSource<MealsResponse, Meal> {
+class MealsDataSource @Inject constructor() :
+    DataSource<MealsResponse, Meal> {
 
     override var items: MutableMap<Int, MutableList<Meal>> = mutableMapOf()
 
     init {
         for (day in MealDays.values()){
-            items[day.ordinal] = mutableListOf(
-                Meal(
-                    MealType.LUNCH,
-                    day.name.plus(" Plate 1"),
-                    "Description plate 1"
-                ),
-                Meal(
-                    MealType.DINNER,
-                    day.name.plus(" Plate 2"),
-                    "Description plate 2"
-                )
-            )
+
         }
     }
 

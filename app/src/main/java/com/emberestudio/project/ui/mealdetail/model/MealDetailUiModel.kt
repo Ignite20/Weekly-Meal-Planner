@@ -4,10 +4,9 @@ import com.emberestudio.project.ui.domain.model.Meal
 
 data class MealDetailUiModel (
     val name : String,
-    val description : String,
-    val type : String
+    val description : String
 )
 
 fun Meal.toUiModel() : MealDetailUiModel{
-    return MealDetailUiModel(name, description, type.name)
+    return MealDetailUiModel(name, description)
 }

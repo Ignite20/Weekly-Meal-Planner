@@ -67,7 +67,7 @@ class MealPlannerAdapter(
     ): View {
         val meal = getChild(groupPosition, childPosition) as Meal
         return MealViewHolder.from(parent)
-            .bind(meal.name, meal.type.toString())
+            .bind(meal)
             .itemView
     }
 

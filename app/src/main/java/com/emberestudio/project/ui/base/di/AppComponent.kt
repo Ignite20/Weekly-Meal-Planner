@@ -1,7 +1,8 @@
 package com.emberestudio.project.ui.base.di
 
 import com.emberestudio.project.ui.base.MealApplication
-import com.emberestudio.project.ui.domain.MealsDataSource
+import com.emberestudio.project.ui.domain.datasource.firebase.FireBaseDataSourceImpl
+import com.emberestudio.project.ui.domain.datasource.local.MealsDataSource
 import com.emberestudio.project.ui.grocery.di.GroceryShopListModule
 import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.managers.FireCloudManager
@@ -25,6 +26,7 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         MainModule::class,
         MealsDataSource::class,
+        FireBaseDataSourceImpl::class,
         AuthenticationManager::class,
         FireCloudManager::class,
         MealPlannerModule::class,

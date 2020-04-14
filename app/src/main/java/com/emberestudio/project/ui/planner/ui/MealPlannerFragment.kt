@@ -12,6 +12,7 @@ import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.components.customexpandablelist.DragNDropListeners
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.MealDays
+import com.emberestudio.project.ui.meals.ui.AddMealToPlanDialog
 import com.emberestudio.project.ui.planner.adapter.MealPlannerAdapter
 import com.emberestudio.project.ui.util.toastShort
 
@@ -45,7 +46,6 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
 
     private fun prepareUI(){
         observeData()
-        prepareEditButton()
     }
 
     private fun prepareRecyclerView(items: MutableMap<Int, MutableList<Meal>>){
@@ -60,11 +60,7 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
         }
     }
 
-    private fun prepareEditButton(){
-        binding.fabEditMealPlan.setOnClickListener {
-            AddMealToPlanDialog(this@MealPlannerFragment).show(parentFragmentManager,"")
-        }
-    }
+
 
     private fun observeData(){
         viewModel.plan.observe(viewLifecycleOwner, Observer {
@@ -83,7 +79,7 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
         childPosition: Int,
         id: Long
     ): Boolean {
-        findNavController().navigate(MealPlannerFragmentDirections.actionPlannerToMealDetail(groupPosition, childPosition))
+        findNavController().navigate(MealPlannerFragmentDirections.actionPlannerToMealDetail(""))
         return true
     }
 
@@ -103,7 +99,6 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
 
     override fun onDrag(x: Float, y: Float) {
         // Not needed
-        binding.elvMealsWeek.scrollY = (y.toInt())
     }
 
     override fun onPick(position: IntArray?) {

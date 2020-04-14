@@ -5,9 +5,14 @@ import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.ItemMealBinding
+import com.emberestudio.project.ui.domain.model.Meal
 import kotlinx.android.synthetic.main.item_meal.view.*
 
 class MealViewHolder (binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    interface OnItemClick{
+        fun onItemClick(id: String)
+    }
 
     companion object {
         fun from(viewGroup: ViewGroup?): MealViewHolder {
@@ -17,9 +22,9 @@ class MealViewHolder (binding: ViewDataBinding) : RecyclerView.ViewHolder(bindin
         }
     }
 
-    fun bind(day : String, type : String) : MealViewHolder{
-        itemView.tv_item_meal_name.text = day
-        itemView.tv_item_meal_type.text = type
+    fun bind(meal : Meal) : MealViewHolder{
+        itemView.tv_item_meal_name.text = meal.name
+        itemView.tv_item_meal_type.text = meal.description
         return this
     }
 }

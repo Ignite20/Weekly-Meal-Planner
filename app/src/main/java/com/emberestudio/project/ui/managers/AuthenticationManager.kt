@@ -13,6 +13,10 @@ import javax.inject.Inject
 @Module
 class AuthenticationManager @Inject constructor() {
 
+    var firebaseAuth : FirebaseAuth? = null
+    var user : FirebaseUser? = null
+    var callback : AuthCallback? = null
+
     interface AuthCallback{
         fun onAuthSuccessful(user: FirebaseUser?)
         fun onLogout()
@@ -21,9 +25,9 @@ class AuthenticationManager @Inject constructor() {
     companion object{
          const val RC_SIGN_IN : Int = 1
     }
-
-    var user : FirebaseUser? = null
-    var callback : AuthCallback? = null
+    init {
+        firebaseAuth = FirebaseAuth.getInstance()
+    }
 
     fun login(context: Fragment){
         if(user == null) {
@@ -45,8 +49,13 @@ class AuthenticationManager @Inject constructor() {
         }
     }
 
-    fun silentLogin(context: Fragment){
-        AuthUI.getInstance().silentSignIn(context.requireContext(), mutableListOf())
+    fun recoverUser(context: Fragment){
+        user = firebaseAuth?.currentUser
+        if(user == null){
+            callback?.onAuthFailure()
+        }else{
+            callback?.onAuthSuccessful(user)
+        }
     }
 
     fun logout(context: Fragment){
@@ -69,10 +78,7 @@ class AuthenticationManager @Inject constructor() {
             callback?.onAuthSuccessful(user)
             // ...
         } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
+            callback?.onAuthFailure()
         }
 
     }
