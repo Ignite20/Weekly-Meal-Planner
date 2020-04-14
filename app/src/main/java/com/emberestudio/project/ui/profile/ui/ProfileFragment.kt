@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.emberestudio.project.databinding.FragmentProfileBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.managers.AuthenticationManager
@@ -27,8 +28,8 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), AuthenticationManager.
             lifecycleOwner = this@ProfileFragment
             executePendingBindings()
         }
-        binding.model = viewModel.uiData.value
         prepareUI()
+        authManager.recoverUser(this)
         return binding.root
     }
 
@@ -60,7 +61,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), AuthenticationManager.
                 true)
         }
         binding.model = viewModel.uiData.value
-
+        Glide.with(binding.profilePhoto).load(user?.photoUrl).into(binding.profilePhoto)
     }
 
     override fun onLogout() {
@@ -80,6 +81,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), AuthenticationManager.
     }
 
     override fun onAuthFailure() {
+        binding.btnLogin.btn_login.text = "Login"
     }
 
 }

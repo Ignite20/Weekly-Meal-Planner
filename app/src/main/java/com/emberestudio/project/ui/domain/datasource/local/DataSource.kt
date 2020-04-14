@@ -1,4 +1,4 @@
-package com.emberestudio.project.ui.domain
+package com.emberestudio.project.ui.domain.datasource.local
 
 interface DataSource<Response, DomainItem>{
 

@@ -17,6 +17,9 @@
         android:label="@string/meals_list"
         android:name="com.emberestudio.project.ui.meals.ui.MealsFragment"
         tools:layout="@layout/fragment_meals_list">
+        <action
+            android:id="@+id/action_meals_to_meal_detail"
+            app:destination="@id/meal_detail" />
     </fragment>
 
     <fragment
@@ -45,12 +48,9 @@
         android:label="@string/meal_detail"
         tools:layout="@layout/fragment_meal_detail">
         <argument
-            android:name="groupId"
-            app:argType="integer"/>
-
-        <argument
-            android:name="childId"
-            app:argType="integer"/>
+            android:name="meal"
+            app:argType="string"
+            />
     </fragment>
 
 </navigation>

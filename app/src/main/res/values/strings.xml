@@ -8,7 +8,7 @@
 
 
 	<!-- ADD MEAL TO PLAN DIALOG-->
-	<string name="add_meal">Add Meal to Plan</string>
+	<string name="add_meal">Add New Meal</string>
 	<string name="meal_name">Meal name</string>
 	<string name="meal_name_hint">Write the name of the meal</string>
 	<string name="meal_day">Meal day</string>
