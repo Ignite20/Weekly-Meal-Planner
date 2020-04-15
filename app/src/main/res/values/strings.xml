@@ -16,6 +16,9 @@
 	<string name="save_meal_button_text">Save Meal</string>
 	<string name="cancel">Cancel</string>
 
+	<!--MEALS VIEW-->
+	<string name="delete_item_title">Delete Meal</string>
+	<string name="delete_item_message">Are you sure you want to delete the meal?</string>
 
 	<string name="exit">Close</string>
 	<string name="sign_in">Sign In</string>

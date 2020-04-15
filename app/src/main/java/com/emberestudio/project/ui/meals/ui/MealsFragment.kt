@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.emberestudio.project.R
 import com.emberestudio.project.databinding.FragmentMealsListBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Meal
@@ -71,6 +73,21 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
     }
 
     override fun onItemDelete(position: Int) {
-        viewModel.removeItem(position)
+        showDeleteDialog(position)
+    }
+
+    private fun showDeleteDialog(position: Int){
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.delete_item_title)
+            .setMessage(R.string.delete_item_message)
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                viewModel.removeItem(position)
+                dialog.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }
