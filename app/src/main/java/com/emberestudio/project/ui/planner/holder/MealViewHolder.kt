@@ -6,13 +6,10 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.ItemMealBinding
 import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.meals.adapter.MealsAdapter
 import kotlinx.android.synthetic.main.item_meal.view.*
 
 class MealViewHolder (binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    interface OnItemClick{
-        fun onItemClick(id: String)
-    }
 
     companion object {
         fun from(viewGroup: ViewGroup?): MealViewHolder {
@@ -26,5 +23,11 @@ class MealViewHolder (binding: ViewDataBinding) : RecyclerView.ViewHolder(bindin
         itemView.tv_item_meal_name.text = meal.name
         itemView.tv_item_meal_type.text = meal.description
         return this
+    }
+
+    fun setOnRemoveListener(listener: MealsAdapter.OnItemActions?){
+        itemView.delete_item.setOnClickListener {
+            listener?.onItemDelete(adapterPosition)
+        }
     }
 }

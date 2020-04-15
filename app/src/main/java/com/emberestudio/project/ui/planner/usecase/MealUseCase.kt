@@ -44,4 +44,8 @@ class MealUseCaseImplementation @Inject constructor(private val repository: Repo
     override fun getMeal(uidMeal : String) {
         repository.getMeal(mealResponse, uidMeal)
     }
+
+    override fun removeMeal(uidMeal: String) {
+        repository.removeMeal(mealsResponse, uidMeal)
+    }
 }

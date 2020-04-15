@@ -25,4 +25,6 @@ interface MealsUseCaseContract{
     fun getMeals()
 
     fun getMeal(uidMeal : String)
+
+    fun removeMeal(uidMeal: String)
 }

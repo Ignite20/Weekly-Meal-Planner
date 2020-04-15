@@ -26,6 +26,13 @@ class MealsViewModel @Inject constructor(
         mealUseCase.getMeals()
     }
 
+    fun removeItem(position : Int){
+        meals.value!![position].let {
+            mealUseCase.removeMeal(it.id)
+        }
+
+    }
+
     private fun setupObservers(){
         uiData.apply {
             addSource(mealUseCase.mealsResponse.data){ response ->

@@ -14,9 +14,9 @@ import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.meals.adapter.MealsAdapter
 
-class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Actions, MealsAdapter.OnItemClick{
+class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Actions, MealsAdapter.OnItemActions {
 
-    lateinit var binding : FragmentMealsListBinding
+    lateinit var binding: FragmentMealsListBinding
     lateinit var adapter: MealsAdapter
 
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
@@ -32,13 +32,14 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
         super.onViewCreated(view, savedInstanceState)
         viewModel.getMeals()
     }
-    private fun prepareUI(){
+
+    private fun prepareUI() {
         observeData()
         prepareEditButton()
         prepareRecyclerView()
     }
 
-    private fun prepareRecyclerView(){
+    private fun prepareRecyclerView() {
         adapter = MealsAdapter(mutableListOf(), null)
         binding.rvMeals.apply {
             adapter = adapter
@@ -46,9 +47,10 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
     }
-    private fun prepareEditButton(){
+
+    private fun prepareEditButton() {
         binding.fabSaveMeal.setOnClickListener {
-            AddMealToPlanDialog(this).show(parentFragmentManager,"")
+            AddMealToPlanDialog(this).show(parentFragmentManager, "")
         }
     }
 
@@ -56,7 +58,7 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
         viewModel.saveMeal(item)
     }
 
-    private fun observeData(){
+    private fun observeData() {
         viewModel.meals.observe(this, Observer {
             binding.rvMeals.adapter = MealsAdapter(it, this)
             binding.rvMeals.adapter?.notifyDataSetChanged()
@@ -66,5 +68,9 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
 
     override fun onItemClick(item: Meal) {
         findNavController().navigate(MealsFragmentDirections.actionMealsToMealDetail(item.id))
+    }
+
+    override fun onItemDelete(position: Int) {
+        viewModel.removeItem(position)
     }
 }

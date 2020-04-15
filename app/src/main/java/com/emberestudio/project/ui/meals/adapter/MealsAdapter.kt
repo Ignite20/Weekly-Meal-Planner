@@ -5,10 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.planner.holder.MealViewHolder
 
-class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnItemClick?): RecyclerView.Adapter<MealViewHolder>() {
+class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnItemActions?): RecyclerView.Adapter<MealViewHolder>() {
 
-    interface OnItemClick{
+    interface OnItemActions{
         fun onItemClick(item: Meal)
+        fun onItemDelete(position: Int)
     }
 
 
@@ -21,8 +22,13 @@ class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnIte
     }
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
-        holder.bind(list[position]).itemView.setOnClickListener {
-            callback?.onItemClick(list[position])
+        holder.bind(list[position]).apply {
+            itemView.apply {
+                this.setOnClickListener {
+                    callback?.onItemClick(list[position])
+                }
+            }
+            setOnRemoveListener(callback)
         }
     }
 }
