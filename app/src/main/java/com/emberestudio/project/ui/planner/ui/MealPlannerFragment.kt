@@ -12,7 +12,6 @@ import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.components.customexpandablelist.DragNDropListeners
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.MealDays
-import com.emberestudio.project.ui.meals.ui.AddMealToPlanDialog
 import com.emberestudio.project.ui.planner.adapter.MealPlannerAdapter
 import com.emberestudio.project.ui.util.toastShort
 
@@ -21,8 +20,7 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
     ExpandableListView.OnChildClickListener,
     ExpandableListView.OnGroupCollapseListener,
     ExpandableListView.OnGroupExpandListener,
-    DragNDropListeners,
-    AddMealToPlanDialog.Actions
+    DragNDropListeners
 {
 
     lateinit var binding: FragmentMealPlannerBinding
@@ -89,12 +87,6 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
 
     override fun onGroupExpand(groupPosition: Int) {
         viewModel.setExpansibleState(groupPosition)
-    }
-
-    override fun onSaveMeal(item: Meal, day: Int) {
-        viewModel.saveMeal(day, item)
-        binding.elvMealsWeek.deferNotifyDataSetChanged()
-        binding.elvMealsWeek.expandGroup(day)
     }
 
     override fun onDrag(x: Float, y: Float) {

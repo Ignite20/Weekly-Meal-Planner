@@ -1,4 +1,4 @@
-package com.emberestudio.project.ui.planner.holder
+package com.emberestudio.project.ui.meals.holder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,11 +15,13 @@ class MealViewHolder (binding: ViewDataBinding) : RecyclerView.ViewHolder(bindin
         fun from(viewGroup: ViewGroup?): MealViewHolder {
             val layoutInflater = LayoutInflater.from(viewGroup?.context)
             val binding = ItemMealBinding.inflate(layoutInflater, viewGroup, false)
-            return MealViewHolder(binding)
+            return MealViewHolder(
+                binding
+            )
         }
     }
 
-    fun bind(meal : Meal) : MealViewHolder{
+    fun bind(meal : Meal) : MealViewHolder {
         itemView.tv_item_meal_name.text = meal.name
         itemView.tv_item_meal_type.text = meal.description
         return this

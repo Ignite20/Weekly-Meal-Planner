@@ -15,8 +15,10 @@ import com.emberestudio.project.databinding.FragmentMealsListBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.meals.adapter.MealsAdapter
+import com.emberestudio.project.ui.meals.ui.add_meal_dialog.AddMealDialog
+import com.emberestudio.project.ui.util.toastShort
 
-class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Actions, MealsAdapter.OnItemActions {
+class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, MealsAdapter.OnItemActions {
 
     lateinit var binding: FragmentMealsListBinding
     lateinit var adapter: MealsAdapter
@@ -52,12 +54,15 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
 
     private fun prepareEditButton() {
         binding.fabSaveMeal.setOnClickListener {
-            AddMealToPlanDialog(this).show(parentFragmentManager, "")
+            AddMealDialog(
+                this
+            ).show(parentFragmentManager, "")
         }
     }
 
-    override fun onSaveMeal(item: Meal, day: Int) {
-        viewModel.saveMeal(item)
+    override fun onSaveMeal(item: Meal) {
+        toastShort(item.id)
+//        viewModel.saveMeal(item)
     }
 
     private fun observeData() {

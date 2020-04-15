@@ -27,13 +27,33 @@ data class Step(
 )
 
 data class Ingredient(
-    val name : String = "",
-    val quantity : Int = 1,
-    val unit : QuantityUnit = QuantityUnit.KILOGRAMS
+    var name : String = "",
+    var quantity : String = "",
+    var unit : String = ""
 )
 
-enum class QuantityUnit(name : String, shortName : String){
+enum class QuantityUnit(val longName : String, val shortName : String){
+    NO_UNIT ("",""),
     KILOGRAMS("Kilograms", "Kg"),
+    GRAMS("grams", "g"),
     LITERS("Liters", "l"),
-    MILLILITERS("Milliliters", "ml")
+    MILLILITERS("Milliliters", "ml"),
+    PIECES("Pieces", "pcs");
+
+
+    companion object {
+        fun shortNames() : List<String> {
+            return values().map { it.shortName }
+        }
+
+        fun longNames() : List<String> {
+            return values().map { it.longName }
+        }
+
+        fun findValue(value : String) : QuantityUnit?{
+            return values().find {
+                   it.longName == value
+            }
+        }
+    }
 }

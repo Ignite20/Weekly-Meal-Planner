@@ -3,7 +3,7 @@ package com.emberestudio.project.ui.meals.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.ui.domain.model.Meal
-import com.emberestudio.project.ui.planner.holder.MealViewHolder
+import com.emberestudio.project.ui.meals.holder.MealViewHolder
 
 class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnItemActions?): RecyclerView.Adapter<MealViewHolder>() {
 
