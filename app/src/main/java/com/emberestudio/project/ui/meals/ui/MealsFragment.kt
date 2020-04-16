@@ -16,7 +16,6 @@ import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.meals.adapter.MealsAdapter
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.AddMealDialog
-import com.emberestudio.project.ui.util.toastShort
 
 class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, MealsAdapter.OnItemActions {
 
@@ -54,15 +53,13 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
 
     private fun prepareEditButton() {
         binding.fabSaveMeal.setOnClickListener {
-            AddMealDialog(
-                this
-            ).show(parentFragmentManager, "")
+            AddMealDialog(this).show(parentFragmentManager, "")
         }
     }
 
     override fun onSaveMeal(item: Meal) {
-        toastShort(item.id)
-//        viewModel.saveMeal(item)
+//        toastShort(item.id)
+        viewModel.saveMeal(item)
     }
 
     private fun observeData() {
@@ -75,6 +72,10 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
 
     override fun onItemClick(item: Meal) {
         findNavController().navigate(MealsFragmentDirections.actionMealsToMealDetail(item.id))
+    }
+
+    override fun onItemLongClick(item: Meal) {
+        AddMealDialog(this, item).show(parentFragmentManager, "")
     }
 
     override fun onItemDelete(position: Int) {

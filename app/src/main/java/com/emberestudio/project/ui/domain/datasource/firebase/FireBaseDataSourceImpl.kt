@@ -6,6 +6,7 @@ import com.emberestudio.project.ui.domain.model.Meal
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.SetOptions
 import dagger.Module
 import javax.inject.Inject
 
@@ -34,9 +35,21 @@ class FireBaseDataSourceImpl @Inject constructor(): FireBaseDataSource{
     }
 
     override fun saveMeal(meal: Meal, listener : FireBaseDataSource.FireBaseListener?){
-        db.collection(MEALS_COLLECTION).add(meal).addOnSuccessListener {
-            getMeals(listener)
-        }
+        db.collection(MEALS_COLLECTION).whereEqualTo("id", meal.id)
+            .get()
+            .addOnSuccessListener {
+                if(it.documents.size > 0){
+                    db.collection(MEALS_COLLECTION).document(it.documents[0].id).set(meal, SetOptions.merge()).addOnSuccessListener {
+                        getMeals(listener)
+                    }
+                }else{
+                    db.collection(MEALS_COLLECTION).add(meal).addOnSuccessListener {
+                        getMeals(listener)
+                    }
+                }
+            }.addOnFailureListener {
+
+            }
     }
 
     override fun getMeals(listener : FireBaseDataSource.FireBaseListener?){

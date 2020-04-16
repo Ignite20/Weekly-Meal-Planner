@@ -50,10 +50,8 @@ enum class QuantityUnit(val longName : String, val shortName : String){
             return values().map { it.longName }
         }
 
-        fun findValue(value : String) : QuantityUnit?{
-            return values().find {
-                   it.longName == value
-            }
+        fun findValue(value : String) : QuantityUnit? {
+            return values().find { it.longName == value || it.shortName == value }
         }
     }
 }

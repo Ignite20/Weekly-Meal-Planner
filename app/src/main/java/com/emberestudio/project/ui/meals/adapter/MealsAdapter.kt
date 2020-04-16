@@ -9,6 +9,7 @@ class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnIte
 
     interface OnItemActions{
         fun onItemClick(item: Meal)
+        fun onItemLongClick(item : Meal)
         fun onItemDelete(position: Int)
     }
 
@@ -27,7 +28,12 @@ class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnIte
                 this.setOnClickListener {
                     callback?.onItemClick(list[position])
                 }
+                this.setOnLongClickListener {
+                    callback?.onItemLongClick(list[position])
+                    true
+                }
             }
+
             setOnRemoveListener(callback)
         }
     }

@@ -11,27 +11,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.ItemIngredientBinding
 import com.emberestudio.project.ui.domain.model.Ingredient
 import com.emberestudio.project.ui.domain.model.QuantityUnit
-import java.util.*
 
 class IngredientViewHolder(var binding : ItemIngredientBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    var callback : OnFocusLost? = null
+    var callbackOnDelete : OnDeleteItem? = null
     var callbackOnChange : OnChange? = null
-    var focusCallback : View.OnFocusChangeListener? = null
 
     var name : String = ""
     var quantity : String = ""
     var quantityUnit : QuantityUnit? = QuantityUnit.NO_UNIT
 
-    interface OnFocusLost{
-        fun onFocusLost(position : Int, ingredient : Ingredient)
+    var quantityUnits = QuantityUnit.shortNames()
+
+    interface OnDeleteItem{
         fun onDeleteItem(position: Int)
     }
 
     interface OnChange{
         fun onChangeName(position: Int, name : String)
         fun onChangeQuantity(position: Int, quantity : String)
-        fun onChangeUnit (position: Int, quantityUnit : QuantityUnit)
+        fun onChangeUnit (position: Int, quantityUnit : QuantityUnit?)
     }
 
     companion object {
@@ -50,34 +49,41 @@ class IngredientViewHolder(var binding : ItemIngredientBinding) : RecyclerView.V
             quantity = it.quantity
             quantityUnit = QuantityUnit.findValue(it.unit)
         }
+
         binding.ingredientName.text = Editable.Factory.getInstance().newEditable(name)
         binding.ingredientQuantity.text = Editable.Factory.getInstance().newEditable(quantity)
-//        binding.spnrUnit.setSelection(quantityUnit!!.ordinal)
 
-        binding.ingredientName.doAfterTextChanged {
-            callbackOnChange?.onChangeName(adapterPosition, it.toString())
-        }
-
-        binding.ingredientQuantity.doAfterTextChanged {
-            callbackOnChange?.onChangeQuantity(adapterPosition, it.toString())
-        }
-
+        prepareIngredientNameWatcher()
+        prepareIngredientQuantityWatcher()
         prepareSpinner()
         prepareDeleteButton()
 
     }
+    private fun prepareIngredientNameWatcher(){
+        binding.ingredientName.doAfterTextChanged {
+            callbackOnChange?.onChangeName(adapterPosition, it.toString())
+        }
+    }
+
+    private fun prepareIngredientQuantityWatcher(){
+        binding.ingredientQuantity.doAfterTextChanged {
+            callbackOnChange?.onChangeQuantity(adapterPosition, it.toString())
+        }
+    }
+
     private fun prepareDeleteButton(){
         binding.itemDelete.setOnClickListener {
-            callback?.onDeleteItem(adapterPosition)
+            callbackOnDelete?.onDeleteItem(adapterPosition)
 
         }
     }
+
     private fun prepareSpinner(){
         binding.spnrUnit.apply {
             adapter = ArrayAdapter(
                 this.context,
                 android.R.layout.simple_spinner_item,
-                QuantityUnit.shortNames()
+                quantityUnits
             ).also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -85,10 +91,14 @@ class IngredientViewHolder(var binding : ItemIngredientBinding) : RecyclerView.V
                 }
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    callbackOnChange?.onChangeUnit(adapterPosition, QuantityUnit.findValue(QuantityUnit.longNames()[position].toUpperCase(Locale.getDefault()))!!)
+                    callbackOnChange?.onChangeUnit(adapterPosition, QuantityUnit.findValue(quantityUnits[position]))
                 }
             }
-            setSelection(0)
+            quantityUnit?.let { setSelection(it.ordinal) }
         }
+    }
+
+    fun focus(focus: Boolean){
+        if(focus) binding.ingredientName.requestFocus()
     }
 }

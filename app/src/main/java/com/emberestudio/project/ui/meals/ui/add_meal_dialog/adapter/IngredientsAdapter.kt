@@ -25,29 +25,25 @@ class IngredientsAdapter (
 
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         holder.bind(ingredients[position])
-
+        holder.focus(position == ingredients.size - 1)
+        
         holder.callbackOnChange = object :IngredientViewHolder.OnChange{
             override fun onChangeName(position: Int, name: String) {
                 ingredients[position].name = name
-//                notifyItemChanged(position)
             }
 
             override fun onChangeQuantity(position: Int, quantity: String) {
                 ingredients[position].quantity = quantity
-//                notifyItemChanged(position)
             }
 
-            override fun onChangeUnit(position: Int, quantityUnit: QuantityUnit) {
-                ingredients[position].unit = quantityUnit.name
-//                notifyItemChanged(position)
+            override fun onChangeUnit(position: Int, quantityUnit: QuantityUnit?) {
+                quantityUnit?.let {
+                    ingredients[position].unit = it.shortName
+                }
             }
         }
 
-        holder.callback = object : IngredientViewHolder.OnFocusLost{
-            override fun onFocusLost(position: Int, ingredient: Ingredient) {
-                callback?.saveIngredient(position, ingredient)
-            }
-
+        holder.callbackOnDelete = object : IngredientViewHolder.OnDeleteItem{
             override fun onDeleteItem(position: Int) {
                 ingredients.removeAt(position)
                 notifyItemRemoved(position)

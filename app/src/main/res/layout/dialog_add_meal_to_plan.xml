@@ -30,6 +30,7 @@
             >
 
             <TextView
+                android:id="@+id/meal_add_edit_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
@@ -122,13 +123,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <Button
-                        android:id="@+id/btn_add_ingredient"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:text="@string/meal_add_ingredient"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_ingredients_title" />
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_ingredients"
@@ -137,13 +132,29 @@
                         android:padding="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btn_add_ingredient" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_ingredients_title" />
+
+                    <Button
+                        android:id="@+id/btn_add_ingredient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/button_rounded_green"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+                        android:text="@string/meal_add_ingredient"
+                        android:textColor="@color/textActive"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_ingredients_title"
+                        app:layout_constraintStart_toStartOf="@+id/tv_ingredients_title"
+                        app:layout_constraintTop_toBottomOf="@+id/rv_ingredients" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/steps_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
                     <TextView
                         android:id="@+id/tv_steps_title"
                         android:layout_width="wrap_content"
