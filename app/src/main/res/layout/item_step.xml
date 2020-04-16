@@ -16,7 +16,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/meal_step_hint"
-            android:inputType="textLongMessage"
+            android:scrollHorizontally="false"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines ="4"
+            android:maxLength ="2000"
             android:layout_weight="0.95"/>
 
         <ImageView

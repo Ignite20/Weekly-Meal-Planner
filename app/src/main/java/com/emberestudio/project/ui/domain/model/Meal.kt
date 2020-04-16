@@ -24,13 +24,15 @@ class Meal {
 data class Step(
     var order : Int = 0,
     var description: String = ""
-)
+) : Item()
 
 data class Ingredient(
     var name : String = "",
     var quantity : String = "",
     var unit : String = ""
-)
+) : Item()
+
+abstract class Item
 
 enum class QuantityUnit(val longName : String, val shortName : String){
     NO_UNIT ("",""),
