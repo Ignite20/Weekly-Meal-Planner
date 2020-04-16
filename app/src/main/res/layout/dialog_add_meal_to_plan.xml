@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
 
     </data>
@@ -123,8 +124,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_ingredients"
                         android:layout_width="match_parent"
@@ -154,6 +153,7 @@
                     android:id="@+id/steps_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
                     android:layout_marginTop="16dp">
                     <TextView
                         android:id="@+id/tv_steps_title"
@@ -175,7 +175,23 @@
                         android:padding="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_steps_title" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_steps_title"
+                        tools:layout_height="0dp"/>
+
+                    <Button
+                        android:id="@+id/btn_add_step"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/button_rounded_green"
+                        android:paddingStart="24dp"
+                        android:paddingEnd="24dp"
+                        android:text="@string/meal_add_step"
+                        android:textColor="@color/textActive"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_steps_title"
+                        app:layout_constraintStart_toStartOf="@+id/tv_steps_title"
+                        app:layout_constraintTop_toBottomOf="@id/rv_steps" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
@@ -189,7 +205,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:background="@android:color/white"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:visibility="visible"
+            >
 
             <Button
                 android:id="@+id/btn_save_meal"

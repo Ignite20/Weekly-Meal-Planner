@@ -17,7 +17,10 @@ import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.IngredientsA
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.StepsAdapter
 import java.util.*
 
-class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialogFragment(), IngredientsAdapter.OnItemAddedListener {
+class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialogFragment(),
+    IngredientsAdapter.OnItemAddedListener ,
+    StepsAdapter.OnItemAddedListener
+{
 
     interface Actions {
         fun onSaveMeal(item: Meal)
@@ -43,6 +46,7 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
     override fun prepareUI() {
         prepareGeneral()
         prepareIngredients()
+        prepareSteps()
         prepareSaveMealAction()
         prepareCancel()
     }
@@ -56,8 +60,18 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
             binding.mealAddEditTitle.text = getText(R.string.edit_meal)
             binding.tiMealNameEdit.text = Editable.Factory.getInstance().newEditable(meal?.name)
             binding.tiMealDescriptionEdit.text = Editable.Factory.getInstance().newEditable(meal?.description)
-            ingredients = meal?.ingredients!!.toMutableList()
-            steps = meal?.steps!!.toMutableList()
+
+            ingredients = if(meal?.ingredients == null){
+                mutableListOf()
+            }else{
+                meal?.ingredients!!.toMutableList()
+            }
+
+            steps = if(meal?.steps == null){
+                mutableListOf()
+            }else{
+                meal?.steps!!.toMutableList()
+            }
 
         }
     }
@@ -71,6 +85,16 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
         }
 
         prepareAddNewIngredientButton()
+        prepareAddNewStepButton()
+    }
+
+    private fun prepareSteps(){
+        stepsAdapter = StepsAdapter(steps, this@AddMealDialog)
+        binding.rvSteps.apply {
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
+            adapter = stepsAdapter
+        }
     }
 
     private fun prepareAddNewIngredientButton(){
@@ -79,6 +103,15 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
             binding.rvIngredients.adapter = IngredientsAdapter(ingredients, this)
             ingredientsAdapter.notifyDataSetChanged()
             binding.rvIngredients.scrollToPosition(ingredients.size - 1)
+        }
+    }
+
+    private fun prepareAddNewStepButton(){
+        binding.btnAddStep.setOnClickListener {
+            steps.add(Step())
+            binding.rvSteps.adapter = StepsAdapter(steps, this)
+            stepsAdapter.notifyDataSetChanged()
+            binding.rvSteps.scrollToPosition(steps.size - 1)
         }
     }
 
@@ -108,5 +141,13 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
 
     override fun deleteIngredient(position: Int) {
         ingredientsAdapter.notifyItemRemoved(position)
+    }
+
+    override fun saveStep(position: Int, step: Step) {
+
+    }
+
+    override fun deleteStep(position: Int) {
+
     }
 }

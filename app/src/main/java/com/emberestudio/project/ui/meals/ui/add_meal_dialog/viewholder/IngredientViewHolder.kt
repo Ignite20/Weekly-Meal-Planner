@@ -23,10 +23,6 @@ class IngredientViewHolder(var binding : ItemIngredientBinding) : RecyclerView.V
 
     var quantityUnits = QuantityUnit.shortNames()
 
-    interface OnDeleteItem{
-        fun onDeleteItem(position: Int)
-    }
-
     interface OnChange{
         fun onChangeName(position: Int, name : String)
         fun onChangeQuantity(position: Int, quantity : String)
@@ -40,7 +36,6 @@ class IngredientViewHolder(var binding : ItemIngredientBinding) : RecyclerView.V
             binding.executePendingBindings()
             return IngredientViewHolder(binding)
         }
-
     }
 
     fun bind(ingredient : Ingredient?){

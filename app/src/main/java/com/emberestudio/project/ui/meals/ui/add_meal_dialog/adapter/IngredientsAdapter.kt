@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.ui.domain.model.Ingredient
 import com.emberestudio.project.ui.domain.model.QuantityUnit
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.viewholder.IngredientViewHolder
+import com.emberestudio.project.ui.meals.ui.add_meal_dialog.viewholder.OnDeleteItem
 
 class IngredientsAdapter (
     var ingredients : MutableList<Ingredient>,
@@ -26,7 +27,7 @@ class IngredientsAdapter (
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         holder.bind(ingredients[position])
         holder.focus(position == ingredients.size - 1)
-        
+
         holder.callbackOnChange = object :IngredientViewHolder.OnChange{
             override fun onChangeName(position: Int, name: String) {
                 ingredients[position].name = name
@@ -43,11 +44,11 @@ class IngredientsAdapter (
             }
         }
 
-        holder.callbackOnDelete = object : IngredientViewHolder.OnDeleteItem{
+        holder.callbackOnDelete = object : OnDeleteItem {
             override fun onDeleteItem(position: Int) {
                 ingredients.removeAt(position)
                 notifyItemRemoved(position)
-                callback?.deleteIngredient(position)
+//                callback?.deleteIngredient(position)
             }
         }
     }

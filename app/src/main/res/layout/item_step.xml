@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:weightSum="1">
+        <EditText
+            android:id="@+id/step_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/meal_step_hint"
+            android:inputType="textLongMessage"
+            android:layout_weight="0.95"/>
+
+        <ImageView
+            android:id="@+id/item_delete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_delete_black_24dp"
+            android:tint="@android:color/holo_red_dark"
+            android:layout_weight="0.1"
+            />
+
+    </LinearLayout>
+</layout>

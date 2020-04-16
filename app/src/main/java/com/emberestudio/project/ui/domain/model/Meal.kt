@@ -22,8 +22,8 @@ class Meal {
 }
 
 data class Step(
-    val order : Int = 1,
-    val description: String = ""
+    var order : Int = 0,
+    var description: String = ""
 )
 
 data class Ingredient(

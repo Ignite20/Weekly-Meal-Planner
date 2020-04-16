@@ -16,6 +16,7 @@
 	<string name="meal_description_hint">Write some description of the meal</string>
 	<string name="meal_ingredients_title">Ingredients</string>
 	<string name="meal_add_ingredient">New Ingredient</string>
+	<string name="meal_add_step">New Step</string>
 	<string name="meal_ingredient_hint">Ingredient</string>
 	<string name="meal_ingredient_value">0.0</string>
 	<string name="meal_steps_title">Steps</string>
