@@ -4,7 +4,9 @@ import com.emberestudio.project.ui.domain.datasource.MEALS_COLLECTION
 import com.emberestudio.project.ui.domain.datasource.USERS_COLLECTION
 import com.emberestudio.project.ui.domain.model.Meal
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.SetOptions
 import dagger.Module
 import javax.inject.Inject
 
@@ -12,6 +14,13 @@ import javax.inject.Inject
 class FireBaseDataSourceImpl @Inject constructor(): FireBaseDataSource{
 
     private var db : FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    init {
+        val settings = FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(true)
+            .build()
+        db.firestoreSettings = settings
+    }
 
     override fun getCurrentUser() : QuerySnapshot? {
         val result = db.collection(USERS_COLLECTION).get()
@@ -26,9 +35,21 @@ class FireBaseDataSourceImpl @Inject constructor(): FireBaseDataSource{
     }
 
     override fun saveMeal(meal: Meal, listener : FireBaseDataSource.FireBaseListener?){
-        db.collection(MEALS_COLLECTION).add(meal).addOnSuccessListener {
-            getMeals(listener)
-        }
+        db.collection(MEALS_COLLECTION).whereEqualTo("id", meal.id)
+            .get()
+            .addOnSuccessListener {
+                if(it.documents.size > 0){
+                    db.collection(MEALS_COLLECTION).document(it.documents[0].id).set(meal, SetOptions.merge()).addOnSuccessListener {
+                        getMeals(listener)
+                    }
+                }else{
+                    db.collection(MEALS_COLLECTION).add(meal).addOnSuccessListener {
+                        getMeals(listener)
+                    }
+                }
+            }.addOnFailureListener {
+
+            }
     }
 
     override fun getMeals(listener : FireBaseDataSource.FireBaseListener?){
@@ -44,8 +65,10 @@ class FireBaseDataSourceImpl @Inject constructor(): FireBaseDataSource{
     }
 
     override fun removeMeal(id: String, listener: FireBaseDataSource.OnItemRemoved?) {
-        db.collection(MEALS_COLLECTION).document(id).delete().addOnCanceledListener {
-            listener?.onItemRemoved(id)
+        db.collection(MEALS_COLLECTION).whereEqualTo("id", id).get().addOnSuccessListener {
+            db.collection(MEALS_COLLECTION).document(it.documents[0].id).delete().addOnSuccessListener {
+                listener?.onItemRemoved(id)
+            }
         }
     }
 }

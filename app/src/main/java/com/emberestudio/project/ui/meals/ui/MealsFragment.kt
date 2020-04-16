@@ -4,19 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.emberestudio.project.R
 import com.emberestudio.project.databinding.FragmentMealsListBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.meals.adapter.MealsAdapter
+import com.emberestudio.project.ui.meals.ui.add_meal_dialog.AddMealDialog
 
-class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Actions, MealsAdapter.OnItemClick{
+class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, MealsAdapter.OnItemActions {
 
-    lateinit var binding : FragmentMealsListBinding
+    lateinit var binding: FragmentMealsListBinding
     lateinit var adapter: MealsAdapter
 
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
@@ -32,13 +35,14 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
         super.onViewCreated(view, savedInstanceState)
         viewModel.getMeals()
     }
-    private fun prepareUI(){
+
+    private fun prepareUI() {
         observeData()
         prepareEditButton()
         prepareRecyclerView()
     }
 
-    private fun prepareRecyclerView(){
+    private fun prepareRecyclerView() {
         adapter = MealsAdapter(mutableListOf(), null)
         binding.rvMeals.apply {
             adapter = adapter
@@ -46,17 +50,19 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
     }
-    private fun prepareEditButton(){
+
+    private fun prepareEditButton() {
         binding.fabSaveMeal.setOnClickListener {
-            AddMealToPlanDialog(this).show(parentFragmentManager,"")
+            AddMealDialog(this).show(parentFragmentManager, "")
         }
     }
 
-    override fun onSaveMeal(item: Meal, day: Int) {
+    override fun onSaveMeal(item: Meal) {
+//        toastShort(item.id)
         viewModel.saveMeal(item)
     }
 
-    private fun observeData(){
+    private fun observeData() {
         viewModel.meals.observe(this, Observer {
             binding.rvMeals.adapter = MealsAdapter(it, this)
             binding.rvMeals.adapter?.notifyDataSetChanged()
@@ -66,5 +72,28 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealToPlanDialog.Action
 
     override fun onItemClick(item: Meal) {
         findNavController().navigate(MealsFragmentDirections.actionMealsToMealDetail(item.id))
+    }
+
+    override fun onItemLongClick(item: Meal) {
+        AddMealDialog(this, item).show(parentFragmentManager, "")
+    }
+
+    override fun onItemDelete(position: Int) {
+        showDeleteDialog(position)
+    }
+
+    private fun showDeleteDialog(position: Int){
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.delete_item_title)
+            .setMessage(R.string.delete_item_message)
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                viewModel.removeItem(position)
+                dialog.dismiss()
+            }
+            .setNegativeButton(android.R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }
