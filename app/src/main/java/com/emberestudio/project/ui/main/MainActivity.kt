@@ -1,5 +1,7 @@
 package com.emberestudio.project.ui.main
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -27,7 +29,14 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector{
     @Inject
     lateinit var authManager : AuthenticationManager
 
+    companion object{
+        fun start(activity: Activity){
+            activity.startActivity(Intent(activity, MainActivity::class.java))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         AndroidInjection.inject(this)

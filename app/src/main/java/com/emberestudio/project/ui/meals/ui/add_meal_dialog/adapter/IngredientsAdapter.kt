@@ -26,15 +26,14 @@ class IngredientsAdapter (
 
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         holder.bind(ingredients[position])
-        holder.focus(position == ingredients.size - 1)
 
         holder.callbackOnChange = object :IngredientViewHolder.OnChange{
             override fun onChangeName(position: Int, name: String) {
-                ingredients[position].name = name
+                if(name.isNotBlank()) ingredients[position].name = name.trim()
             }
 
             override fun onChangeQuantity(position: Int, quantity: String) {
-                ingredients[position].quantity = quantity
+                if(quantity.isNotBlank()) ingredients[position].quantity = quantity.trim()
             }
 
             override fun onChangeUnit(position: Int, quantityUnit: QuantityUnit?) {
@@ -48,7 +47,7 @@ class IngredientsAdapter (
             override fun onDeleteItem(position: Int) {
                 ingredients.removeAt(position)
                 notifyItemRemoved(position)
-//                callback?.deleteIngredient(position)
+                callback?.deleteIngredient(position)
             }
         }
     }

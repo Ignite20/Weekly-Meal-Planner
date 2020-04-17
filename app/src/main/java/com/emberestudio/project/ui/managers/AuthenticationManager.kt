@@ -49,7 +49,23 @@ class AuthenticationManager @Inject constructor() {
         }
     }
 
-    fun recoverUser(context: Fragment){
+    fun login(activity: Activity){
+        // Choose authentication providers
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.PhoneBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
+
+        // Create and launch sign-in intent
+        activity.startActivityForResult(
+            AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build(),
+            RC_SIGN_IN)
+    }
+
+    fun recoverUser(context: Fragment?){
         user = firebaseAuth?.currentUser
         if(user == null){
             callback?.onAuthFailure()

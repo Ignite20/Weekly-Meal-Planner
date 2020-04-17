@@ -103,6 +103,7 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
             binding.rvIngredients.adapter = IngredientsAdapter(ingredients, this)
             ingredientsAdapter.notifyDataSetChanged()
             binding.rvIngredients.scrollToPosition(ingredients.size - 1)
+            binding.scrollContent.smoothScrollTo(binding.btnAddIngredient.x.toInt(), binding.btnAddIngredient.y.toInt())
         }
     }
 
@@ -112,6 +113,7 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
             binding.rvSteps.adapter = StepsAdapter(steps, this)
             stepsAdapter.notifyDataSetChanged()
             binding.rvSteps.scrollToPosition(steps.size - 1)
+            binding.scrollContent.smoothScrollTo(binding.btnAddStep.x.toInt(), binding.btnAddStep.y.toInt())
         }
     }
 
@@ -120,8 +122,8 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
 
             callback.onSaveMeal(
                 Meal(id = if(meal != null) meal?.id!! else UUID.randomUUID().toString(),
-                    name = binding.tiMealNameEdit.text.toString(),
-                    description = binding.tiMealDescriptionEdit.text.toString(),
+                    name = binding.tiMealNameEdit.text.toString().trim(),
+                    description = binding.tiMealDescriptionEdit.text.toString().trim(),
                     ingredients = ingredients,
                     steps = steps
                     ))
@@ -144,10 +146,10 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
     }
 
     override fun saveStep(position: Int, step: Step) {
-
+        stepsAdapter.notifyItemInserted(position)
     }
 
     override fun deleteStep(position: Int) {
-
+        stepsAdapter.notifyItemRemoved(position)
     }
 }
