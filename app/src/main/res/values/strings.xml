@@ -31,7 +31,7 @@
     <string name="delete_item_message">Are you sure you want to delete the meal?</string>
 
     <string name="exit">Close</string>
-    <string name="sign_in">Sign In</string>
+    <string name="sign_in">Sign Out</string>
 
     <string-array name="meal_types">
         <item>Breakfast</item>

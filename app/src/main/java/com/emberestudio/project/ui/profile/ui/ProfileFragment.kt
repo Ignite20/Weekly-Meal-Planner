@@ -29,7 +29,7 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), AuthenticationManager.
             executePendingBindings()
         }
         prepareUI()
-        authManager.recoverUser(this)
+        authManager.recoverUser()
         return binding.root
     }
 
@@ -39,8 +39,6 @@ class ProfileFragment : BaseFragment<ProfileViewModel>(), AuthenticationManager.
         binding.btnLogin.setOnClickListener {
             if(viewModel.uiData.value?.logged != null && viewModel.uiData.value?.logged!!)
                 authManager.logout(this)
-            else
-                authManager.login(this)
         }
     }
 

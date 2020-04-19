@@ -5,26 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.emberestudio.project.R
+import com.emberestudio.project.ui.base.BaseActivity
 import com.emberestudio.project.ui.managers.AuthenticationManager
+import com.google.firebase.auth.FirebaseUser
 import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.main_activity.*
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), HasSupportFragmentInjector{
+class MainActivity : BaseActivity(), AuthenticationManager.AuthCallback{
 
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
     @Inject
     lateinit var authManager : AuthenticationManager
@@ -40,6 +35,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         AndroidInjection.inject(this)
+        authManager.callback = this
         setupActionBar()
         setUpNavigation()
     }
@@ -52,6 +48,10 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector{
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         return when (item?.itemId) {
+            R.id.sing_out -> {
+                authManager.logout(this)
+                return true
+            }
             android.R.id.home -> {
                 onBackPressed()
                 return true
@@ -70,6 +70,16 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector{
         setupActionBarWithNavController(findNavController(R.id.nav_host_fragment_container))
     }
 
-    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
+    override fun onAuthSuccessful(user: FirebaseUser?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLogout() {
+        finish()
+    }
+
+    override fun onAuthFailure() {
+        TODO("Not yet implemented")
+    }
 
 }

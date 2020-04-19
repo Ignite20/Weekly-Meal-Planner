@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/sing_in"
-        android:icon="@drawable/ic_face_black_24dp"
+        android:id="@+id/sing_out"
+        android:icon="@drawable/ic_logout"
         app:showAsAction="always"
         android:title="@string/sign_in"
-        android:visible="false"/>
+        android:visible="true"/>
 
 </menu>
