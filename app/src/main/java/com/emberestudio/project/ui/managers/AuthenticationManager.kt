@@ -3,6 +3,7 @@ package com.emberestudio.project.ui.managers
 import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
+import com.emberestudio.project.R
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -29,27 +30,25 @@ class AuthenticationManager @Inject constructor() {
         firebaseAuth = FirebaseAuth.getInstance()
     }
 
-    fun login(context: Fragment){
-        if(user == null) {
-            // Choose authentication providers
-            val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.PhoneBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build()
-            )
+    fun login(activity: Activity){
+        // Choose authentication providers
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.PhoneBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
 
-            // Create and launch sign-in intent
-            context.startActivityForResult(
-                AuthUI.getInstance().createSignInIntentBuilder()
-                    .setAvailableProviders(providers)
-                    .build(),
-                RC_SIGN_IN)
-        }else{
-            logout(context)
-        }
+        // Create and launch sign-in intent
+        activity.startActivityForResult(
+            AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setTheme(R.style.LoginTheme)
+                .setLogo(R.drawable.sandwich)
+                .build(),
+            RC_SIGN_IN)
     }
 
-    fun recoverUser(context: Fragment){
+    fun recoverUser(){
         user = firebaseAuth?.currentUser
         if(user == null){
             callback?.onAuthFailure()
@@ -61,6 +60,15 @@ class AuthenticationManager @Inject constructor() {
     fun logout(context: Fragment){
         AuthUI.getInstance()
             .signOut(context.requireContext())
+            .addOnCompleteListener {
+                user = null
+                callback?.onLogout()
+            }
+    }
+
+    fun logout(context: Activity){
+        AuthUI.getInstance()
+            .signOut(context)
             .addOnCompleteListener {
                 user = null
                 callback?.onLogout()

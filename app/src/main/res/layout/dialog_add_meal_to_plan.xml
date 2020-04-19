@@ -58,7 +58,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -109,7 +109,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/ingredients_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true">
 
                     <TextView
                         android:id="@+id/tv_ingredients_title"
@@ -195,7 +196,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <LinearLayout
             android:id="@+id/linearLayout"

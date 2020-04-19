@@ -27,11 +27,11 @@ class StepsAdapter (
     override fun onBindViewHolder(holder: StepViewHolder, position: Int) {
         steps[position].order = position
         holder.bind(steps[position])
-        holder.focus(position == steps.size - 1)
+//        holder.focus(position == steps.size - 1)
 
         holder.callbackOnChange = object : StepViewHolder.OnChange{
             override fun onChangeContent(position: Int, content: String) {
-                steps[position].description = content
+                steps[position].description = content.trim()
             }
         }
 

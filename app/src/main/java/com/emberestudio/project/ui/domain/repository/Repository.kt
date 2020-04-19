@@ -6,13 +6,15 @@ import com.emberestudio.project.ui.domain.datasource.firebase.FireBaseDataSource
 import com.emberestudio.project.ui.domain.datasource.local.MealsDataSource
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.usecase.error.Error
+import com.emberestudio.project.ui.managers.AuthenticationManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(
     private val dataSource: MealsDataSource,
-    private val fireBaseDataSource: FireBaseDataSourceImpl
+    private val fireBaseDataSource: FireBaseDataSourceImpl,
+    private val authManager : AuthenticationManager
     ){
 
     fun getMeal(day: Int, meal: Int, callback: ApiCallback<Meal, Error>){
@@ -33,6 +35,11 @@ class Repository @Inject constructor(
 
     fun updateMealPosition(callback : ApiCallback<Boolean, Error>, from : IntArray, to : IntArray){
         dataSource.updateItemPosition(from, to)
+    }
+    //FIREBASE
+
+    fun getCurrentUser(callback: ApiCallback<Boolean, Error>){
+        callback.onResponse("",authManager.firebaseAuth?.currentUser != null)
     }
 
     fun saveMeal(callback: ApiCallback<MutableList<Meal>, Error>, meal: Meal){

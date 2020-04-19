@@ -28,3 +28,9 @@ interface MealsUseCaseContract{
 
     fun removeMeal(uidMeal: String)
 }
+
+interface UserUseCaseContract{
+    val userResponse : SingleUseCase<Boolean>
+
+    fun getCurrentUser()
+}

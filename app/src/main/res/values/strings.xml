@@ -1,51 +1,51 @@
 <resources>
-	<string name="app_name">My Weekly Meal Planner</string>
-	<string name="weekly_plan">Meal Plan</string>
-	<string name="grocery_list">Grocery List</string>
-	<string name="meals_list">Meals</string>
-	<string name="meal_detail">Meal Detail</string>
-	<string name="profile">Profile</string>
+    <string name="app_name">My Weekly Meal Planner</string>
+    <string name="weekly_plan">Meal Plan</string>
+    <string name="grocery_list">Grocery List</string>
+    <string name="meals_list">Meals</string>
+    <string name="meal_detail">Meal Detail</string>
+    <string name="profile">Profile</string>
 
 
-	<!-- ADD MEAL TO PLAN DIALOG-->
-	<string name="add_meal">Add New Meal</string>
-	<string name="edit_meal">Edit Meal</string>
-	<string name="meal_name">Meal name</string>
-	<string name="meal_description">Meal description</string>
-	<string name="meal_name_hint">Write the name of the meal</string>
-	<string name="meal_description_hint">Write some description of the meal</string>
-	<string name="meal_ingredients_title">Ingredients</string>
-	<string name="meal_add_ingredient">New Ingredient</string>
-	<string name="meal_add_step">New Step</string>
-	<string name="meal_ingredient_hint">Ingredient</string>
-	<string name="meal_ingredient_value">0.0</string>
-	<string name="meal_steps_title">Steps</string>
-	<string name="meal_step_hint">Step</string>
-	<string name="meal_day">Meal day</string>
-	<string name="meal_type">Meal type</string>
-	<string name="save_meal_button_text">Save Meal</string>
-	<string name="cancel">Cancel</string>
+    <!-- ADD MEAL TO PLAN DIALOG-->
+    <string name="add_meal">Add New Meal</string>
+    <string name="edit_meal">Edit Meal</string>
+    <string name="meal_name">Meal name</string>
+    <string name="meal_description">Meal description</string>
+    <string name="meal_name_hint">Write the name of the meal</string>
+    <string name="meal_description_hint">Write some description of the meal</string>
+    <string name="meal_ingredients_title">Ingredients</string>
+    <string name="meal_add_ingredient">New Ingredient</string>
+    <string name="meal_add_step">New Step</string>
+    <string name="meal_ingredient_hint">Ingredient</string>
+    <string name="meal_ingredient_value">0.0</string>
+    <string name="meal_steps_title">Steps</string>
+    <string name="meal_step_hint">Step</string>
+    <string name="meal_day">Meal day</string>
+    <string name="meal_type">Meal type</string>
+    <string name="save_meal_button_text">Save Meal</string>
+    <string name="cancel">Cancel</string>
 
-	<!--MEALS VIEW-->
-	<string name="delete_item_title">Delete Meal</string>
-	<string name="delete_item_message">Are you sure you want to delete the meal?</string>
+    <!--MEALS VIEW-->
+    <string name="delete_item_title">Delete Meal</string>
+    <string name="delete_item_message">Are you sure you want to delete the meal?</string>
 
-	<string name="exit">Close</string>
-	<string name="sign_in">Sign In</string>
+    <string name="exit">Close</string>
+    <string name="sign_in">Sign Out</string>
 
-	<string-array name="meal_types">
-		<item>Breakfast</item>
-		<item>Lunch</item>
-		<item>Dinner</item>
-	</string-array>
+    <string-array name="meal_types">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+    </string-array>
 
-	<string-array name="meal_days">
-		<item>Monday</item>
-		<item>Tuesday</item>
-		<item>Wednesday</item>
-		<item>Thursday</item>
-		<item>Friday</item>
-		<item>Saturday</item>
-		<item>Sunday</item>
-	</string-array>
+    <string-array name="meal_days">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
 </resources>
