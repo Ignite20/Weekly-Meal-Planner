@@ -50,8 +50,9 @@ class SplashActivity : BaseActivity(), AuthenticationManager.AuthCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == AuthenticationManager.RC_SIGN_IN) {
-            if(data != null) authManager.handleSignInResult(resultCode, data)
+            if(data != null) authManager.handleSignInResult(resultCode, data) else finish()
         }
     }
 
