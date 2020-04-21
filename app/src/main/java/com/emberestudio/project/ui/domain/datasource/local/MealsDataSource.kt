@@ -1,8 +1,8 @@
 package com.emberestudio.project.ui.domain.datasource.local
 
 import com.emberestudio.project.ui.domain.model.Meal
-import com.emberestudio.project.ui.domain.model.MealDays
 import com.emberestudio.project.ui.domain.model.MealsResponse
+import com.emberestudio.project.ui.domain.model.WeekDays
 import dagger.Module
 import javax.inject.Inject
 
@@ -13,7 +13,7 @@ class MealsDataSource @Inject constructor() :
     override var items: MutableMap<Int, MutableList<Meal>> = mutableMapOf()
 
     init {
-        for (day in MealDays.values()){
+        for (day in WeekDays.values()){
 
         }
     }

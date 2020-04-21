@@ -2,14 +2,13 @@ package com.emberestudio.project.ui.meals.holder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.ItemMealBinding
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.meals.adapter.MealsAdapter
 import kotlinx.android.synthetic.main.item_meal.view.*
 
-class MealViewHolder (binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
+class MealViewHolder (binding: ItemMealBinding) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         fun from(viewGroup: ViewGroup?): MealViewHolder {

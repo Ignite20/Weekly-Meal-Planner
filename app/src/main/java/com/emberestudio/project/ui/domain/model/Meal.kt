@@ -4,21 +4,29 @@ class Meal {
     constructor()
 
     constructor(id : String,
+                author : String,
                 name : String,
                 description : String,
                 ingredients : List<Ingredient>,
-                steps : List<Step>){
+                steps : List<Step>,
+                global : Boolean
+                ){
         this.id = id
+        this.author = author
         this.name = name
         this.description = description
         this.ingredients = ingredients
         this.steps = steps
+        this.global = global
+
     }
     var id : String = ""
+    var author : String = ""
     var name : String = ""
     var description : String = ""
     var ingredients : List<Ingredient>? = null
     var steps : List<Step>? = null
+    var global : Boolean = true
 }
 
 data class Step(

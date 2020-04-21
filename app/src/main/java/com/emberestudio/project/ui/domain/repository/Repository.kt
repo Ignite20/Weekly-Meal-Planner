@@ -5,6 +5,7 @@ import com.emberestudio.project.ui.domain.datasource.firebase.FireBaseDataSource
 import com.emberestudio.project.ui.domain.datasource.firebase.FireBaseDataSourceImpl
 import com.emberestudio.project.ui.domain.datasource.local.MealsDataSource
 import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.domain.usecase.error.Error
 import com.emberestudio.project.ui.managers.AuthenticationManager
 import javax.inject.Inject
@@ -37,6 +38,22 @@ class Repository @Inject constructor(
         dataSource.updateItemPosition(from, to)
     }
     //FIREBASE
+
+    fun getPlanifications(callback: ApiCallback<MutableList<Plan>, Error>){
+        fireBaseDataSource.getPlanifications(object : FireBaseDataSource.OnPlanificationsRetrieved{
+            override fun onSuccess(list: MutableList<Plan>) {
+                callback.onResponse("", list)
+            }
+        })
+    }
+
+    fun savePlanification(plan: Plan, callback: ApiCallback<MutableList<Plan>, Error>){
+        fireBaseDataSource.savePlanification(plan, object : FireBaseDataSource.OnPlanificationsRetrieved{
+            override fun onSuccess(list: MutableList<Plan>) {
+                callback.onResponse("", list)
+            }
+        })
+    }
 
     fun getCurrentUser(callback: ApiCallback<Boolean, Error>){
         callback.onResponse("",authManager.firebaseAuth?.currentUser != null)
@@ -84,4 +101,6 @@ class Repository @Inject constructor(
             }
         })
     }
+
+
 }

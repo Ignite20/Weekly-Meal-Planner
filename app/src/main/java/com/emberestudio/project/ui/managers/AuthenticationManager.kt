@@ -48,8 +48,12 @@ class AuthenticationManager @Inject constructor() {
             RC_SIGN_IN)
     }
 
-    fun recoverUser(){
+    fun getCurrentUser() : FirebaseUser?{
         user = firebaseAuth?.currentUser
+        return user
+    }
+    fun recoverUser(){
+        getCurrentUser()
         if(user == null){
             callback?.onAuthFailure()
         }else{

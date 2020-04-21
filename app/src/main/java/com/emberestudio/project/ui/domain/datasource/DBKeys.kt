@@ -4,5 +4,9 @@ const val MEALS_COLLECTION = "meals_collection"
 const val USERS_COLLECTION = "user_collection"
 const val PLANS_COLLECTION = "plans_collection"
 
+const val ID = "id"
+const val AUTHOR = "author"
+
+
 
 //SHARED PREFERENCES

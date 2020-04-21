@@ -1,6 +1,7 @@
 package com.emberestudio.project.ui.domain.usecase.base
 
 import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.domain.model.Plan
 
 
 interface MealsUseCaseContract{
@@ -27,6 +28,14 @@ interface MealsUseCaseContract{
     fun getMeal(uidMeal : String)
 
     fun removeMeal(uidMeal: String)
+}
+
+interface PlanificationsUseCaseContract{
+    val plansResponse : SingleUseCase<MutableList<Plan>>
+
+    fun getPlanifications()
+
+    fun savePlanificaction(plan: Plan)
 }
 
 interface UserUseCaseContract{

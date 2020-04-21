@@ -1,8 +1,9 @@
 package com.emberestudio.project.ui.domain.datasource.firebase
 
-import com.emberestudio.project.ui.domain.datasource.MEALS_COLLECTION
-import com.emberestudio.project.ui.domain.datasource.USERS_COLLECTION
+import com.emberestudio.project.ui.domain.datasource.*
 import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.domain.model.Plan
+import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.QuerySnapshot
@@ -11,7 +12,7 @@ import dagger.Module
 import javax.inject.Inject
 
 @Module
-class FireBaseDataSourceImpl @Inject constructor(): FireBaseDataSource{
+class FireBaseDataSourceImpl @Inject constructor(val authenticationManager: AuthenticationManager): FireBaseDataSource{
 
     private var db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -20,6 +21,24 @@ class FireBaseDataSourceImpl @Inject constructor(): FireBaseDataSource{
             .setPersistenceEnabled(true)
             .build()
         db.firestoreSettings = settings
+    }
+
+    override fun getPlanifications(listener : FireBaseDataSource.OnPlanificationsRetrieved?){
+        authenticationManager.getCurrentUser()?.uid?.let { uid ->
+            db.collection(PLANS_COLLECTION).whereEqualTo(AUTHOR, uid).get().addOnSuccessListener {
+                listener?.onSuccess(it.toObjects(Plan::class.java))
+            }
+        }
+    }
+
+    override fun savePlanification(plan: Plan, listener : FireBaseDataSource.OnPlanificationsRetrieved?) {
+        authenticationManager.getCurrentUser()?.uid?.let {
+            var mPlan = plan
+            mPlan.author = it
+            db.collection(PLANS_COLLECTION).add(mPlan).addOnSuccessListener {
+                getPlanifications(listener)
+            }
+        }
     }
 
     override fun getCurrentUser() : QuerySnapshot? {
@@ -35,7 +54,7 @@ class FireBaseDataSourceImpl @Inject constructor(): FireBaseDataSource{
     }
 
     override fun saveMeal(meal: Meal, listener : FireBaseDataSource.FireBaseListener?){
-        db.collection(MEALS_COLLECTION).whereEqualTo("id", meal.id)
+        db.collection(MEALS_COLLECTION).whereEqualTo(ID, meal.id)
             .get()
             .addOnSuccessListener {
                 if(it.documents.size > 0){
@@ -59,13 +78,13 @@ class FireBaseDataSourceImpl @Inject constructor(): FireBaseDataSource{
     }
 
     override fun getMeal(id: String, listener : FireBaseDataSource.FireBaseListener?) {
-         db.collection(MEALS_COLLECTION).whereEqualTo("id", id).get().addOnSuccessListener {
+         db.collection(MEALS_COLLECTION).whereEqualTo(ID, id).get().addOnSuccessListener {
              listener?.onItemSaved(it.documents[0].toObject(Meal::class.java))
          }
     }
 
     override fun removeMeal(id: String, listener: FireBaseDataSource.OnItemRemoved?) {
-        db.collection(MEALS_COLLECTION).whereEqualTo("id", id).get().addOnSuccessListener {
+        db.collection(MEALS_COLLECTION).whereEqualTo(ID, id).get().addOnSuccessListener {
             db.collection(MEALS_COLLECTION).document(it.documents[0].id).delete().addOnSuccessListener {
                 listener?.onItemRemoved(id)
             }

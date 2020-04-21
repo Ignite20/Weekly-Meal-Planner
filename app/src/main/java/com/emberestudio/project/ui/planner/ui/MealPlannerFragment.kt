@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import com.emberestudio.project.databinding.FragmentMealPlannerBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.components.customexpandablelist.DragNDropListeners
 import com.emberestudio.project.ui.domain.model.Meal
-import com.emberestudio.project.ui.domain.model.MealDays
+import com.emberestudio.project.ui.domain.model.WeekDays
 import com.emberestudio.project.ui.planner.adapter.MealPlannerAdapter
 import com.emberestudio.project.ui.util.toastShort
 
@@ -48,7 +47,7 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
 
     private fun prepareRecyclerView(items: MutableMap<Int, MutableList<Meal>>){
         binding.elvMealsWeek.apply {
-            setAdapter(MealPlannerAdapter(MealDays.values().map { it.name }, items))
+            setAdapter(MealPlannerAdapter(WeekDays.values().map { it.name }, items))
             setOnChildClickListener(this@MealPlannerFragment)
             setOnGroupExpandListener(this@MealPlannerFragment)
             setOnGroupCollapseListener(this@MealPlannerFragment)
@@ -77,7 +76,6 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
         childPosition: Int,
         id: Long
     ): Boolean {
-        findNavController().navigate(MealPlannerFragmentDirections.actionPlannerToMealDetail(""))
         return true
     }
 

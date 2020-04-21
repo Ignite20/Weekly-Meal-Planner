@@ -32,7 +32,6 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         viewModel.getMeals()
     }
 
@@ -58,7 +57,6 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
     }
 
     override fun onSaveMeal(item: Meal) {
-//        toastShort(item.id)
         viewModel.saveMeal(item)
     }
 

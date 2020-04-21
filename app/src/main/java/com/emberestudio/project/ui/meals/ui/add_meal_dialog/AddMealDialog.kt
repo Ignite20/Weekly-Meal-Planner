@@ -13,9 +13,11 @@ import com.emberestudio.project.ui.base.BaseDialogFragment
 import com.emberestudio.project.ui.domain.model.Ingredient
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.Step
+import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.IngredientsAdapter
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.StepsAdapter
 import java.util.*
+import javax.inject.Inject
 
 class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialogFragment(),
     IngredientsAdapter.OnItemAddedListener ,
@@ -33,6 +35,8 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
 
     lateinit var ingredientsAdapter : IngredientsAdapter
     lateinit var stepsAdapter: StepsAdapter
+
+    @Inject lateinit var authManager : AuthenticationManager
 
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = DialogAddMealToPlanBinding.inflate(inflater).apply {
@@ -120,13 +124,19 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
     private fun prepareSaveMealAction(){
         binding.btnSaveMeal.setOnClickListener {
 
-            callback.onSaveMeal(
-                Meal(id = if(meal != null) meal?.id!! else UUID.randomUUID().toString(),
-                    name = binding.tiMealNameEdit.text.toString().trim(),
-                    description = binding.tiMealDescriptionEdit.text.toString().trim(),
-                    ingredients = ingredients,
-                    steps = steps
-                    ))
+            authManager.user?.uid?.let {
+                callback.onSaveMeal(
+                    Meal(
+                        id = if(meal != null) meal?.id!! else UUID.randomUUID().toString(),
+                        author = it,
+                        name = binding.tiMealNameEdit.text.toString().trim(),
+                        description = binding.tiMealDescriptionEdit.text.toString().trim(),
+                        ingredients = ingredients,
+                        steps = steps,
+                        global = true
+                ))
+            }
+
             dismiss()
         }
     }
