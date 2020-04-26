@@ -1,18 +1,19 @@
 package com.emberestudio.project.ui.domain.datasource.firebase
 
-import com.emberestudio.project.ui.domain.datasource.*
+import com.emberestudio.project.ui.domain.datasource.MEALS_COLLECTION
+import com.emberestudio.project.ui.domain.datasource.PLANS_COLLECTION
+import com.emberestudio.project.ui.domain.datasource.ROLES
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.Plan
+import com.emberestudio.project.ui.domain.model.Roles
 import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.firestore.QuerySnapshot
-import com.google.firebase.firestore.SetOptions
 import dagger.Module
 import javax.inject.Inject
 
 @Module
-class FireBaseDataSourceImpl @Inject constructor(val authenticationManager: AuthenticationManager): FireBaseDataSource{
+class FireBaseDataSourceImpl @Inject constructor(private val authenticationManager: AuthenticationManager): FireBaseDataSource{
 
     private var db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -25,50 +26,40 @@ class FireBaseDataSourceImpl @Inject constructor(val authenticationManager: Auth
 
     override fun getPlanifications(listener : FireBaseDataSource.OnPlanificationsRetrieved?){
         authenticationManager.getCurrentUser()?.uid?.let { uid ->
-            db.collection(PLANS_COLLECTION).whereEqualTo(AUTHOR, uid).get().addOnSuccessListener {
-                listener?.onSuccess(it.toObjects(Plan::class.java))
+            db.collection(PLANS_COLLECTION)
+                .whereIn(ROLES.plus(".$uid"), Roles.getNameValues())
+                .get()
+                .addOnSuccessListener {
+                    listener?.onSuccess(it.toObjects(Plan::class.java))
             }
         }
     }
 
     override fun savePlanification(plan: Plan, listener : FireBaseDataSource.OnPlanificationsRetrieved?) {
         authenticationManager.getCurrentUser()?.uid?.let {
-            var mPlan = plan
-            mPlan.author = it
-            db.collection(PLANS_COLLECTION).add(mPlan).addOnSuccessListener {
+            plan.roles?.let { roles ->
+                roles[it] = Roles.OWNER.nName
+            }
+
+            val docRef = db.collection(PLANS_COLLECTION).document()
+            plan.id = docRef.id
+
+            db.collection(PLANS_COLLECTION).document(docRef.id).set(plan).addOnSuccessListener {
                 getPlanifications(listener)
             }
         }
     }
 
-    override fun getCurrentUser() : QuerySnapshot? {
-        val result = db.collection(USERS_COLLECTION).get()
-        return result.result
-    }
-
-    override fun saveUser(uuid: String) : Boolean?{
-
-        val result = db.collection(MEALS_COLLECTION).add(uuid)
-
-        return result.isSuccessful
-    }
-
     override fun saveMeal(meal: Meal, listener : FireBaseDataSource.FireBaseListener?){
-        db.collection(MEALS_COLLECTION).whereEqualTo(ID, meal.id)
-            .get()
-            .addOnSuccessListener {
-                if(it.documents.size > 0){
-                    db.collection(MEALS_COLLECTION).document(it.documents[0].id).set(meal, SetOptions.merge()).addOnSuccessListener {
-                        getMeals(listener)
-                    }
-                }else{
-                    db.collection(MEALS_COLLECTION).add(meal).addOnSuccessListener {
-                        getMeals(listener)
-                    }
-                }
-            }.addOnFailureListener {
 
-            }
+        if(meal.id.isBlank()) {
+            meal.id = db.collection(MEALS_COLLECTION).document().id
+        }
+
+        db.collection(MEALS_COLLECTION).document(meal.id).set(meal).addOnSuccessListener {
+            getMeals(listener)
+        }
+
     }
 
     override fun getMeals(listener : FireBaseDataSource.FireBaseListener?){
@@ -78,16 +69,14 @@ class FireBaseDataSourceImpl @Inject constructor(val authenticationManager: Auth
     }
 
     override fun getMeal(id: String, listener : FireBaseDataSource.FireBaseListener?) {
-         db.collection(MEALS_COLLECTION).whereEqualTo(ID, id).get().addOnSuccessListener {
-             listener?.onItemSaved(it.documents[0].toObject(Meal::class.java))
+         db.collection(MEALS_COLLECTION).document(id).get().addOnSuccessListener {
+             listener?.onItemSaved(it.toObject(Meal::class.java))
          }
     }
 
     override fun removeMeal(id: String, listener: FireBaseDataSource.OnItemRemoved?) {
-        db.collection(MEALS_COLLECTION).whereEqualTo(ID, id).get().addOnSuccessListener {
-            db.collection(MEALS_COLLECTION).document(it.documents[0].id).delete().addOnSuccessListener {
-                listener?.onItemRemoved(id)
-            }
+        db.collection(MEALS_COLLECTION).document(id).delete().addOnSuccessListener {
+            listener?.onItemRemoved(id)
         }
     }
 }

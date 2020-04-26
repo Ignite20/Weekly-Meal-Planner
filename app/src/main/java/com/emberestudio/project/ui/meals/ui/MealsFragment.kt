@@ -14,13 +14,16 @@ import com.emberestudio.project.R
 import com.emberestudio.project.databinding.FragmentMealsListBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.meals.adapter.MealsAdapter
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.AddMealDialog
+import javax.inject.Inject
 
 class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, MealsAdapter.OnItemActions {
 
     lateinit var binding: FragmentMealsListBinding
     lateinit var adapter: MealsAdapter
+    @Inject lateinit var authManager : AuthenticationManager
 
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentMealsListBinding.inflate(inflater).apply {
@@ -52,7 +55,7 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
 
     private fun prepareEditButton() {
         binding.fabSaveMeal.setOnClickListener {
-            AddMealDialog(this).show(parentFragmentManager, "")
+            AddMealDialog(this, authManager = authManager).show(parentFragmentManager, "")
         }
     }
 
@@ -73,7 +76,7 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
     }
 
     override fun onItemLongClick(item: Meal) {
-        AddMealDialog(this, item).show(parentFragmentManager, "")
+        AddMealDialog(this, item, authManager = authManager).show(parentFragmentManager, "")
     }
 
     override fun onItemDelete(position: Int) {

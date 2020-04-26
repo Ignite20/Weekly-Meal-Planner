@@ -9,7 +9,6 @@ import com.emberestudio.project.ui.domain.model.WeekDays
 import com.emberestudio.project.ui.planifications.usecase.PlanificationsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUseCase) : BaseViewModel(){
@@ -31,9 +30,9 @@ class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUs
         viewModelScope.launch(Dispatchers.IO) {
             useCase.savePlanificaction(
                 Plan(
-                    UUID.randomUUID().toString(),
-                    "Test",
-                    mutableListOf(DayPlan(WeekDays.MONDAY.nName, mutableListOf()))
+                    title = "Test",
+                    planification = mutableListOf(DayPlan(WeekDays.MONDAY.nName, mutableListOf())),
+                    roles = mutableMapOf()
                 )
             )
         }

@@ -16,10 +16,8 @@ import com.emberestudio.project.ui.domain.model.Step
 import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.IngredientsAdapter
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.StepsAdapter
-import java.util.*
-import javax.inject.Inject
 
-class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialogFragment(),
+class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authManager : AuthenticationManager ) : BaseDialogFragment(),
     IngredientsAdapter.OnItemAddedListener ,
     StepsAdapter.OnItemAddedListener
 {
@@ -36,7 +34,7 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
     lateinit var ingredientsAdapter : IngredientsAdapter
     lateinit var stepsAdapter: StepsAdapter
 
-    @Inject lateinit var authManager : AuthenticationManager
+//    @Inject lateinit var authManager : AuthenticationManager
 
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = DialogAddMealToPlanBinding.inflate(inflater).apply {
@@ -46,6 +44,8 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
         prepareUI()
         return binding.root
     }
+
+
 
     override fun prepareUI() {
         prepareGeneral()
@@ -123,11 +123,11 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
 
     private fun prepareSaveMealAction(){
         binding.btnSaveMeal.setOnClickListener {
-
-            authManager.user?.uid?.let {
+            //TODO : Rework update meal
+            authManager.getCurrentUser()?.uid?.let {
                 callback.onSaveMeal(
                     Meal(
-                        id = if(meal != null) meal?.id!! else UUID.randomUUID().toString(),
+                        id = if(meal != null) meal?.id!! else "",
                         author = it,
                         name = binding.tiMealNameEdit.text.toString().trim(),
                         description = binding.tiMealDescriptionEdit.text.toString().trim(),

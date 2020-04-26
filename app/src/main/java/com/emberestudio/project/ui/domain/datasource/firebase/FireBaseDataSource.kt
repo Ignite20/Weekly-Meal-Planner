@@ -2,7 +2,6 @@ package com.emberestudio.project.ui.domain.datasource.firebase
 
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.Plan
-import com.google.firebase.firestore.QuerySnapshot
 
 interface FireBaseDataSource {
     interface FireBaseListener {
@@ -22,10 +21,6 @@ interface FireBaseDataSource {
     fun getPlanifications(listener : OnPlanificationsRetrieved?)
 
     fun savePlanification(plan: Plan, listener : OnPlanificationsRetrieved?)
-
-    fun getCurrentUser() : QuerySnapshot?
-
-    fun saveUser(uuid: String) : Boolean?
 
     fun saveMeal(meal : Meal, listener : FireBaseListener?)
 

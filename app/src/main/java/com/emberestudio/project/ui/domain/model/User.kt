@@ -10,6 +10,9 @@ class User {
         plansIds : MutableList<String>
     ){
         this.uuid = uuid
+        this.name = name
+        this.email = email
+        this.plansIds = plansIds
     }
 
     var name : String = ""

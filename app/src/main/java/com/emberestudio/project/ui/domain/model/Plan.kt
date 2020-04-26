@@ -4,20 +4,19 @@ class Plan {
     constructor()
 
     constructor(
-        id : String,
-        title: String,
-        planification : MutableList<DayPlan>
+        title: String = "",
+        planification : MutableList<DayPlan>,
+        roles : MutableMap<String, String>
     ){
-        this.id = id
         this.title = title
-        this.author = author
         this.planification = planification
+        this.roles = roles
     }
 
     var title: String = ""
     var id : String = ""
-    var author : String = ""
     var planification : MutableList<DayPlan>? = null
+    var roles : MutableMap<String, String>? = null
 }
 
 class DayPlan {

@@ -3,14 +3,15 @@ package com.emberestudio.project.ui.domain.model
 class Meal {
     constructor()
 
-    constructor(id : String,
-                author : String,
-                name : String,
-                description : String,
-                ingredients : List<Ingredient>,
-                steps : List<Step>,
-                global : Boolean
-                ){
+    constructor(
+        id : String = "",
+        author : String,
+        name : String,
+        description : String,
+        ingredients : List<Ingredient>,
+        steps : List<Step>,
+        global : Boolean
+        ){
         this.id = id
         this.author = author
         this.name = name
