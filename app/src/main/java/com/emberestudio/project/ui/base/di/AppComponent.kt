@@ -8,6 +8,7 @@ import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.managers.FireCloudManager
 import com.emberestudio.project.ui.mealdetail.di.MealDetailModule
 import com.emberestudio.project.ui.meals.di.MealsModule
+import com.emberestudio.project.ui.planifications.di.PlanificationModule
 import com.emberestudio.project.ui.planner.di.MealPlannerModule
 import com.emberestudio.project.ui.profile.di.ProfileModule
 import dagger.BindsInstance
@@ -29,6 +30,7 @@ import javax.inject.Singleton
         FireBaseDataSourceImpl::class,
         AuthenticationManager::class,
         FireCloudManager::class,
+        PlanificationModule::class,
         MealPlannerModule::class,
         MealDetailModule::class,
         GroceryShopListModule::class,

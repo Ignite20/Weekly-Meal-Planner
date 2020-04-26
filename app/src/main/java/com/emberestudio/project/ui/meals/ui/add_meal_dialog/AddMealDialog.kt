@@ -13,11 +13,11 @@ import com.emberestudio.project.ui.base.BaseDialogFragment
 import com.emberestudio.project.ui.domain.model.Ingredient
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.Step
+import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.IngredientsAdapter
 import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.StepsAdapter
-import java.util.*
 
-class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialogFragment(),
+class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authManager : AuthenticationManager ) : BaseDialogFragment(),
     IngredientsAdapter.OnItemAddedListener ,
     StepsAdapter.OnItemAddedListener
 {
@@ -34,6 +34,8 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
     lateinit var ingredientsAdapter : IngredientsAdapter
     lateinit var stepsAdapter: StepsAdapter
 
+//    @Inject lateinit var authManager : AuthenticationManager
+
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = DialogAddMealToPlanBinding.inflate(inflater).apply {
             lifecycleOwner = this@AddMealDialog
@@ -42,6 +44,8 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
         prepareUI()
         return binding.root
     }
+
+
 
     override fun prepareUI() {
         prepareGeneral()
@@ -119,14 +123,20 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null) : BaseDialo
 
     private fun prepareSaveMealAction(){
         binding.btnSaveMeal.setOnClickListener {
+            //TODO : Rework update meal
+            authManager.getCurrentUser()?.uid?.let {
+                callback.onSaveMeal(
+                    Meal(
+                        id = if(meal != null) meal?.id!! else "",
+                        author = it,
+                        name = binding.tiMealNameEdit.text.toString().trim(),
+                        description = binding.tiMealDescriptionEdit.text.toString().trim(),
+                        ingredients = ingredients,
+                        steps = steps,
+                        global = true
+                ))
+            }
 
-            callback.onSaveMeal(
-                Meal(id = if(meal != null) meal?.id!! else UUID.randomUUID().toString(),
-                    name = binding.tiMealNameEdit.text.toString().trim(),
-                    description = binding.tiMealDescriptionEdit.text.toString().trim(),
-                    ingredients = ingredients,
-                    steps = steps
-                    ))
             dismiss()
         }
     }

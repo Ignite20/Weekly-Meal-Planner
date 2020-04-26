@@ -1,7 +1,7 @@
 package com.emberestudio.project.ui.domain.datasource.firebase
 
 import com.emberestudio.project.ui.domain.model.Meal
-import com.google.firebase.firestore.QuerySnapshot
+import com.emberestudio.project.ui.domain.model.Plan
 
 interface FireBaseDataSource {
     interface FireBaseListener {
@@ -10,12 +10,17 @@ interface FireBaseDataSource {
         fun onMealsResponse(list : MutableList<Meal>?)
     }
 
+    interface OnPlanificationsRetrieved{
+        fun onSuccess(list : MutableList<Plan>)
+    }
+
     interface OnItemRemoved{
         fun onItemRemoved(item : String)
     }
-    fun getCurrentUser() : QuerySnapshot?
 
-    fun saveUser(uuid: String) : Boolean?
+    fun getPlanifications(listener : OnPlanificationsRetrieved?)
+
+    fun savePlanification(plan: Plan, listener : OnPlanificationsRetrieved?)
 
     fun saveMeal(meal : Meal, listener : FireBaseListener?)
 
