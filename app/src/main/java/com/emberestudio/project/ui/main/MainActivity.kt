@@ -5,10 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
+import com.bumptech.glide.Glide
 import com.emberestudio.project.R
 import com.emberestudio.project.ui.base.BaseActivity
 import com.emberestudio.project.ui.managers.AuthenticationManager
@@ -67,7 +66,11 @@ class MainActivity : BaseActivity(), AuthenticationManager.AuthCallback{
     }
 
     private fun setupActionBar() {
-        setupActionBarWithNavController(findNavController(R.id.nav_host_fragment_container))
+        Glide.with(iv_profile_icon.context).load(authManager.getCurrentUser()?.photoUrl).optionalCircleCrop().into(iv_profile_icon)
+        iv_profile_icon.setOnClickListener {
+            authManager.logout(this)
+        }
+//        setupActionBarWithNavController(findNavController(R.id.nav_host_fragment_container))
     }
 
     override fun onAuthSuccessful(user: FirebaseUser?) {

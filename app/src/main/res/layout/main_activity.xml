@@ -4,7 +4,40 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	style="@style/Theme.AppCompat.NoActionBar"
 	tools:context=".ui.base.BaseActivity">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/toolbar2"
+		android:layout_width="match_parent"
+		android:layout_height="?attr/actionBarSize"
+		android:background="@color/colorPrimary"
+		style="?attr/actionBarWidgetTheme"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:textStyle="bold"
+			android:textSize="20sp"
+			style="@style/AppTheme"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="Title"/>
+
+		<ImageView
+			android:id="@+id/iv_profile_icon"
+			android:layout_width="36dp"
+			android:layout_height="36dp"
+			android:layout_margin="16dp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
 
 	<fragment
 		android:id="@+id/nav_host_fragment_container"
@@ -15,7 +48,7 @@
 		app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/toolbar2"
 		app:navGraph="@navigation/main_nav_graph" />
 
 	<com.google.android.material.bottomnavigation.BottomNavigationView
