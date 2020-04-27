@@ -79,6 +79,9 @@ class AuthenticationManager @Inject constructor() {
             }
     }
 
+    fun showAccountPicker(){
+
+    }
 
     fun handleSignInResult(resultCode: Int, data: Intent) {
 

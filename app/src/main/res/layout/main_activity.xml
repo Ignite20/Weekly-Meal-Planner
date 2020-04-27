@@ -18,12 +18,13 @@
 		app:layout_constraintTop_toTopOf="parent">
 
 		<TextView
+			android:id="@+id/tv_app_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="16dp"
 			android:textStyle="bold"
 			android:textSize="20sp"
-			style="@style/AppTheme"
+			android:textColor="@android:color/white"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
