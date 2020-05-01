@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.FragmentPlanificationsListBinding
 import com.emberestudio.project.ui.base.BaseFragment
+import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.planifications.adapter.PlanificationsAdapter
 
-class PlanificationsFragment : BaseFragment<PlanificationsViewModel>() {
+class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(), PlanificationsAdapter.OnItemActions {
 
     lateinit var binding : FragmentPlanificationsListBinding
 
@@ -37,7 +39,7 @@ class PlanificationsFragment : BaseFragment<PlanificationsViewModel>() {
 
     private fun observeData() {
         viewModel.plans.observe(this, Observer {
-            binding.rvPlanifications.adapter = PlanificationsAdapter(it)
+            binding.rvPlanifications.adapter = PlanificationsAdapter(it, this)
             binding.rvPlanifications.adapter?.notifyDataSetChanged()
         })
 
@@ -53,5 +55,9 @@ class PlanificationsFragment : BaseFragment<PlanificationsViewModel>() {
         binding.rvPlanifications.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
+    }
+
+    override fun onPlanClick(plan: Plan) {
+        findNavController().navigate(PlanificationsFragmentDirections.actionPlanificationsToPlan(plan.id))
     }
 }

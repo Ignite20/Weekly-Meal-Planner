@@ -24,6 +24,18 @@ class FireBaseDataSourceImpl @Inject constructor(private val authenticationManag
         db.firestoreSettings = settings
     }
 
+    override fun getPlan(planId: String, listener: FireBaseDataSource.OnPlanRetrieved?) {
+        db.collection(PLANS_COLLECTION).document(planId).get().addOnSuccessListener {
+            it.toObject(Plan::class.java)?.let { plan -> listener?.onSuccess(plan) }
+        }
+    }
+
+    override fun savePlan(plan: Plan, listener: FireBaseDataSource.OnPlanSaved?){
+        db.collection(PLANS_COLLECTION).document(plan.id).set(plan).addOnSuccessListener {
+            listener?.onSuccess(true)
+        }
+    }
+
     override fun getPlanifications(listener : FireBaseDataSource.OnPlanificationsRetrieved?){
         authenticationManager.getCurrentUser()?.uid?.let { uid ->
             db.collection(PLANS_COLLECTION)

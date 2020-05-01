@@ -11,6 +11,7 @@ interface PlanificationsUseCase : PlanificationsUseCaseContract
 class PlanificationsUseCaseImplementation @Inject constructor(private val repository: Repository): PlanificationsUseCase{
     override val plansResponse = SingleUseCaseImplementation<MutableList<Plan>>()
 
+
     override fun getPlanifications() {
         repository.getPlanifications(plansResponse)
     }

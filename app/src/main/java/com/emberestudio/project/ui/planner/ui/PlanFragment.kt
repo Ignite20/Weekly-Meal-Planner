@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ExpandableListView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import com.emberestudio.project.databinding.FragmentMealPlannerBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.components.customexpandablelist.DragNDropListeners
 import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.domain.model.WeekDays
-import com.emberestudio.project.ui.planner.adapter.MealPlannerAdapter
+import com.emberestudio.project.ui.planner.adapter.PlanAdapter
 import com.emberestudio.project.ui.util.toastShort
 
 
-class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
+class PlanFragment : BaseFragment<PlanViewModel>(),
     ExpandableListView.OnChildClickListener,
     ExpandableListView.OnGroupCollapseListener,
     ExpandableListView.OnGroupExpandListener,
@@ -24,9 +26,11 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
 
     lateinit var binding: FragmentMealPlannerBinding
 
+    private val args: PlanFragmentArgs by navArgs()
+
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentMealPlannerBinding.inflate(inflater).apply {
-            lifecycleOwner = this@MealPlannerFragment
+            lifecycleOwner = this@PlanFragment
             executePendingBindings()
         }
         prepareUI()
@@ -37,35 +41,39 @@ class MealPlannerFragment : BaseFragment<MealPlannerViewModel>(),
         super.onCreate(savedInstanceState)
         retainInstance = true
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.getMeals()
-    }
 
     private fun prepareUI(){
+        retrieveArgs()
         observeData()
     }
 
+    private fun preparePlan(plan: Plan){
+        binding.tvPlanTitle.text = plan.title
+//        prepareRecyclerView(plan.planification)
+    }
+
+    //TODO: Use when adapter is reworked
     private fun prepareRecyclerView(items: MutableMap<Int, MutableList<Meal>>){
         binding.elvMealsWeek.apply {
-            setAdapter(MealPlannerAdapter(WeekDays.values().map { it.name }, items))
-            setOnChildClickListener(this@MealPlannerFragment)
-            setOnGroupExpandListener(this@MealPlannerFragment)
-            setOnGroupCollapseListener(this@MealPlannerFragment)
+            setAdapter(PlanAdapter(WeekDays.values().map { it.name }, items))
+            setOnChildClickListener(this@PlanFragment)
+            setOnGroupExpandListener(this@PlanFragment)
+            setOnGroupCollapseListener(this@PlanFragment)
         }.also{
             it.setDragOnLongPress(true)
-            it.setDragListener(this@MealPlannerFragment)
+            it.setDragListener(this@PlanFragment)
         }
     }
 
-
+    private fun retrieveArgs(){
+        args.let {
+            viewModel.getPlan(it.planId)
+        }
+    }
 
     private fun observeData(){
         viewModel.plan.observe(viewLifecycleOwner, Observer {
-            prepareRecyclerView(it)
-        })
-
-        viewModel.change.observe(viewLifecycleOwner, Observer {
-            toastShort("Change Successful: ".plus(it))
+            preparePlan(it)
         })
     }
 

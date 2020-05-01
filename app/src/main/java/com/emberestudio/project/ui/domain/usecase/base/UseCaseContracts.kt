@@ -38,6 +38,15 @@ interface PlanificationsUseCaseContract{
     fun savePlanificaction(plan: Plan)
 }
 
+interface PlanUseCaseContract{
+    val planResponse : SingleUseCase<Plan>
+    val saveResponse : SingleUseCase<Boolean>
+
+    fun getPlan(planId: String)
+
+    fun savePlan(plan : Plan)
+}
+
 interface UserUseCaseContract{
     val userResponse : SingleUseCase<Boolean>
 

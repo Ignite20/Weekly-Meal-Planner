@@ -24,11 +24,11 @@ class Repository @Inject constructor(
         }
     }
 
-    fun getPlan(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>){
-        dataSource.getMap().let {
-            callback.onResponse("", it)
-        }
-    }
+//    fun getPlan(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>){
+//        dataSource.getMap().let {
+//            callback.onResponse("", it)
+//        }
+//    }
 
     fun saveMealLocal(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>, day: Int, item : Meal){
         dataSource.addItem(day, item)
@@ -38,6 +38,22 @@ class Repository @Inject constructor(
         dataSource.updateItemPosition(from, to)
     }
     //FIREBASE
+
+    fun getPlan(callback: ApiCallback<Plan, Error>, planId : String){
+        fireBaseDataSource.getPlan(planId, object : FireBaseDataSource.OnPlanRetrieved{
+            override fun onSuccess(plan: Plan) {
+                callback.onResponse("", plan)
+            }
+        })
+    }
+
+    fun savePlan(callback: ApiCallback<Boolean, Error>, plan: Plan){
+        fireBaseDataSource.savePlan(plan, object : FireBaseDataSource.OnPlanSaved{
+            override fun onSuccess(saved: Boolean) {
+                callback.onResponse("", saved)
+            }
+        })
+    }
 
     fun getPlanifications(callback: ApiCallback<MutableList<Plan>, Error>){
         fireBaseDataSource.getPlanifications(object : FireBaseDataSource.OnPlanificationsRetrieved{
