@@ -9,7 +9,7 @@ import com.emberestudio.project.ui.managers.FireCloudManager
 import com.emberestudio.project.ui.mealdetail.di.MealDetailModule
 import com.emberestudio.project.ui.meals.di.MealsModule
 import com.emberestudio.project.ui.planifications.di.PlanificationModule
-import com.emberestudio.project.ui.planner.di.MealPlannerModule
+import com.emberestudio.project.ui.planner.di.PlanModule
 import com.emberestudio.project.ui.profile.di.ProfileModule
 import dagger.BindsInstance
 import dagger.Component
@@ -31,7 +31,7 @@ import javax.inject.Singleton
         AuthenticationManager::class,
         FireCloudManager::class,
         PlanificationModule::class,
-        MealPlannerModule::class,
+        PlanModule::class,
         MealDetailModule::class,
         GroceryShopListModule::class,
         MealsModule::class,

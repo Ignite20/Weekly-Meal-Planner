@@ -24,6 +24,18 @@ class FireBaseDataSourceImpl @Inject constructor(private val authenticationManag
         db.firestoreSettings = settings
     }
 
+    override fun getPlan(planId: String, listener: FireBaseDataSource.OnPlanRetrieved?) {
+        db.collection(PLANS_COLLECTION).document(planId).get().addOnSuccessListener {
+            it.toObject(Plan::class.java)?.let { plan -> listener?.onSuccess(plan) }
+        }
+    }
+
+    override fun updatePlan(plan: Plan, listener: FireBaseDataSource.OnPlanSaved?){
+        db.collection(PLANS_COLLECTION).document(plan.id).set(plan).addOnSuccessListener {
+            listener?.onSuccess(plan.id)
+        }
+    }
+
     override fun getPlanifications(listener : FireBaseDataSource.OnPlanificationsRetrieved?){
         authenticationManager.getCurrentUser()?.uid?.let { uid ->
             db.collection(PLANS_COLLECTION)
@@ -35,7 +47,7 @@ class FireBaseDataSourceImpl @Inject constructor(private val authenticationManag
         }
     }
 
-    override fun savePlanification(plan: Plan, listener : FireBaseDataSource.OnPlanificationsRetrieved?) {
+    override fun savePlanification(plan: Plan, listener : FireBaseDataSource.OnPlanSaved?) {
         authenticationManager.getCurrentUser()?.uid?.let {
             plan.roles?.let { roles ->
                 roles[it] = Roles.OWNER.nName
@@ -45,7 +57,7 @@ class FireBaseDataSourceImpl @Inject constructor(private val authenticationManag
             plan.id = docRef.id
 
             db.collection(PLANS_COLLECTION).document(docRef.id).set(plan).addOnSuccessListener {
-                getPlanifications(listener)
+                listener?.onSuccess(plan.id)
             }
         }
     }

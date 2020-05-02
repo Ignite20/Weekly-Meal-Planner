@@ -28,6 +28,20 @@
         android:label="@string/weekly_plan"
         tools:layout="@layout/fragment_planifications_list">
 
+        <action
+            android:id="@+id/action_planifications_to_plan"
+            app:destination="@id/plan" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/plan"
+        android:name="com.emberestudio.project.ui.planner.ui.PlanFragment"
+        android:label="@string/plan"
+        tools:layout="@layout/fragment_meal_planner"
+        >
+        <argument
+            android:name="planId"
+            app:argType="string"/>
     </fragment>
 
     <fragment

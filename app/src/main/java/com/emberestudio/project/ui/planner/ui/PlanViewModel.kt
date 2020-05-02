@@ -4,26 +4,45 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.emberestudio.project.ui.base.BaseViewModel
 import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.planner.usecase.MealUseCase
+import com.emberestudio.project.ui.planner.usecase.PlanUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MealPlannerViewModel @Inject constructor(private val mealUseCase: MealUseCase) : BaseViewModel() {
+class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, private val planUseCase: PlanUseCase) : BaseViewModel() {
 
-    val uiData = MediatorLiveData<MutableMap<Int, MutableList<Meal>>>()
-    var plan : LiveData<MutableMap<Int, MutableList<Meal>>> = uiData
-    val change = MediatorLiveData<Boolean>()
-    var _change : LiveData<Boolean> = change
+    val uiData = MediatorLiveData<Plan>()
+    var plan : LiveData<Plan> = uiData
+
+    val change = MediatorLiveData<String>()
+    var _change : LiveData<String> = change
     var groupState : ArrayList<Int> = arrayListOf()
 
     init {
         setupObservers()
     }
 
-    fun getMeals() {
+    fun getPlan(planId : String) {
         viewModelScope.launch(Dispatchers.IO) {
-            mealUseCase.getPlan()
+            planUseCase.getPlan(planId)
+        }
+    }
+
+    fun updateTitle(planTitle : String){
+        val plan = plan.value
+        plan?.let {
+            it.title = planTitle
+            planUseCase.savePlan(it)
+        }
+
+    }
+
+    fun updatePlanfication(){
+        val plan = plan.value
+        plan?.let {
+            planUseCase.savePlan(it)
         }
     }
 
@@ -37,25 +56,25 @@ class MealPlannerViewModel @Inject constructor(private val mealUseCase: MealUseC
 
     private fun setupObservers(){
         uiData.apply {
-            addSource(mealUseCase.planResponse.data){ response ->
+            addSource(planUseCase.planResponse.data){ response ->
                 createAndPostUiModel(response)
             }
         }
 
         change.apply {
-            addSource(mealUseCase.changeResponse.data){ response ->
+            addSource(planUseCase.saveResponse.data){ response ->
                 postChangeSuccessful(response)
             }
         }
     }
 
-    private fun createAndPostUiModel(response: MutableMap<Int, MutableList<Meal>>) {
+    private fun createAndPostUiModel(response: Plan) {
         viewModelScope.launch {
             uiData.postValue(response)
         }
     }
 
-    private fun postChangeSuccessful(response : Boolean){
+    private fun postChangeSuccessful(response : String){
         viewModelScope.launch {
             change.postValue(response)
         }

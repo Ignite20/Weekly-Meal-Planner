@@ -32,10 +32,20 @@ interface MealsUseCaseContract{
 
 interface PlanificationsUseCaseContract{
     val plansResponse : SingleUseCase<MutableList<Plan>>
+    val saveResponse : SingleUseCase<String>
 
     fun getPlanifications()
 
-    fun savePlanificaction(plan: Plan)
+    fun savePlanification(plan: Plan)
+}
+
+interface PlanUseCaseContract{
+    val planResponse : SingleUseCase<Plan>
+    val saveResponse : SingleUseCase<String>
+
+    fun getPlan(planId: String)
+
+    fun savePlan(plan : Plan)
 }
 
 interface UserUseCaseContract{

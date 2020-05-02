@@ -24,11 +24,11 @@ class Repository @Inject constructor(
         }
     }
 
-    fun getPlan(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>){
-        dataSource.getMap().let {
-            callback.onResponse("", it)
-        }
-    }
+//    fun getPlan(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>){
+//        dataSource.getMap().let {
+//            callback.onResponse("", it)
+//        }
+//    }
 
     fun saveMealLocal(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>, day: Int, item : Meal){
         dataSource.addItem(day, item)
@@ -39,6 +39,22 @@ class Repository @Inject constructor(
     }
     //FIREBASE
 
+    fun getPlan(callback: ApiCallback<Plan, Error>, planId : String){
+        fireBaseDataSource.getPlan(planId, object : FireBaseDataSource.OnPlanRetrieved{
+            override fun onSuccess(plan: Plan) {
+                callback.onResponse("", plan)
+            }
+        })
+    }
+
+    fun savePlan(callback: ApiCallback<String, Error>, plan: Plan){
+        fireBaseDataSource.updatePlan(plan, object : FireBaseDataSource.OnPlanSaved{
+            override fun onSuccess(planId: String) {
+                callback.onResponse("", planId)
+            }
+        })
+    }
+
     fun getPlanifications(callback: ApiCallback<MutableList<Plan>, Error>){
         fireBaseDataSource.getPlanifications(object : FireBaseDataSource.OnPlanificationsRetrieved{
             override fun onSuccess(list: MutableList<Plan>) {
@@ -47,10 +63,10 @@ class Repository @Inject constructor(
         })
     }
 
-    fun savePlanification(plan: Plan, callback: ApiCallback<MutableList<Plan>, Error>){
-        fireBaseDataSource.savePlanification(plan, object : FireBaseDataSource.OnPlanificationsRetrieved{
-            override fun onSuccess(list: MutableList<Plan>) {
-                callback.onResponse("", list)
+    fun savePlanification(plan: Plan, callback: ApiCallback<String, Error>){
+        fireBaseDataSource.savePlanification(plan, object : FireBaseDataSource.OnPlanSaved{
+            override fun onSuccess(planId: String) {
+                callback.onResponse("", planId)
             }
         })
     }

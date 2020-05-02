@@ -21,7 +21,7 @@ class MealUseCaseImplementation @Inject constructor(private val repository: Repo
 
     override fun getMeal(day: Int, meal: Int) = repository.getMeal(day, meal, mealResponse)
 
-    override fun getPlan() = repository.getPlan(planResponse)
+    override fun getPlan(){}
 
     override fun saveMeal(day: Int, meal: Meal) {
         repository.saveMealLocal(planResponse, day, meal)

@@ -14,7 +14,7 @@ import android.widget.ExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.ImageView
 import com.emberestudio.project.R
-import com.emberestudio.project.ui.planner.adapter.MealPlannerAdapter
+import com.emberestudio.project.ui.planner.adapter.PlanAdapter
 
 
 class CustomExpandableListView(context: Context, attrs: AttributeSet) :
@@ -32,7 +32,7 @@ class CustomExpandableListView(context: Context, attrs: AttributeSet) :
     private var screenHeight = 0f
     private var dragRatio = 0f
     private var mDragView: ImageView? = null
-    private var adapter: MealPlannerAdapter? = null
+    private var adapter: PlanAdapter? = null
     private var listeners: DragNDropListeners? = null
     private val dragOffset = 50
     private var dragOnLongPress = false
@@ -55,7 +55,7 @@ class CustomExpandableListView(context: Context, attrs: AttributeSet) :
 
     override fun setAdapter(adapter: ExpandableListAdapter?) {
         super.setAdapter(adapter)
-        this.adapter = adapter as MealPlannerAdapter
+        this.adapter = adapter as PlanAdapter
 //        expandAll()
     }
 

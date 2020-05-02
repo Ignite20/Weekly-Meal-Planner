@@ -17,7 +17,8 @@ class PlanificationViewHolder (var binding: ItemPlanBinding) : RecyclerView.View
             )
         }
     }
-    fun bind(plan: Plan){
+    fun bind(plan: Plan) : PlanificationViewHolder{
         binding.planName.text = plan.title
+        return this
     }
 }

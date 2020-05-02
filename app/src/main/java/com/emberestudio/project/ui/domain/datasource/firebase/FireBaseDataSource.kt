@@ -14,13 +14,25 @@ interface FireBaseDataSource {
         fun onSuccess(list : MutableList<Plan>)
     }
 
+    interface OnPlanRetrieved{
+        fun onSuccess(plan : Plan)
+    }
+
+    interface OnPlanSaved{
+        fun onSuccess(planId : String)
+    }
+
     interface OnItemRemoved{
         fun onItemRemoved(item : String)
     }
 
     fun getPlanifications(listener : OnPlanificationsRetrieved?)
 
-    fun savePlanification(plan: Plan, listener : OnPlanificationsRetrieved?)
+    fun getPlan(planId: String, listener: OnPlanRetrieved?)
+
+    fun updatePlan(plan: Plan, listener: OnPlanSaved?)
+
+    fun savePlanification(plan: Plan, listener : OnPlanSaved?)
 
     fun saveMeal(meal : Meal, listener : FireBaseListener?)
 

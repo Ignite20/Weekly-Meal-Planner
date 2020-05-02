@@ -5,6 +5,7 @@
     <string name="meals_list">Meals</string>
     <string name="meal_detail">Meal Detail</string>
     <string name="profile">Profile</string>
+    <string name="plan">Plan</string>
 
 
     <!-- ADD MEAL TO PLAN DIALOG-->

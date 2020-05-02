@@ -11,12 +11,14 @@ interface PlanificationsUseCase : PlanificationsUseCaseContract
 class PlanificationsUseCaseImplementation @Inject constructor(private val repository: Repository): PlanificationsUseCase{
     override val plansResponse = SingleUseCaseImplementation<MutableList<Plan>>()
 
+    override val saveResponse = SingleUseCaseImplementation<String>()
+
     override fun getPlanifications() {
         repository.getPlanifications(plansResponse)
     }
 
-    override fun savePlanificaction(plan: Plan) {
-        repository.savePlanification(plan, plansResponse)
+    override fun savePlanification(plan: Plan) {
+        repository.savePlanification(plan, saveResponse)
     }
 
 }

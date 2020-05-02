@@ -8,7 +8,7 @@ import com.emberestudio.project.ui.meals.holder.MealViewHolder
 import com.emberestudio.project.ui.planner.holder.DayViewHolder
 
 
-class MealPlannerAdapter(
+class PlanAdapter(
     var listDays: List<String>,
     var listMeals: MutableMap<Int, MutableList<Meal>>)
     : BaseExpandableListAdapter() {

@@ -1,4 +1,4 @@
-package com.emberestudio.project.ui.planner
+package com.emberestudio.project.ui.planner.model
 
 import com.emberestudio.project.ui.domain.model.Plan
 

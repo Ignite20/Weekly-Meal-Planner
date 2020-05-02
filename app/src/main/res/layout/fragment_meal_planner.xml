@@ -12,16 +12,39 @@
 		android:layout_height="match_parent"
 		tools:context=".ui.base.BaseFragment">
 
-		<com.emberestudio.project.ui.components.customexpandablelist.CustomExpandableListView
-			android:id="@+id/elv_meals_week"
+		<EditText
+			android:id="@+id/tv_plan_title"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:textSize="20sp"
+			android:textStyle="bold"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			tools:text="Plan title" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/rv_day_meals"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:animateLayoutChanges="false"
-			android:groupIndicator="@null"
+			android:layout_height="0dp"
+			android:padding="8dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toBottomOf="@+id/tv_plan_title" />
+
+<!--		<com.emberestudio.project.ui.components.customexpandablelist.CustomExpandableListView-->
+<!--			android:id="@+id/elv_meals_week"-->
+<!--			android:layout_width="match_parent"-->
+<!--			android:layout_height="0dp"-->
+<!--			android:animateLayoutChanges="false"-->
+<!--			android:groupIndicator="@null"-->
+<!--			android:layout_marginTop="8dp"-->
+<!--			app:layout_constraintBottom_toBottomOf="parent"-->
+<!--			app:layout_constraintEnd_toEndOf="parent"-->
+<!--			app:layout_constraintStart_toStartOf="parent"-->
+<!--			app:layout_constraintTop_toBottomOf="@+id/tv_plan_title" />-->
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

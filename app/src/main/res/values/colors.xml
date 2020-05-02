@@ -5,6 +5,7 @@
 	<color name="colorAccent">#35B33B</color>
 	<color name="colorPrimary700">#388E3C</color>
 	<color name="colorSaveMealButton">#0EC701</color>
+	<color name="colorComplementary700">#1976D2</color>
 	<color name="colorCancel">#DA0303</color>
 	<color name="textActive">#E8F5E9</color>
 	<color name="textInactive">#33691E</color>
