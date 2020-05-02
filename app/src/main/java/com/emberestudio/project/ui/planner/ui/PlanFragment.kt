@@ -1,28 +1,23 @@
 package com.emberestudio.project.ui.planner.ui
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ExpandableListView
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.FragmentMealPlannerBinding
 import com.emberestudio.project.ui.base.BaseFragment
-import com.emberestudio.project.ui.components.customexpandablelist.DragNDropListeners
-import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.domain.model.DayPlan
 import com.emberestudio.project.ui.domain.model.Plan
-import com.emberestudio.project.ui.domain.model.WeekDays
-import com.emberestudio.project.ui.planner.adapter.PlanAdapter
-import com.emberestudio.project.ui.util.toastShort
+import com.emberestudio.project.ui.planner.adapter.PlanAdapter2
 
 
-class PlanFragment : BaseFragment<PlanViewModel>(),
-    ExpandableListView.OnChildClickListener,
-    ExpandableListView.OnGroupCollapseListener,
-    ExpandableListView.OnGroupExpandListener,
-    DragNDropListeners
-{
+class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified {
 
     lateinit var binding: FragmentMealPlannerBinding
 
@@ -48,20 +43,18 @@ class PlanFragment : BaseFragment<PlanViewModel>(),
     }
 
     private fun preparePlan(plan: Plan){
-        binding.tvPlanTitle.text = plan.title
-//        prepareRecyclerView(plan.planification)
+        binding.tvPlanTitle.text = Editable.Factory.getInstance().newEditable(plan.title)
+        binding.tvPlanTitle.setSelection(plan.title.length)
+        binding.tvPlanTitle.doOnTextChanged { text, start, count, after ->
+            viewModel.updateTitle(text.toString())
+        }
+        prepareRecyclerView(plan.planification)
     }
 
-    //TODO: Use when adapter is reworked
-    private fun prepareRecyclerView(items: MutableMap<Int, MutableList<Meal>>){
-        binding.elvMealsWeek.apply {
-            setAdapter(PlanAdapter(WeekDays.values().map { it.name }, items))
-            setOnChildClickListener(this@PlanFragment)
-            setOnGroupExpandListener(this@PlanFragment)
-            setOnGroupCollapseListener(this@PlanFragment)
-        }.also{
-            it.setDragOnLongPress(true)
-            it.setDragListener(this@PlanFragment)
+    private fun prepareRecyclerView(items: MutableList<DayPlan>){
+        binding.rvDayMeals.apply {
+            adapter = PlanAdapter2(items, this@PlanFragment)
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
     }
 
@@ -77,39 +70,7 @@ class PlanFragment : BaseFragment<PlanViewModel>(),
         })
     }
 
-    override fun onChildClick(
-        parent: ExpandableListView?,
-        v: View?,
-        groupPosition: Int,
-        childPosition: Int,
-        id: Long
-    ): Boolean {
-        return true
-    }
-
-    override fun onGroupCollapse(groupPosition: Int) {
-        viewModel.removeExpansibleState(groupPosition)
-    }
-
-    override fun onGroupExpand(groupPosition: Int) {
-        viewModel.setExpansibleState(groupPosition)
-    }
-
-    override fun onDrag(x: Float, y: Float) {
-        // Not needed
-    }
-
-    override fun onPick(position: IntArray?) {
-
-        //TODO : Change to affect data source
-        toastShort(position!![0].toString().plus(position[1]))
-    }
-
-    override fun onDrop(from: IntArray?, to: IntArray?) {
-        //TODO : Changee to affect data source
-        toastShort(from!![0].toString().plus(from[1]).plus(" ").plus(to!![0].toString().plus(to[1])))
-//        viewModel.updateOrder(from, to)
-        binding.elvMealsWeek.collapseGroup(from[0])
-        binding.elvMealsWeek.expandGroup(to[0])
+    override fun onAddNewMeal() {
+        viewModel.updatePlanfication()
     }
 }

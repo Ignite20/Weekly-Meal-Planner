@@ -15,8 +15,8 @@ class Plan {
 
     var title: String = ""
     var id : String = ""
-    var planification : MutableList<DayPlan>? = null
-    var roles : MutableMap<String, String>? = null
+    var planification : MutableList<DayPlan> = mutableListOf()
+    var roles : MutableMap<String, String>? = mutableMapOf()
 }
 
 class DayPlan {
@@ -24,12 +24,26 @@ class DayPlan {
 
     constructor(
         day: String,
-         meals: MutableList<Meal>
+        meals: MutableList<MealSnapshot>
     ){
         this.day = day
         this.meals = meals
     }
     var day: String = ""
-    var meals: MutableList<Meal>? = null
+    var meals: MutableList<MealSnapshot> = mutableListOf()
+}
 
+class MealSnapshot{
+    constructor()
+
+    constructor(
+        title: String,
+        mealId: String
+    ){
+        this.title = title
+        this.mealId = mealId
+    }
+
+    var title : String = ""
+    var mealId : String = ""
 }

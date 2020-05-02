@@ -10,7 +10,7 @@ interface PlanUseCase : PlanUseCaseContract
 
 class PlanUseCaseImplementation @Inject constructor(private val repository: Repository) : PlanUseCase{
     override val planResponse = SingleUseCaseImplementation<Plan>()
-    override val saveResponse = SingleUseCaseImplementation<Boolean>()
+    override val saveResponse = SingleUseCaseImplementation<String>()
 
     override fun getPlan(planId : String) {
         repository.getPlan(planResponse, planId)

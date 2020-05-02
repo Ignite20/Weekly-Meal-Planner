@@ -43,11 +43,14 @@ class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(), Planific
             binding.rvPlanifications.adapter?.notifyDataSetChanged()
         })
 
+        viewModel.planId.observe(this, Observer { planId ->
+            findNavController().navigate(PlanificationsFragmentDirections.actionPlanificationsToPlan(planId))
+        })
     }
 
     private fun prepareAddButton(){
         binding.btnCreatePlan.setOnClickListener {
-            viewModel.savePlan(null)
+            viewModel.addNewPlan()
         }
     }
 

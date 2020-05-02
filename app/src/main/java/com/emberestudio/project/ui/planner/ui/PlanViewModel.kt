@@ -16,8 +16,8 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
     val uiData = MediatorLiveData<Plan>()
     var plan : LiveData<Plan> = uiData
 
-    val change = MediatorLiveData<Boolean>()
-    var _change : LiveData<Boolean> = change
+    val change = MediatorLiveData<String>()
+    var _change : LiveData<String> = change
     var groupState : ArrayList<Int> = arrayListOf()
 
     init {
@@ -27,6 +27,22 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
     fun getPlan(planId : String) {
         viewModelScope.launch(Dispatchers.IO) {
             planUseCase.getPlan(planId)
+        }
+    }
+
+    fun updateTitle(planTitle : String){
+        val plan = plan.value
+        plan?.let {
+            it.title = planTitle
+            planUseCase.savePlan(it)
+        }
+
+    }
+
+    fun updatePlanfication(){
+        val plan = plan.value
+        plan?.let {
+            planUseCase.savePlan(it)
         }
     }
 
@@ -58,7 +74,7 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
         }
     }
 
-    private fun postChangeSuccessful(response : Boolean){
+    private fun postChangeSuccessful(response : String){
         viewModelScope.launch {
             change.postValue(response)
         }

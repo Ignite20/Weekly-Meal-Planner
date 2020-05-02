@@ -19,7 +19,7 @@ interface FireBaseDataSource {
     }
 
     interface OnPlanSaved{
-        fun onSuccess(saved : Boolean)
+        fun onSuccess(planId : String)
     }
 
     interface OnItemRemoved{
@@ -30,9 +30,9 @@ interface FireBaseDataSource {
 
     fun getPlan(planId: String, listener: OnPlanRetrieved?)
 
-    fun savePlan(plan: Plan, listener: OnPlanSaved?)
+    fun updatePlan(plan: Plan, listener: OnPlanSaved?)
 
-    fun savePlanification(plan: Plan, listener : OnPlanificationsRetrieved?)
+    fun savePlanification(plan: Plan, listener : OnPlanSaved?)
 
     fun saveMeal(meal : Meal, listener : FireBaseListener?)
 

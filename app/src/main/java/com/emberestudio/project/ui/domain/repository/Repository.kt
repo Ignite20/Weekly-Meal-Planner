@@ -47,10 +47,10 @@ class Repository @Inject constructor(
         })
     }
 
-    fun savePlan(callback: ApiCallback<Boolean, Error>, plan: Plan){
-        fireBaseDataSource.savePlan(plan, object : FireBaseDataSource.OnPlanSaved{
-            override fun onSuccess(saved: Boolean) {
-                callback.onResponse("", saved)
+    fun savePlan(callback: ApiCallback<String, Error>, plan: Plan){
+        fireBaseDataSource.updatePlan(plan, object : FireBaseDataSource.OnPlanSaved{
+            override fun onSuccess(planId: String) {
+                callback.onResponse("", planId)
             }
         })
     }
@@ -63,10 +63,10 @@ class Repository @Inject constructor(
         })
     }
 
-    fun savePlanification(plan: Plan, callback: ApiCallback<MutableList<Plan>, Error>){
-        fireBaseDataSource.savePlanification(plan, object : FireBaseDataSource.OnPlanificationsRetrieved{
-            override fun onSuccess(list: MutableList<Plan>) {
-                callback.onResponse("", list)
+    fun savePlanification(plan: Plan, callback: ApiCallback<String, Error>){
+        fireBaseDataSource.savePlanification(plan, object : FireBaseDataSource.OnPlanSaved{
+            override fun onSuccess(planId: String) {
+                callback.onResponse("", planId)
             }
         })
     }

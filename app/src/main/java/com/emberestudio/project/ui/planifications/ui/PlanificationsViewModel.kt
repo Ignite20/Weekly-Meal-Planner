@@ -13,8 +13,11 @@ import javax.inject.Inject
 
 class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUseCase) : BaseViewModel(){
 
-    val uiData = MediatorLiveData<MutableList<Plan>>()
-    var plans : LiveData<MutableList<Plan>> = uiData
+    val _plans = MediatorLiveData<MutableList<Plan>>()
+    var plans : LiveData<MutableList<Plan>> = _plans
+
+    val _planId = MediatorLiveData<String>()
+    var planId : LiveData<String> = _planId
 
     init {
         setupObservers()
@@ -26,12 +29,19 @@ class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUs
         }
     }
 
-    fun savePlan(plan: Plan?){
+    fun addNewPlan(){
         viewModelScope.launch(Dispatchers.IO) {
-            useCase.savePlanificaction(
+            useCase.savePlanification(
                 Plan(
-                    title = "Test",
-                    planification = mutableListOf(DayPlan(WeekDays.MONDAY.nName, mutableListOf())),
+                    planification = mutableListOf(
+                        DayPlan(WeekDays.MONDAY.nName, mutableListOf()),
+                        DayPlan(WeekDays.TUESDAY.nName, mutableListOf()),
+                        DayPlan(WeekDays.WEDNESDAY.nName, mutableListOf()),
+                        DayPlan(WeekDays.THURSDAY.nName, mutableListOf()),
+                        DayPlan(WeekDays.FRIDAY.nName, mutableListOf()),
+                        DayPlan(WeekDays.SATURDAY.nName, mutableListOf()),
+                        DayPlan(WeekDays.SUNDAY.nName, mutableListOf())
+                    ),
                     roles = mutableMapOf()
                 )
             )
@@ -39,16 +49,28 @@ class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUs
     }
 
     private fun setupObservers(){
-        uiData.apply {
+        _plans.apply {
             addSource(useCase.plansResponse.data){response ->
                 createAndPostUiModel(response)
+            }
+        }
+
+        _planId.apply {
+            addSource(useCase.saveResponse.data){ planId ->
+                postPlanID(planId)
             }
         }
     }
 
     private fun createAndPostUiModel(list : MutableList<Plan>){
         viewModelScope.launch {
-            uiData.postValue(list)
+            _plans.postValue(list)
+        }
+    }
+
+    private fun postPlanID(planId : String){
+        viewModelScope.launch {
+            _planId.postValue(planId)
         }
     }
 }
