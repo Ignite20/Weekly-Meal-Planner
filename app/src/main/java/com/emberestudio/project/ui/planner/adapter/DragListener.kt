@@ -83,7 +83,7 @@ class DragListener(var mListener: MealSnapshotAdapter.Listener?) : OnDragListene
                         getEmptyText(target.parent as LinearLayout).visibility = View.GONE
                     }
 
-
+                    mListener?.updatePlan()
                 }
             }
             DragEvent.ACTION_DRAG_ENDED -> {
