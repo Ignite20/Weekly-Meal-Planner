@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.emberestudio.project.ui.base.BaseViewModel
 import com.emberestudio.project.ui.domain.model.Meal
+import com.emberestudio.project.ui.domain.model.MealSnapshot
 import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.planner.usecase.MealUseCase
 import com.emberestudio.project.ui.planner.usecase.PlanUseCase
@@ -42,6 +43,14 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
     fun updatePlanfication(){
         val plan = plan.value
         plan?.let {
+            planUseCase.savePlan(it)
+        }
+    }
+
+    fun updatePlanfication(dayPosition : Int, mealSnapshot: MealSnapshot){
+        val plan = plan.value
+        plan?.let {
+            it.planification[dayPosition].meals.add(mealSnapshot)
             planUseCase.savePlan(it)
         }
     }

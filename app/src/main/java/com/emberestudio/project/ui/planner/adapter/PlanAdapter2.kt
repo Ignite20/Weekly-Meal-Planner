@@ -3,13 +3,13 @@ package com.emberestudio.project.ui.planner.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.ui.domain.model.DayPlan
-import com.emberestudio.project.ui.domain.model.MealSnapshot
 import com.emberestudio.project.ui.planner.holder.DayPlanViewHolder
 
 class PlanAdapter2 (val list: MutableList<DayPlan>, var callback : OnPlanModified? = null) : RecyclerView.Adapter<DayPlanViewHolder>(){
 
     interface OnPlanModified{
-        fun onAddNewMeal()
+        fun onAddNewMeal(dayPosition : Int)
+        fun onMealChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayPlanViewHolder = DayPlanViewHolder.from(parent)
@@ -20,11 +20,13 @@ class PlanAdapter2 (val list: MutableList<DayPlan>, var callback : OnPlanModifie
         holder.bind(list[position])
         holder.callback = object : DayPlanViewHolder.OnAddNewMealAction{
             override fun addMealToPlan() {
-                list[position].meals.add(MealSnapshot("test ".plus(list[position].meals.size), "meal id".plus(position)))
-                notifyItemChanged(position)
+//                notifyItemChanged(position)
                 //TODO: Add logic and link to meals list
-                callback?.onAddNewMeal()
+                callback?.onAddNewMeal(position)
+            }
 
+            override fun updatePlan() {
+                callback?.onMealChanged()
             }
         }
     }

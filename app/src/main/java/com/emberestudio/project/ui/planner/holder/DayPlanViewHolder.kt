@@ -13,6 +13,7 @@ class DayPlanViewHolder(val binding: ItemDayPlanItemViewBinding) : RecyclerView.
 
     interface OnAddNewMealAction{
         fun addMealToPlan()
+        fun updatePlan()
     }
 
     var callback : OnAddNewMealAction? = null
@@ -44,5 +45,9 @@ class DayPlanViewHolder(val binding: ItemDayPlanItemViewBinding) : RecyclerView.
 
     override fun setEmptyList(visibility: Boolean, tag: Int) {
         // Not used for now
+    }
+
+    override fun updatePlan() {
+        callback?.updatePlan()
     }
 }

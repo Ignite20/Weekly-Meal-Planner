@@ -45,6 +45,7 @@ class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : 
 
     interface Listener {
         fun setEmptyList(visibility: Boolean, tag: Int)
+        fun updatePlan()
     }
 
     fun getDragInstance(): DragListener? {

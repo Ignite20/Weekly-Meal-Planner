@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.FragmentMealPlannerBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.DayPlan
+import com.emberestudio.project.ui.domain.model.MealSnapshot
 import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.planner.adapter.PlanAdapter2
 
@@ -70,7 +71,12 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified 
         })
     }
 
-    override fun onAddNewMeal() {
+    override fun onAddNewMeal(dayPosition: Int) {
+        viewModel.updatePlanfication(dayPosition, MealSnapshot("test Summer", "meal ID"))
+        binding.rvDayMeals.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onMealChanged() {
         viewModel.updatePlanfication()
     }
 }
