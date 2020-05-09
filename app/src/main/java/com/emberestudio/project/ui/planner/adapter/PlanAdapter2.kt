@@ -20,7 +20,7 @@ class PlanAdapter2 (val list: MutableList<DayPlan>, var callback : OnPlanModifie
         holder.bind(list[position])
         holder.callback = object : DayPlanViewHolder.OnAddNewMealAction{
             override fun addMealToPlan() {
-                list[position].meals.add(MealSnapshot("test ".plus(position), "meal id".plus(position)))
+                list[position].meals.add(MealSnapshot("test ".plus(list[position].meals.size), "meal id".plus(position)))
                 notifyItemChanged(position)
                 //TODO: Add logic and link to meals list
                 callback?.onAddNewMeal()
