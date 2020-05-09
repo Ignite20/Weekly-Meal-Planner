@@ -35,6 +35,14 @@
                 android:maxEms="12"
                 android:scrollHorizontally="false"
                 tools:text="Chicken tikka masala"/>
+
+            <ImageView
+                android:id="@+id/iv_change_meal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_create_black_18dp" />
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

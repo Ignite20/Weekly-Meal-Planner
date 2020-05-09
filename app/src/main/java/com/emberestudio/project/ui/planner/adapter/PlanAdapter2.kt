@@ -10,6 +10,7 @@ class PlanAdapter2 (val list: MutableList<DayPlan>, var callback : OnPlanModifie
     interface OnPlanModified{
         fun onAddNewMeal(dayPosition : Int)
         fun onMealChanged()
+        fun onMealRemoved()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayPlanViewHolder = DayPlanViewHolder.from(parent)

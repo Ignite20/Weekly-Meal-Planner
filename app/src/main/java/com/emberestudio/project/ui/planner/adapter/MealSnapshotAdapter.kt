@@ -11,7 +11,7 @@ import com.emberestudio.project.ui.planner.holder.MealSnapshotViewHolder
 
 
 class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : Listener?) :
-    RecyclerView.Adapter<MealSnapshotViewHolder>(){
+    RecyclerView.Adapter<MealSnapshotViewHolder>(), MealSnapshotViewHolder.Action{
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealSnapshotViewHolder = MealSnapshotViewHolder.from(parent)
 
@@ -32,6 +32,8 @@ class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : 
             it.visibility = View.INVISIBLE
             true
         }
+
+        holder.callback = this@MealSnapshotAdapter
     }
 
     fun getMealSnapshotList(): MutableList<MealSnapshot>{
@@ -56,4 +58,16 @@ class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : 
             null
         }
     }
+
+    override fun onEditMealClick(mealPosition: Int) {
+        //TODO("Not yet implemented")
+    }
+
+    override fun onDeleteMealClick(mealPosition: Int) {
+        list.removeAt(mealPosition)
+        notifyItemRemoved(mealPosition)
+        listener?.updatePlan()
+    }
+
+
 }

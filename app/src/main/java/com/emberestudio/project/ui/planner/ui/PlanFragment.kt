@@ -79,4 +79,8 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified 
     override fun onMealChanged() {
         viewModel.updatePlanfication()
     }
+
+    override fun onMealRemoved() {
+        //TODO: Implementation
+    }
 }

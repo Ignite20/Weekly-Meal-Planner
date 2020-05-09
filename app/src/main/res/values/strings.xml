@@ -33,6 +33,8 @@
 
     <string name="exit">Close</string>
     <string name="sign_in">Sign Out</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
 
     <string-array name="meal_types">
         <item>Breakfast</item>

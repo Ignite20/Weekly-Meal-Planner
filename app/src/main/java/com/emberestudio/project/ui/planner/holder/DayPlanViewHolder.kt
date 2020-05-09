@@ -38,9 +38,7 @@ class DayPlanViewHolder(val binding: ItemDayPlanItemViewBinding) : RecyclerView.
         binding.cardAddNewMeal.setOnClickListener {
             callback?.addMealToPlan()
         }
-        binding.textEmptyList.visibility = if (dayPlan.meals.size == 0) View.VISIBLE else View.GONE
-        binding.rvMealsSnapshots.visibility = if (dayPlan.meals.size == 0) View.GONE else View.VISIBLE
-
+        checkListVisibility(dayPlan.meals.size)
     }
 
     override fun setEmptyList(visibility: Boolean, tag: Int) {
@@ -48,6 +46,14 @@ class DayPlanViewHolder(val binding: ItemDayPlanItemViewBinding) : RecyclerView.
     }
 
     override fun updatePlan() {
+        binding.rvMealsSnapshots.adapter?.let {
+            checkListVisibility(it.itemCount)
+        }
         callback?.updatePlan()
+    }
+
+    private fun checkListVisibility(listSize : Int){
+        binding.textEmptyList.visibility = if (listSize == 0) View.VISIBLE else View.GONE
+        binding.rvMealsSnapshots.visibility = if (listSize == 0) View.GONE else View.VISIBLE
     }
 }
