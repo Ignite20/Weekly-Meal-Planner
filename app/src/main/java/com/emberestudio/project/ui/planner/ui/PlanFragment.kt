@@ -76,7 +76,7 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified 
         binding.rvDayMeals.adapter?.notifyDataSetChanged()
     }
 
-    override fun onMealChanged() {
+    override fun onPlanChanged() {
         viewModel.updatePlanfication()
     }
 
