@@ -13,6 +13,7 @@ class DayPlanViewHolder(val binding: ItemDayPlanItemViewBinding) : RecyclerView.
 
     interface OnAddNewMealAction{
         fun onMealSelected(mealId: String)
+        fun onEditMeal(dayPosition: Int, mealPosition: Int)
         fun addMealToPlan()
         fun updatePlan()
     }
@@ -48,6 +49,10 @@ class DayPlanViewHolder(val binding: ItemDayPlanItemViewBinding) : RecyclerView.
 
     override fun setEmptyList(visibility: Boolean, tag: Int) {
         // Not used for now
+    }
+
+    override fun editMeal(mealPosition: Int) {
+        callback?.onEditMeal(adapterPosition, mealPosition)
     }
 
     override fun updatePlan() {

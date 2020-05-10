@@ -81,6 +81,10 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified,
         viewModel.getMeals(dayPosition)
     }
 
+    override fun onEditMeal(dayPosition: Int, mealPosition: Int) {
+        viewModel.getMeals(dayPosition, mealPosition)
+    }
+
     private fun showMealsDialog(meals : MutableList<Meal>){
         if(meals.isNullOrEmpty().not()) {
             WeekDays.findByOrder(viewModel.dayPosition)?.nName?.let { AddMealToPlanDialog(it, meals, this@PlanFragment).show(parentFragmentManager, "") }
@@ -102,7 +106,6 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified,
     }
 
     override fun onMealSelected(selectedMeal: Meal) {
-
         viewModel.updatePlanfication(MealSnapshot(selectedMeal.name, selectedMeal.id))
         binding.rvDayMeals.adapter?.notifyDataSetChanged()
     }
