@@ -1,6 +1,7 @@
 package com.emberestudio.project.ui.meals.holder
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.ItemMealBinding
@@ -30,5 +31,9 @@ class MealViewHolder (binding: ItemMealBinding) : RecyclerView.ViewHolder(bindin
         itemView.delete_item.setOnClickListener {
             listener?.onItemDelete(adapterPosition)
         }
+    }
+
+    fun showDeleteButton(show : Boolean){
+        itemView.delete_item.visibility = if(show) View.VISIBLE else View.GONE
     }
 }

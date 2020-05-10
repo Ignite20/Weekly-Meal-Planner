@@ -8,7 +8,7 @@
     <string name="plan">Plan</string>
 
 
-    <!-- ADD MEAL TO PLAN DIALOG-->
+    <!-- ADD NEW MEAL DIALOG-->
     <string name="add_meal">Add New Meal</string>
     <string name="edit_meal">Edit Meal</string>
     <string name="meal_name">Meal name</string>
@@ -26,6 +26,9 @@
     <string name="meal_type">Meal type</string>
     <string name="save_meal_button_text">Save Meal</string>
     <string name="cancel">Cancel</string>
+
+    <!-- ADD MEAL TO PLAN DIALOG-->
+    <string name="add_meal_to_plan_title">Select your meal for %1$s</string>
 
     <!--MEALS VIEW-->
     <string name="delete_item_title">Delete Meal</string>

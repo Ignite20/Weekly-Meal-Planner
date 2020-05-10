@@ -8,6 +8,7 @@ import com.emberestudio.project.ui.meals.holder.MealViewHolder
 import com.emberestudio.project.ui.planner.holder.DayViewHolder
 
 
+@Deprecated("Adapter for Meals list. Too complex, use PlanAdapter2")
 class PlanAdapter(
     var listDays: List<String>,
     var listMeals: MutableMap<Int, MutableList<Meal>>)

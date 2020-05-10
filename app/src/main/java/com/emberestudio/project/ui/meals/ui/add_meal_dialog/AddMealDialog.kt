@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.R
-import com.emberestudio.project.databinding.DialogAddMealToPlanBinding
+import com.emberestudio.project.databinding.DialogAddMealBinding
 import com.emberestudio.project.ui.base.BaseDialogFragment
 import com.emberestudio.project.ui.domain.model.Ingredient
 import com.emberestudio.project.ui.domain.model.Meal
@@ -26,7 +26,7 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authMan
         fun onSaveMeal(item: Meal)
     }
 
-    lateinit var binding: DialogAddMealToPlanBinding
+    lateinit var binding: DialogAddMealBinding
 
     lateinit var ingredients : MutableList<Ingredient>
     lateinit var steps : MutableList<Step>
@@ -34,10 +34,8 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authMan
     lateinit var ingredientsAdapter : IngredientsAdapter
     lateinit var stepsAdapter: StepsAdapter
 
-//    @Inject lateinit var authManager : AuthenticationManager
-
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
-        binding = DialogAddMealToPlanBinding.inflate(inflater).apply {
+        binding = DialogAddMealBinding.inflate(inflater).apply {
             lifecycleOwner = this@AddMealDialog
             executePendingBindings()
         }

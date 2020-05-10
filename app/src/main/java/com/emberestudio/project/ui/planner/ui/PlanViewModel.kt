@@ -14,12 +14,17 @@ import javax.inject.Inject
 
 class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, private val planUseCase: PlanUseCase) : BaseViewModel() {
 
-    val uiData = MediatorLiveData<Plan>()
-    var plan : LiveData<Plan> = uiData
+    val _plan = MediatorLiveData<Plan>()
+    var plan : LiveData<Plan> = _plan
+
+    val _meals = MediatorLiveData<MutableList<Meal>>()
+    var meals : LiveData<MutableList<Meal>> = _meals
 
     val change = MediatorLiveData<String>()
     var _change : LiveData<String> = change
     var groupState : ArrayList<Int> = arrayListOf()
+
+    var dayPosition = -1
 
     init {
         setupObservers()
@@ -47,24 +52,24 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
         }
     }
 
-    fun updatePlanfication(dayPosition : Int, mealSnapshot: MealSnapshot){
-        val plan = plan.value
-        plan?.let {
-            it.planification[dayPosition].meals.add(mealSnapshot)
-            planUseCase.savePlan(it)
+    fun updatePlanfication(mealSnapshot: MealSnapshot){
+        if(dayPosition != -1) {
+            val plan = plan.value
+            plan?.let {
+                it.planification[dayPosition].meals.add(mealSnapshot)
+                planUseCase.savePlan(it)
+            }
         }
+        dayPosition = -1
     }
 
-    fun saveMeal(day: Int, item : Meal){
-        mealUseCase.saveMeal(day, item)
-    }
-
-    fun updateOrder(from: IntArray?, to: IntArray?){
-        mealUseCase.updateMeal(from!!, to!!)
+    fun getMeals(selectedDayPosition : Int){
+        this.dayPosition = selectedDayPosition
+        mealUseCase.getMeals()
     }
 
     private fun setupObservers(){
-        uiData.apply {
+        _plan.apply {
             addSource(planUseCase.planResponse.data){ response ->
                 createAndPostUiModel(response)
             }
@@ -75,11 +80,18 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
                 postChangeSuccessful(response)
             }
         }
+
+        _meals.apply {
+            addSource(mealUseCase.mealsResponse.data){ response ->
+                postMealsList(response)
+            }
+        }
+
     }
 
     private fun createAndPostUiModel(response: Plan) {
         viewModelScope.launch {
-            uiData.postValue(response)
+            _plan.postValue(response)
         }
     }
 
@@ -88,12 +100,9 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
             change.postValue(response)
         }
     }
-
-    fun setExpansibleState(expanded : Int){
-        groupState.add(expanded)
-    }
-
-    fun removeExpansibleState(expanded: Int){
-        groupState.remove(expanded)
+    private fun postMealsList(response: MutableList<Meal>){
+        viewModelScope.launch {
+            _meals.postValue(response)
+        }
     }
 }

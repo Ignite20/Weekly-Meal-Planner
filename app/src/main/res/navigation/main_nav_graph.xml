@@ -42,6 +42,9 @@
         <argument
             android:name="planId"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_plan_to_meal_detail"
+            app:destination="@id/meal_detail" />
     </fragment>
 
     <fragment
