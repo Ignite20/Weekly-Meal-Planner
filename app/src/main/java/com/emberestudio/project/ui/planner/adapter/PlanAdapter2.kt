@@ -11,6 +11,7 @@ class PlanAdapter2 (val list: MutableList<DayPlan>, var callback : OnPlanModifie
         fun onAddNewMeal(dayPosition : Int)
         fun onPlanChanged()
         fun onMealRemoved()
+        fun openMeal(mealId: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayPlanViewHolder = DayPlanViewHolder.from(parent)
@@ -21,13 +22,15 @@ class PlanAdapter2 (val list: MutableList<DayPlan>, var callback : OnPlanModifie
         holder.bind(list[position])
         holder.callback = object : DayPlanViewHolder.OnAddNewMealAction{
             override fun addMealToPlan() {
-//                notifyItemChanged(position)
-                //TODO: Add logic and link to meals list
                 callback?.onAddNewMeal(position)
             }
 
             override fun updatePlan() {
                 callback?.onPlanChanged()
+            }
+
+            override fun onMealSelected(mealId: String) {
+                callback?.openMeal(mealId)
             }
         }
     }

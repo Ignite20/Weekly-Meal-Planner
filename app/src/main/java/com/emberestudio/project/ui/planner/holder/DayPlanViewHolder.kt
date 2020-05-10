@@ -12,6 +12,7 @@ import com.emberestudio.project.ui.planner.adapter.MealSnapshotAdapter
 class DayPlanViewHolder(val binding: ItemDayPlanItemViewBinding) : RecyclerView.ViewHolder(binding.root), MealSnapshotAdapter.Listener {
 
     interface OnAddNewMealAction{
+        fun onMealSelected(mealId: String)
         fun addMealToPlan()
         fun updatePlan()
     }
@@ -39,6 +40,10 @@ class DayPlanViewHolder(val binding: ItemDayPlanItemViewBinding) : RecyclerView.
             callback?.addMealToPlan()
         }
         checkListVisibility(dayPlan.meals.size)
+    }
+
+    override fun onMealSelected(mealId: String) {
+        callback?.onMealSelected(mealId)
     }
 
     override fun setEmptyList(visibility: Boolean, tag: Int) {

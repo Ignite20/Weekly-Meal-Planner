@@ -13,6 +13,7 @@ import com.emberestudio.project.ui.domain.model.MealSnapshot
 class MealSnapshotViewHolder(val binding: ItemMealSnapshotViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
     interface Action{
+        fun onMealSelected(mealId : String)
         fun onEditMealClick(mealPosition : Int)
         fun onDeleteMealClick(mealPosition : Int)
     }
@@ -31,6 +32,9 @@ class MealSnapshotViewHolder(val binding: ItemMealSnapshotViewBinding) : Recycle
         binding.tvMealSnapshotTitle.text = item.title
         binding.ivChangeMeal.setOnClickListener {
             showContextMenu(it, item)
+        }
+        binding.cvMealSnapshot.setOnClickListener {
+            callback?.onMealSelected(item.mealId)
         }
     }
 

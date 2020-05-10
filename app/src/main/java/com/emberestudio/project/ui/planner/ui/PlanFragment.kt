@@ -7,18 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.FragmentMealPlannerBinding
 import com.emberestudio.project.ui.base.BaseFragment
-import com.emberestudio.project.ui.domain.model.DayPlan
-import com.emberestudio.project.ui.domain.model.MealSnapshot
-import com.emberestudio.project.ui.domain.model.Plan
+import com.emberestudio.project.ui.domain.model.*
 import com.emberestudio.project.ui.planner.adapter.PlanAdapter2
+import com.emberestudio.project.ui.planner.dialog.AddMealToPlanDialog
+import com.emberestudio.project.ui.util.toastLong
 
 
-class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified {
+class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified, AddMealToPlanDialog.Actions {
 
     lateinit var binding: FragmentMealPlannerBinding
 
@@ -69,11 +70,27 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified 
         viewModel.plan.observe(viewLifecycleOwner, Observer {
             preparePlan(it)
         })
+
+        viewModel.meals.observe(viewLifecycleOwner, Observer {
+            showMealsDialog(it)
+        })
     }
 
     override fun onAddNewMeal(dayPosition: Int) {
-        viewModel.updatePlanfication(dayPosition, MealSnapshot("test Summer", "meal ID"))
-        binding.rvDayMeals.adapter?.notifyDataSetChanged()
+        //TODO : Call dialog to add meals
+        viewModel.getMeals(dayPosition)
+    }
+
+    private fun showMealsDialog(meals : MutableList<Meal>){
+        if(meals.isNullOrEmpty().not()) {
+            WeekDays.findByOrder(viewModel.dayPosition)?.nName?.let { AddMealToPlanDialog(it, meals, this@PlanFragment).show(parentFragmentManager, "") }
+        }else{
+            toastLong("An error occurred retrieving the meals list")
+        }
+    }
+
+    override fun openMeal(mealId: String) {
+        findNavController().navigate(PlanFragmentDirections.actionPlanToMealDetail(mealId))
     }
 
     override fun onPlanChanged() {
@@ -82,5 +99,11 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified 
 
     override fun onMealRemoved() {
         //TODO: Implementation
+    }
+
+    override fun onMealSelected(selectedMeal: Meal) {
+
+        viewModel.updatePlanfication(MealSnapshot(selectedMeal.name, selectedMeal.id))
+        binding.rvDayMeals.adapter?.notifyDataSetChanged()
     }
 }

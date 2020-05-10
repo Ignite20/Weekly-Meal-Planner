@@ -13,6 +13,12 @@ import com.emberestudio.project.ui.planner.holder.MealSnapshotViewHolder
 class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : Listener?) :
     RecyclerView.Adapter<MealSnapshotViewHolder>(), MealSnapshotViewHolder.Action{
 
+    interface Listener {
+        fun onMealSelected(mealId: String)
+        fun setEmptyList(visibility: Boolean, tag: Int)
+        fun updatePlan()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealSnapshotViewHolder = MealSnapshotViewHolder.from(parent)
 
     override fun getItemCount(): Int = list.size
@@ -45,10 +51,7 @@ class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : 
         notifyDataSetChanged()
     }
 
-    interface Listener {
-        fun setEmptyList(visibility: Boolean, tag: Int)
-        fun updatePlan()
-    }
+
 
     fun getDragInstance(): DragListener? {
         return if (listener != null) {
@@ -57,6 +60,10 @@ class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : 
             Log.e("Route Adapter: ", "Initialize listener first!")
             null
         }
+    }
+
+    override fun onMealSelected(mealId: String) {
+        listener?.onMealSelected(mealId)
     }
 
     override fun onEditMealClick(mealPosition: Int) {

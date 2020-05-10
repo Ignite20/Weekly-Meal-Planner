@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.meals.holder.MealViewHolder
 
-class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnItemActions?): RecyclerView.Adapter<MealViewHolder>() {
+class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnItemActions?, var canDeleteItems : Boolean = true): RecyclerView.Adapter<MealViewHolder>() {
 
     interface OnItemActions{
         fun onItemClick(item: Meal)
@@ -24,6 +24,7 @@ class MealsAdapter constructor(var list: MutableList<Meal>, var callback : OnIte
 
     override fun onBindViewHolder(holder: MealViewHolder, position: Int) {
         holder.bind(list[position]).apply {
+            showDeleteButton(canDeleteItems)
             itemView.apply {
                 this.setOnClickListener {
                     callback?.onItemClick(list[position])
