@@ -25,6 +25,7 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
     var groupState : ArrayList<Int> = arrayListOf()
 
     var dayPosition = -1
+    var mealPosition = -1
 
     init {
         setupObservers()
@@ -56,7 +57,12 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
         if(dayPosition != -1) {
             val plan = plan.value
             plan?.let {
-                it.planification[dayPosition].meals.add(mealSnapshot)
+                if(mealPosition != -1){
+                    it.planification[dayPosition].meals.removeAt(mealPosition)
+                    it.planification[dayPosition].meals.add(mealPosition, mealSnapshot)
+                }else {
+                    it.planification[dayPosition].meals.add(mealSnapshot)
+                }
                 planUseCase.savePlan(it)
             }
         }
@@ -67,6 +73,14 @@ class PlanViewModel @Inject constructor(private val mealUseCase: MealUseCase, pr
         this.dayPosition = selectedDayPosition
         mealUseCase.getMeals()
     }
+
+    fun getMeals(selectedDayPosition : Int, selectedMealPosition : Int){
+        this.dayPosition = selectedDayPosition
+        this.mealPosition = selectedMealPosition
+        mealUseCase.getMeals()
+    }
+
+
 
     private fun setupObservers(){
         _plan.apply {

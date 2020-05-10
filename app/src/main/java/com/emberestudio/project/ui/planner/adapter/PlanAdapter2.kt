@@ -9,6 +9,7 @@ class PlanAdapter2 (val list: MutableList<DayPlan>, var callback : OnPlanModifie
 
     interface OnPlanModified{
         fun onAddNewMeal(dayPosition : Int)
+        fun onEditMeal(dayPosition: Int, mealPosition: Int)
         fun onPlanChanged()
         fun onMealRemoved()
         fun openMeal(mealId: String)
@@ -31,6 +32,10 @@ class PlanAdapter2 (val list: MutableList<DayPlan>, var callback : OnPlanModifie
 
             override fun onMealSelected(mealId: String) {
                 callback?.openMeal(mealId)
+            }
+
+            override fun onEditMeal(dayPosition: Int, mealPosition: Int) {
+                callback?.onEditMeal(dayPosition, mealPosition)
             }
         }
     }

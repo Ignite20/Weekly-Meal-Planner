@@ -16,6 +16,7 @@ class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : 
     interface Listener {
         fun onMealSelected(mealId: String)
         fun setEmptyList(visibility: Boolean, tag: Int)
+        fun editMeal(mealPosition: Int)
         fun updatePlan()
     }
 
@@ -67,7 +68,7 @@ class MealSnapshotAdapter (var list : MutableList<MealSnapshot>, var listener : 
     }
 
     override fun onEditMealClick(mealPosition: Int) {
-        //TODO("Not yet implemented")
+        listener?.editMeal(mealPosition)
     }
 
     override fun onDeleteMealClick(mealPosition: Int) {
