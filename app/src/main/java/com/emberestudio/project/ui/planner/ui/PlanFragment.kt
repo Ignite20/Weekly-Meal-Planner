@@ -100,10 +100,6 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter.OnPlanModified, 
         viewModel.updatePlanfication()
     }
 
-    override fun onMealRemoved() {
-        //TODO: Implementation
-    }
-
     override fun onMealSelected(selectedMeal: Meal) {
         viewModel.updatePlanfication(MealSnapshot(selectedMeal.name, selectedMeal.id))
         binding.rvDayMeals.adapter?.notifyDataSetChanged()

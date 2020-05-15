@@ -31,13 +31,18 @@
     <string name="add_meal_to_plan_title">Select your meal for %1$s</string>
 
     <!--MEALS VIEW-->
-    <string name="delete_item_title">Delete Meal</string>
-    <string name="delete_item_message">Are you sure you want to delete the meal?</string>
+    <string name="delete_meal_title">Delete Meal</string>
+    <string name="delete_meal_message">Are you sure you want to delete the meal?</string>
+
+    <string name="delete_plan_title">Delete Plan</string>
+    <string name="delete_plan_message">Are you sure you want to delete the plan?</string>
 
     <string name="exit">Close</string>
     <string name="sign_in">Sign Out</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
+    <string name="remove_plan_option">Remove Plan</string>
+    <string name="share_plan_option">Share Plan</string>
 
     <string-array name="meal_types">
         <item>Breakfast</item>

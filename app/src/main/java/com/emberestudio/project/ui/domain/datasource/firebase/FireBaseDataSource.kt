@@ -26,16 +26,21 @@ interface FireBaseDataSource {
         fun onItemRemoved(item : String)
     }
 
-    fun getPlanifications(listener : OnPlanificationsRetrieved?)
-
+    // DAYSPLAN
     fun getPlan(planId: String, listener: OnPlanRetrieved?)
 
     fun updatePlan(plan: Plan, listener: OnPlanSaved?)
 
-    fun removePlan(planId: String, listener: OnItemRemoved?)
+
+    // PLANIFICATION
+    fun removePlanification(planId: String, listener: OnPlanificationsRetrieved?)
 
     fun savePlanification(plan: Plan, listener : OnPlanSaved?)
 
+    fun getPlanifications(listener : OnPlanificationsRetrieved?)
+
+
+    // MEAL
     fun saveMeal(meal : Meal, listener : FireBaseListener?)
 
     fun getMeals(listener : FireBaseListener?)

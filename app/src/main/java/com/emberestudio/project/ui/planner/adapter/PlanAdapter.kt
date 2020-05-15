@@ -11,7 +11,6 @@ class PlanAdapter (val list: MutableList<DayPlan>, var callback : OnPlanModified
         fun onAddNewMeal(dayPosition : Int)
         fun onEditMeal(dayPosition: Int, mealPosition: Int)
         fun onPlanChanged()
-        fun onMealRemoved()
         fun openMeal(mealId: String)
     }
 

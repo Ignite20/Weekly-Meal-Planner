@@ -29,6 +29,8 @@ interface PlanificationsUseCaseContract{
     fun getPlanifications()
 
     fun savePlanification(plan: Plan)
+
+    fun removePlanification(planId: String)
 }
 
 interface PlanUseCaseContract{

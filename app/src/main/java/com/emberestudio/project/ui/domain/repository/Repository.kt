@@ -33,10 +33,10 @@ class Repository @Inject constructor(
         })
     }
 
-    fun deletePlan(callback: ApiCallback<String, Error>, planId: String){
-        fireBaseDataSource.removePlan(planId, object : FireBaseDataSource.OnItemRemoved{
-            override fun onItemRemoved(item: String) {
-                callback.onResponse("", item)
+    fun removePlanification(callback: ApiCallback<MutableList<Plan>, Error>, planId: String){
+        fireBaseDataSource.removePlanification(planId, object : FireBaseDataSource.OnPlanificationsRetrieved{
+            override fun onSuccess(list: MutableList<Plan>) {
+                callback.onResponse("", list)
             }
         })
     }
