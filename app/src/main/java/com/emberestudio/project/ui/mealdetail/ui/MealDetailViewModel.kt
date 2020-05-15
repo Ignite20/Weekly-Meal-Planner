@@ -19,14 +19,6 @@ class MealDetailViewModel @Inject constructor(private val mealUseCase: MealUseCa
         setupObservers()
     }
 
-
-    fun getMeal(day: Int, meal: Int){
-        viewModelScope.launch(Dispatchers.IO) {
-
-            mealUseCase.getMeal(day, meal)
-        }
-    }
-
     fun getMeal(id : String){
         viewModelScope.launch(Dispatchers.IO) {
             mealUseCase.getMeal(id)

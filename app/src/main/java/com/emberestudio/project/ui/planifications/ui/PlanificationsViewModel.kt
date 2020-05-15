@@ -19,6 +19,7 @@ class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUs
     val _planId = MediatorLiveData<String>()
     var planId : LiveData<String> = _planId
 
+    var selectedPlan : Plan? = null
     init {
         setupObservers()
     }
@@ -26,6 +27,14 @@ class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUs
     fun getPlans(){
         viewModelScope.launch(Dispatchers.IO) {
             useCase.getPlanifications()
+        }
+    }
+
+    fun deletePlan(){
+        viewModelScope.launch(Dispatchers.IO) {
+            selectedPlan?.let {
+                useCase.removePlanification(it.id)
+            }
         }
     }
 
@@ -60,6 +69,12 @@ class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUs
                 postPlanID(planId)
             }
         }
+    }
+
+    fun clearObservers(){
+        _planId.value = null
+        _planId.removeSource(planId)
+        _plans.removeSource(plans)
     }
 
     private fun createAndPostUiModel(list : MutableList<Plan>){

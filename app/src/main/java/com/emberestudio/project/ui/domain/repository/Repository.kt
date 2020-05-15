@@ -3,7 +3,6 @@ package com.emberestudio.project.ui.domain.repository
 import com.emberestudio.project.ui.domain.api.ApiCallback
 import com.emberestudio.project.ui.domain.datasource.firebase.FireBaseDataSource
 import com.emberestudio.project.ui.domain.datasource.firebase.FireBaseDataSourceImpl
-import com.emberestudio.project.ui.domain.datasource.local.MealsDataSource
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.domain.usecase.error.Error
@@ -13,32 +12,11 @@ import javax.inject.Singleton
 
 @Singleton
 class Repository @Inject constructor(
-    private val dataSource: MealsDataSource,
     private val fireBaseDataSource: FireBaseDataSourceImpl,
     private val authManager : AuthenticationManager
     ){
 
-    fun getMeal(day: Int, meal: Int, callback: ApiCallback<Meal, Error>){
-        dataSource.getChildItem(day, meal)?.let {
-            callback.onResponse("", it)
-        }
-    }
-
-//    fun getPlan(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>){
-//        dataSource.getMap().let {
-//            callback.onResponse("", it)
-//        }
-//    }
-
-    fun saveMealLocal(callback: ApiCallback<MutableMap<Int, MutableList<Meal>>, Error>, day: Int, item : Meal){
-        dataSource.addItem(day, item)
-    }
-
-    fun updateMealPosition(callback : ApiCallback<Boolean, Error>, from : IntArray, to : IntArray){
-        dataSource.updateItemPosition(from, to)
-    }
     //FIREBASE
-
     fun getPlan(callback: ApiCallback<Plan, Error>, planId : String){
         fireBaseDataSource.getPlan(planId, object : FireBaseDataSource.OnPlanRetrieved{
             override fun onSuccess(plan: Plan) {
@@ -51,6 +29,14 @@ class Repository @Inject constructor(
         fireBaseDataSource.updatePlan(plan, object : FireBaseDataSource.OnPlanSaved{
             override fun onSuccess(planId: String) {
                 callback.onResponse("", planId)
+            }
+        })
+    }
+
+    fun removePlanification(callback: ApiCallback<MutableList<Plan>, Error>, planId: String){
+        fireBaseDataSource.removePlanification(planId, object : FireBaseDataSource.OnPlanificationsRetrieved{
+            override fun onSuccess(list: MutableList<Plan>) {
+                callback.onResponse("", list)
             }
         })
     }

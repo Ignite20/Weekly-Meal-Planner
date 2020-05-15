@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.FragmentMealPlannerBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.*
-import com.emberestudio.project.ui.planner.adapter.PlanAdapter2
+import com.emberestudio.project.ui.planner.adapter.PlanAdapter
 import com.emberestudio.project.ui.planner.dialog.AddMealToPlanDialog
 import com.emberestudio.project.ui.util.toastLong
 
 
-class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified, AddMealToPlanDialog.Actions {
+class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter.OnPlanModified, AddMealToPlanDialog.Actions {
 
     lateinit var binding: FragmentMealPlannerBinding
 
@@ -47,7 +47,7 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified,
     private fun preparePlan(plan: Plan){
         binding.tvPlanTitle.text = Editable.Factory.getInstance().newEditable(plan.title)
         binding.tvPlanTitle.setSelection(plan.title.length)
-        binding.tvPlanTitle.doOnTextChanged { text, start, count, after ->
+        binding.tvPlanTitle.doOnTextChanged { text, _, _, _ ->
             viewModel.updateTitle(text.toString())
         }
         prepareRecyclerView(plan.planification)
@@ -55,7 +55,7 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified,
 
     private fun prepareRecyclerView(items: MutableList<DayPlan>){
         binding.rvDayMeals.apply {
-            adapter = PlanAdapter2(items, this@PlanFragment)
+            adapter = PlanAdapter(items, this@PlanFragment)
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
     }
@@ -77,7 +77,6 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified,
     }
 
     override fun onAddNewMeal(dayPosition: Int) {
-        //TODO : Call dialog to add meals
         viewModel.getMeals(dayPosition)
     }
 
@@ -99,10 +98,6 @@ class PlanFragment : BaseFragment<PlanViewModel>(), PlanAdapter2.OnPlanModified,
 
     override fun onPlanChanged() {
         viewModel.updatePlanfication()
-    }
-
-    override fun onMealRemoved() {
-        //TODO: Implementation
     }
 
     override fun onMealSelected(selectedMeal: Meal) {

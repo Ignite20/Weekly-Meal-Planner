@@ -7,6 +7,7 @@ import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.domain.model.Roles
 import com.emberestudio.project.ui.managers.AuthenticationManager
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import dagger.Module
@@ -36,10 +37,16 @@ class FireBaseDataSourceImpl @Inject constructor(private val authenticationManag
         }
     }
 
+    override fun removePlanification(planId: String, listener: FireBaseDataSource.OnPlanificationsRetrieved?) {
+        db.collection(PLANS_COLLECTION).document(planId).delete().addOnSuccessListener {
+            getPlanifications(listener)
+        }
+    }
+
     override fun getPlanifications(listener : FireBaseDataSource.OnPlanificationsRetrieved?){
-        authenticationManager.getCurrentUser()?.uid?.let { uid ->
+        authenticationManager.getCurrentUser()?.email?.let { email ->
             db.collection(PLANS_COLLECTION)
-                .whereIn(ROLES.plus(".$uid"), Roles.getNameValues())
+                .whereIn(FieldPath.of(ROLES, email), Roles.getNameValues())
                 .get()
                 .addOnSuccessListener {
                     listener?.onSuccess(it.toObjects(Plan::class.java))
@@ -48,7 +55,7 @@ class FireBaseDataSourceImpl @Inject constructor(private val authenticationManag
     }
 
     override fun savePlanification(plan: Plan, listener : FireBaseDataSource.OnPlanSaved?) {
-        authenticationManager.getCurrentUser()?.uid?.let {
+        authenticationManager.getCurrentUser()?.email?.let {
             plan.roles?.let { roles ->
                 roles[it] = Roles.OWNER.nName
             }

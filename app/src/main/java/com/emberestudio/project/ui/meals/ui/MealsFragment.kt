@@ -85,8 +85,8 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
 
     private fun showDeleteDialog(position: Int){
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.delete_item_title)
-            .setMessage(R.string.delete_item_message)
+            .setTitle(R.string.delete_meal_title)
+            .setMessage(R.string.delete_meal_message)
             .setPositiveButton(android.R.string.ok) { dialog, _ ->
                 viewModel.removeItem(position)
                 dialog.dismiss()

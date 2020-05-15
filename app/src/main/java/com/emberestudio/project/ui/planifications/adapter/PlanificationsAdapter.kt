@@ -8,8 +8,8 @@ import com.emberestudio.project.ui.planifications.holder.PlanificationViewHolder
 class PlanificationsAdapter (var list: MutableList<Plan>, var callback: OnItemActions?) : RecyclerView.Adapter<PlanificationViewHolder>() {
 
     interface OnItemActions{
-        fun onPlanClick(plan: Plan)
-//        fun onPlanLongClick(item : Meal)
+        fun onPlanClick(planId: String)
+        fun onPlanLongClick(plan : Plan)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlanificationViewHolder {
@@ -23,7 +23,12 @@ class PlanificationsAdapter (var list: MutableList<Plan>, var callback: OnItemAc
     override fun onBindViewHolder(holder: PlanificationViewHolder, position: Int) {
         holder.bind(list[position]).apply {
             itemView.setOnClickListener{
-                callback?.onPlanClick(list[position])
+                callback?.onPlanClick(list[position].id)
+            }
+
+            itemView.setOnLongClickListener {
+                callback?.onPlanLongClick(list[position])
+                true
             }
         }
     }
