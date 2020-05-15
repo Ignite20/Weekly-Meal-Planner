@@ -32,6 +32,8 @@ interface FireBaseDataSource {
 
     fun updatePlan(plan: Plan, listener: OnPlanSaved?)
 
+    fun removePlan(planId: String, listener: OnItemRemoved?)
+
     fun savePlanification(plan: Plan, listener : OnPlanSaved?)
 
     fun saveMeal(meal : Meal, listener : FireBaseListener?)

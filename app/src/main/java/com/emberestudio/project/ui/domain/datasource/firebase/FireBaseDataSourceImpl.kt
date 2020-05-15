@@ -36,6 +36,12 @@ class FireBaseDataSourceImpl @Inject constructor(private val authenticationManag
         }
     }
 
+    override fun removePlan(planId: String, listener: FireBaseDataSource.OnItemRemoved?) {
+        db.collection(PLANS_COLLECTION).document(planId).delete().addOnSuccessListener {
+            listener?.onItemRemoved(planId)
+        }
+    }
+
     override fun getPlanifications(listener : FireBaseDataSource.OnPlanificationsRetrieved?){
         authenticationManager.getCurrentUser()?.uid?.let { uid ->
             db.collection(PLANS_COLLECTION)

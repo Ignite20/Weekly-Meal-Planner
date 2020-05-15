@@ -13,14 +13,6 @@ interface MealsUseCaseContract{
 
     val changeResponse : SingleUseCase<Boolean>
 
-    fun getMeal(day: Int, meal: Int)
-
-    fun getPlan()
-
-    fun saveMeal(day: Int, meal: Meal)
-
-    fun updateMeal(from : IntArray, to : IntArray)
-
     fun saveMeal(meal: Meal)
 
     fun getMeals()
