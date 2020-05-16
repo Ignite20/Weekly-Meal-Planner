@@ -97,7 +97,7 @@ class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(), Planific
 
     private fun showDeleteDialog(){
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.delete_plan_title)
+            .setTitle(getString(R.string.delete_plan_title, viewModel.selectedPlan?.title))
             .setMessage(R.string.delete_plan_message)
             .setPositiveButton(android.R.string.ok) { dialog, _ ->
                 viewModel.deletePlan()
