@@ -30,6 +30,8 @@ interface PlanificationsUseCaseContract{
 
     fun savePlanification(plan: Plan)
 
+    fun updatePlanification(plan: Plan)
+
     fun removePlanification(planId: String)
 }
 

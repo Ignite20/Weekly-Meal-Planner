@@ -1,4 +1,4 @@
-package com.emberestudio.project.ui.meals.ui.add_meal_dialog.viewholder
+package com.emberestudio.project.ui.meals.dialog.add_meal_dialog.viewholder
 
 import android.text.Editable
 import android.view.LayoutInflater
@@ -23,7 +23,9 @@ class StepViewHolder(var binding : ItemStepBinding) : RecyclerView.ViewHolder(bi
             val layoutInflater = LayoutInflater.from(viewGroup?.context)
             val binding = ItemStepBinding.inflate(layoutInflater, viewGroup, false)
             binding.executePendingBindings()
-            return StepViewHolder(binding)
+            return StepViewHolder(
+                binding
+            )
         }
     }
 

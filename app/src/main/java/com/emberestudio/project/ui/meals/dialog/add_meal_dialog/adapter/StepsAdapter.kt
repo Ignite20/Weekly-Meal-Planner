@@ -1,14 +1,15 @@
-package com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter
+package com.emberestudio.project.ui.meals.dialog.add_meal_dialog.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.ui.domain.model.Step
-import com.emberestudio.project.ui.meals.ui.add_meal_dialog.viewholder.OnDeleteItem
-import com.emberestudio.project.ui.meals.ui.add_meal_dialog.viewholder.StepViewHolder
+import com.emberestudio.project.ui.meals.dialog.add_meal_dialog.viewholder.OnDeleteItem
+import com.emberestudio.project.ui.meals.dialog.add_meal_dialog.viewholder.StepViewHolder
 
 class StepsAdapter (
     var steps : MutableList<Step>,
-    var callback: IngredientsAdapter.OnItemAddedListener)
+    var callback: IngredientsAdapter.OnItemAddedListener
+)
     :RecyclerView.Adapter<StepViewHolder>(){
 
     interface OnItemAddedListener{
@@ -34,7 +35,8 @@ class StepsAdapter (
             }
         }
 
-        holder.callbackOnDelete = object : OnDeleteItem{
+        holder.callbackOnDelete = object :
+            OnDeleteItem {
             override fun onDeleteItem(position: Int) {
                 steps.removeAt(position)
                 notifyItemRemoved(position)

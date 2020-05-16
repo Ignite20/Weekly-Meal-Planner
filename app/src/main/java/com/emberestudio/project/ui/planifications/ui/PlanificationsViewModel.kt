@@ -38,6 +38,15 @@ class PlanificationsViewModel @Inject constructor(val useCase : PlanificationsUs
         }
     }
 
+    fun updatePlan(rolesList : MutableMap<String, String>?){
+        viewModelScope.launch(Dispatchers.IO){
+            selectedPlan?.let {
+                it.roles = rolesList
+                useCase.updatePlanification(it)
+            }
+        }
+    }
+
     fun addNewPlan(){
         viewModelScope.launch(Dispatchers.IO) {
             useCase.savePlanification(

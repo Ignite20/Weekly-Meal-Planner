@@ -57,6 +57,14 @@ class Repository @Inject constructor(
         })
     }
 
+    fun updatePlanification(plan: Plan, callback: ApiCallback<MutableList<Plan>, Error>){
+        fireBaseDataSource.updatePlanification(plan, object : FireBaseDataSource.OnPlanificationsRetrieved{
+            override fun onSuccess(list: MutableList<Plan>) {
+                callback.onResponse("", list)
+            }
+        })
+    }
+
     fun getCurrentUser(callback: ApiCallback<Boolean, Error>){
         callback.onResponse("",authManager.firebaseAuth?.currentUser != null)
     }
