@@ -34,7 +34,7 @@
     <string name="delete_meal_title">Delete Meal</string>
     <string name="delete_meal_message">Are you sure you want to delete the meal?</string>
 
-    <string name="delete_plan_title">Delete Plan</string>
+    <string name="delete_plan_title">Delete Plan: %1$s</string>
     <string name="delete_plan_message">Are you sure you want to delete the plan?</string>
 
     <string name="exit">Close</string>
