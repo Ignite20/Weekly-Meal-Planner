@@ -16,7 +16,7 @@ import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.meals.adapter.MealsAdapter
-import com.emberestudio.project.ui.meals.ui.add_meal_dialog.AddMealDialog
+import com.emberestudio.project.ui.meals.dialog.add_meal_dialog.AddMealDialog
 import javax.inject.Inject
 
 class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, MealsAdapter.OnItemActions {
@@ -55,7 +55,10 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
 
     private fun prepareEditButton() {
         binding.fabSaveMeal.setOnClickListener {
-            AddMealDialog(this, authManager = authManager).show(parentFragmentManager, "")
+            AddMealDialog(
+                this,
+                authManager = authManager
+            ).show(parentFragmentManager, "")
         }
     }
 
@@ -76,7 +79,11 @@ class MealsFragment : BaseFragment<MealsViewModel>(), AddMealDialog.Actions, Mea
     }
 
     override fun onItemLongClick(item: Meal) {
-        AddMealDialog(this, item, authManager = authManager).show(parentFragmentManager, "")
+        AddMealDialog(
+            this,
+            item,
+            authManager = authManager
+        ).show(parentFragmentManager, "")
     }
 
     override fun onItemDelete(position: Int) {

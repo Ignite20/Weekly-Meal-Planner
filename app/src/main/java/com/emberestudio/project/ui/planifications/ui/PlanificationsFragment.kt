@@ -15,12 +15,16 @@ import com.emberestudio.project.databinding.FragmentPlanificationsListBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Plan
 import com.emberestudio.project.ui.planifications.adapter.PlanificationsAdapter
+import com.emberestudio.project.ui.planifications.dialog.collaborators.CollaboratorsDialog
 import com.emberestudio.project.ui.planner.dialog.PLAN_OPTIONS_SHEET_TAG
 import com.emberestudio.project.ui.planner.dialog.PlanOptionsSheetDialog
-import com.emberestudio.project.ui.util.toastShort
 
 
-class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(), PlanificationsAdapter.OnItemActions, PlanOptionsSheetDialog.PlanOptionsCallback {
+class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(),
+    PlanificationsAdapter.OnItemActions,
+    PlanOptionsSheetDialog.PlanOptionsCallback,
+    CollaboratorsDialog.Actions
+{
 
     lateinit var binding : FragmentPlanificationsListBinding
 
@@ -88,7 +92,7 @@ class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(), Planific
     }
 
     override fun onSharePlan() {
-        toastShort("share")
+        CollaboratorsDialog(this, viewModel.selectedPlan?.roles).show(parentFragmentManager,"")
     }
 
     override fun onDeletePlan() {
@@ -111,5 +115,9 @@ class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(), Planific
             }
             .create()
             .show()
+    }
+
+    override fun onSaveRolesList(rolesList: MutableMap<String, String>?) {
+        viewModel.updatePlan(rolesList)
     }
 }

@@ -20,6 +20,10 @@ class PlanificationsUseCaseImplementation @Inject constructor(private val reposi
         repository.savePlanification(plan, saveResponse)
     }
 
+    override fun updatePlanification(plan: Plan) {
+        repository.updatePlanification(plan, plansResponse)
+    }
+
     override fun removePlanification(planId: String) {
         repository.removePlanification(plansResponse, planId)
     }

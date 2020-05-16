@@ -43,6 +43,9 @@
     <string name="remove">Remove</string>
     <string name="remove_plan_option">Remove Plan</string>
     <string name="share_plan_option">Share Plan</string>
+    <string name="save">Save</string>
+    <string name="collaborators_dialog_title">Collaborators</string>
+    <string name="add_a_collaborator_hint">Add a collaborator by email</string>
 
     <string-array name="meal_types">
         <item>Breakfast</item>

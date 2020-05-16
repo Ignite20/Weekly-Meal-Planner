@@ -1,4 +1,4 @@
-package com.emberestudio.project.ui.meals.ui.add_meal_dialog
+package com.emberestudio.project.ui.meals.dialog.add_meal_dialog
 
 import android.text.Editable
 import android.view.LayoutInflater
@@ -14,8 +14,8 @@ import com.emberestudio.project.ui.domain.model.Ingredient
 import com.emberestudio.project.ui.domain.model.Meal
 import com.emberestudio.project.ui.domain.model.Step
 import com.emberestudio.project.ui.managers.AuthenticationManager
-import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.IngredientsAdapter
-import com.emberestudio.project.ui.meals.ui.add_meal_dialog.adapter.StepsAdapter
+import com.emberestudio.project.ui.meals.dialog.add_meal_dialog.adapter.IngredientsAdapter
+import com.emberestudio.project.ui.meals.dialog.add_meal_dialog.adapter.StepsAdapter
 
 class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authManager : AuthenticationManager ) : BaseDialogFragment(),
     IngredientsAdapter.OnItemAddedListener ,
@@ -79,7 +79,11 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authMan
     }
 
     private fun prepareIngredients(){
-        ingredientsAdapter = IngredientsAdapter(ingredients, this@AddMealDialog)
+        ingredientsAdapter =
+            IngredientsAdapter(
+                ingredients,
+                this@AddMealDialog
+            )
         binding.rvIngredients.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
@@ -91,7 +95,11 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authMan
     }
 
     private fun prepareSteps(){
-        stepsAdapter = StepsAdapter(steps, this@AddMealDialog)
+        stepsAdapter =
+            StepsAdapter(
+                steps,
+                this@AddMealDialog
+            )
         binding.rvSteps.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
@@ -102,7 +110,11 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authMan
     private fun prepareAddNewIngredientButton(){
         binding.btnAddIngredient.setOnClickListener {
             ingredients.add(Ingredient())
-            binding.rvIngredients.adapter = IngredientsAdapter(ingredients, this)
+            binding.rvIngredients.adapter =
+                IngredientsAdapter(
+                    ingredients,
+                    this
+                )
             ingredientsAdapter.notifyDataSetChanged()
             binding.rvIngredients.scrollToPosition(ingredients.size - 1)
             binding.scrollContent.smoothScrollTo(binding.btnAddIngredient.x.toInt(), binding.btnAddIngredient.y.toInt())
@@ -112,7 +124,11 @@ class AddMealDialog (var callback: Actions, var meal : Meal? = null, var authMan
     private fun prepareAddNewStepButton(){
         binding.btnAddStep.setOnClickListener {
             steps.add(Step())
-            binding.rvSteps.adapter = StepsAdapter(steps, this)
+            binding.rvSteps.adapter =
+                StepsAdapter(
+                    steps,
+                    this
+                )
             stepsAdapter.notifyDataSetChanged()
             binding.rvSteps.scrollToPosition(steps.size - 1)
             binding.scrollContent.smoothScrollTo(binding.btnAddStep.x.toInt(), binding.btnAddStep.y.toInt())

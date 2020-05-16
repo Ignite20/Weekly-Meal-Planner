@@ -69,6 +69,12 @@ class FireBaseDataSourceImpl @Inject constructor(private val authenticationManag
         }
     }
 
+    override fun updatePlanification(plan: Plan, listener: FireBaseDataSource.OnPlanificationsRetrieved?) {
+        db.collection(PLANS_COLLECTION).document(plan.id).set(plan).addOnSuccessListener {
+            getPlanifications(listener)
+        }
+    }
+
     override fun saveMeal(meal: Meal, listener : FireBaseDataSource.FireBaseListener?){
 
         if(meal.id.isBlank()) {

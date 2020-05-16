@@ -39,6 +39,7 @@ interface FireBaseDataSource {
 
     fun getPlanifications(listener : OnPlanificationsRetrieved?)
 
+    fun updatePlanification(plan: Plan, listener: OnPlanificationsRetrieved?)
 
     // MEAL
     fun saveMeal(meal : Meal, listener : FireBaseListener?)
