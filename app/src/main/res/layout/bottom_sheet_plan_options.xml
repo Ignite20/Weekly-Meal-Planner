@@ -6,14 +6,14 @@
     android:layout_marginBottom="24dp">
 
     <Button
-        android:id="@+id/tv_share_plan"
+        android:id="@+id/tv_collaborators_plan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_share_black_24dp"
+        android:drawableStart="@drawable/ic_person_add_black_24dp"
         android:drawablePadding="8dp"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:foreground="?attr/selectableItemBackground"
-        android:text="@string/share_plan_option"
+        android:text="@string/collaborators_plan_option"
         android:textStyle="bold"
         android:textSize="20sp"
         android:padding="12dp"
@@ -36,5 +36,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_share_plan" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_collaborators_plan" />
 </androidx.constraintlayout.widget.ConstraintLayout>

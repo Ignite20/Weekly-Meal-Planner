@@ -46,6 +46,7 @@
     <string name="save">Save</string>
     <string name="collaborators_dialog_title">Collaborators</string>
     <string name="add_a_collaborator_hint">Add a collaborator by email</string>
+    <string name="collaborators_plan_option">Collaborators</string>
 
     <string-array name="meal_types">
         <item>Breakfast</item>
