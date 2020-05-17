@@ -44,7 +44,7 @@ class SplashActivity : BaseActivity(), AuthenticationManager.AuthCallback {
                 user.sendEmailVerification().addOnSuccessListener {
                     startMainActivity()
                 }.addOnFailureListener {
-                    finishAndRemoveTask()
+                    finish()
                 }
             }
         }
