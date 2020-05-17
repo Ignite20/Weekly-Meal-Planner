@@ -14,10 +14,12 @@ import com.emberestudio.project.R
 import com.emberestudio.project.databinding.FragmentPlanificationsListBinding
 import com.emberestudio.project.ui.base.BaseFragment
 import com.emberestudio.project.ui.domain.model.Plan
+import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.planifications.adapter.PlanificationsAdapter
 import com.emberestudio.project.ui.planifications.dialog.collaborators.CollaboratorsDialog
 import com.emberestudio.project.ui.planner.dialog.PLAN_OPTIONS_SHEET_TAG
 import com.emberestudio.project.ui.planner.dialog.PlanOptionsSheetDialog
+import javax.inject.Inject
 
 
 class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(),
@@ -27,6 +29,8 @@ class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(),
 {
 
     lateinit var binding : FragmentPlanificationsListBinding
+
+    @Inject lateinit var authenticationManager: AuthenticationManager
 
     override fun onBind(inflater: LayoutInflater, container: ViewGroup?): View {
         binding = FragmentPlanificationsListBinding.inflate(inflater).apply {
@@ -91,8 +95,8 @@ class PlanificationsFragment : BaseFragment<PlanificationsViewModel>(),
         PlanOptionsSheetDialog(this).show(parentFragmentManager, PLAN_OPTIONS_SHEET_TAG)
     }
 
-    override fun onSharePlan() {
-        CollaboratorsDialog(this, viewModel.selectedPlan?.roles).show(parentFragmentManager,"")
+    override fun onManageCollaborators() {
+        CollaboratorsDialog(this, viewModel.selectedPlan?.roles, authenticationManager).show(parentFragmentManager,"")
     }
 
     override fun onDeletePlan() {

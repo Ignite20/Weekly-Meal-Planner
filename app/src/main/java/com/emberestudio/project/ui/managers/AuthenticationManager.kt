@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.emberestudio.project.R
+import com.emberestudio.project.ui.domain.datasource.firebase.FireBaseDataSource
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import javax.inject.Inject
 
@@ -17,6 +19,7 @@ class AuthenticationManager @Inject constructor() {
     var firebaseAuth : FirebaseAuth? = null
     var user : FirebaseUser? = null
     var callback : AuthCallback? = null
+    var firebaseDataBaseDataSource: FirebaseFirestore? = null
 
     interface AuthCallback{
         fun onAuthSuccessful(user: FirebaseUser?)
@@ -28,6 +31,7 @@ class AuthenticationManager @Inject constructor() {
     }
     init {
         firebaseAuth = FirebaseAuth.getInstance()
+        firebaseDataBaseDataSource = FirebaseFirestore.getInstance()
     }
 
     fun login(activity: Activity){
@@ -68,6 +72,10 @@ class AuthenticationManager @Inject constructor() {
                 user = null
                 callback?.onLogout()
             }
+    }
+
+    fun getUserByEmail(email: String){
+
     }
 
     fun logout(context: Activity){

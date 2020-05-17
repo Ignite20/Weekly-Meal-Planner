@@ -37,7 +37,19 @@ class SplashActivity : BaseActivity(), AuthenticationManager.AuthCallback {
     }
 
     override fun onAuthSuccessful(user: FirebaseUser?) {
-        startMainActivity()
+        user?.let {
+            if (it.isEmailVerified){
+                startMainActivity()
+            }else{
+                user.sendEmailVerification().addOnSuccessListener {
+                    startMainActivity()
+                }.addOnFailureListener {
+                    finishAndRemoveTask()
+                }
+            }
+        }
+
+
     }
 
     override fun onLogout() {

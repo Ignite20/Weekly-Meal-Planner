@@ -13,7 +13,7 @@ const val PLAN_OPTIONS_SHEET_TAG = "plan_options_sheet_tag"
 class PlanOptionsSheetDialog(var callback: PlanOptionsCallback?) : BottomSheetDialogFragment() {
 
     interface PlanOptionsCallback{
-        fun onSharePlan()
+        fun onManageCollaborators()
         fun onDeletePlan()
     }
 
@@ -23,9 +23,9 @@ class PlanOptionsSheetDialog(var callback: PlanOptionsCallback?) : BottomSheetDi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tv_share_plan.setOnClickListener {
+        tv_collaborators_plan.setOnClickListener {
             dismissAllowingStateLoss()
-            callback?.onSharePlan()
+            callback?.onManageCollaborators()
         }
 
         tv_delete_plan.setOnClickListener {

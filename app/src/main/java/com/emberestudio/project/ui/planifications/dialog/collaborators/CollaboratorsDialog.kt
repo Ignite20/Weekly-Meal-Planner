@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emberestudio.project.databinding.DialogCollaboratorsBinding
 import com.emberestudio.project.ui.base.BaseDialogFragment
 import com.emberestudio.project.ui.domain.model.Roles
+import com.emberestudio.project.ui.managers.AuthenticationManager
 import com.emberestudio.project.ui.planifications.dialog.collaborators.adapter.CollaboratorsAdapter
 
-class CollaboratorsDialog (var callback: Actions?, var rolesList: MutableMap<String, String>?):BaseDialogFragment(){
+class CollaboratorsDialog (var callback: Actions?, var rolesList: MutableMap<String, String>?, val authenticationManager: AuthenticationManager):BaseDialogFragment(){
 
     interface Actions {
         fun onSaveRolesList(rolesList: MutableMap<String, String>?)
