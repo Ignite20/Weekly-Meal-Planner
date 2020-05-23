@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/iv_drag_handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_drag_handle_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cb_item_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_drag_handle"
+            app:layout_constraintStart_toEndOf="@+id/iv_drag_handle"
+            app:layout_constraintTop_toTopOf="@+id/iv_drag_handle" />
+
+        <EditText
+            android:id="@+id/et_grocery_item_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@android:color/transparent"
+            android:hint="@string/grocery_item_hint"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_drag_handle"
+            app:layout_constraintEnd_toStartOf="@+id/iv_delete_grocery_item"
+            app:layout_constraintStart_toEndOf="@+id/cb_item_check"
+            app:layout_constraintTop_toTopOf="@+id/iv_drag_handle" />
+
+        <ImageView
+            android:id="@+id/iv_delete_grocery_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_close_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
