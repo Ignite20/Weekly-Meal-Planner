@@ -8,9 +8,11 @@ import com.emberestudio.project.ui.grocery.holder.GroceryItemViewHolder
 class GroceryAdapter(var list: MutableList<GroceryItem>, var callback : GroceryAdapterActions? ) : RecyclerView.Adapter<GroceryItemViewHolder>() {
 
     interface GroceryAdapterActions{
-        fun onAddGroceryItem()
+        fun onAddGroceryItem(position: Int)
         fun onDeleteGroceryItem(position : Int)
     }
+
+    var focusPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroceryItemViewHolder {
         return GroceryItemViewHolder.from(parent)
@@ -21,19 +23,19 @@ class GroceryAdapter(var list: MutableList<GroceryItem>, var callback : GroceryA
     }
 
     override fun onBindViewHolder(holder: GroceryItemViewHolder, position: Int) {
-        holder.bind(list[position], position == list.size - 1)
+        holder.bind(list[position], focusPosition)
         holder.callback = object : GroceryItemViewHolder.GroceryListActions{
             override fun onGroceryItemDelete(position : Int) {
                 list.removeAt(position)
                 notifyItemRemoved(position)
             }
 
-            override fun onGroceryItemChanged() {
-
+            override fun onGroceryItemChanged(text: CharSequence?, position: Int) {
+                list[position].content = text.toString()
             }
 
-            override fun onKeyboardEnterPressed() {
-                callback?.onAddGroceryItem()
+            override fun onKeyboardEnterPressed(position: Int) {
+                callback?.onAddGroceryItem(position + 1)
             }
         }
     }

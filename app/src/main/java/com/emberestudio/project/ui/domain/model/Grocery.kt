@@ -7,4 +7,5 @@ class Grocery {
 class GroceryItem{
     var content: String? = ""
     var checked: Boolean = false
+    var focus: Boolean = false
 }

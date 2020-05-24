@@ -1,6 +1,7 @@
 package com.emberestudio.project.ui.util
 
 import android.app.Activity
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
@@ -18,4 +19,16 @@ fun Activity.toastLong(message: String){
 
 fun Activity.toastShort(message: String){
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
+
+fun View.gone(){
+    visibility = View.GONE
+}
+
+fun View.visible(){
+    visibility = View.VISIBLE
+}
+
+fun View.invisible(){
+    visibility = View.INVISIBLE
 }

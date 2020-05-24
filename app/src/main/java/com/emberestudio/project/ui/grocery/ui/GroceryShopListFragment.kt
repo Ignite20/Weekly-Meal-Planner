@@ -41,13 +41,17 @@ class GroceryShopListFragment : BaseFragment<GroceryShopListViewModel>(), Grocer
     private fun prepareAddGroceryItem(){
         binding.addGroceryItem.setOnClickListener {
             viewModel.grocery.list?.add(GroceryItem())
-            groceryAdapter.notifyDataSetChanged()
+            groceryAdapter.focusPosition = groceryAdapter.itemCount - 1
+            groceryAdapter.notifyItemInserted(groceryAdapter.itemCount - 1)
+            binding.rvGroceryList.smoothScrollToPosition(groceryAdapter.itemCount - 1)
         }
     }
 
-    override fun onAddGroceryItem() {
-        viewModel.grocery.list?.add(GroceryItem())
-        groceryAdapter.notifyDataSetChanged()
+    override fun onAddGroceryItem(position: Int) {
+        viewModel.grocery.list?.add(position, GroceryItem())
+        groceryAdapter.focusPosition = position
+        groceryAdapter.notifyItemInserted(position)
+        binding.rvGroceryList.smoothScrollToPosition(position)
     }
 
     override fun onDeleteGroceryItem(position: Int) {

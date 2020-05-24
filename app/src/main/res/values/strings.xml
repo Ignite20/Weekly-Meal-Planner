@@ -49,6 +49,7 @@
     <string name="collaborators_plan_option">Collaborators</string>
 
     <string name="grocery_item_hint">Add an Item to the list</string>
+    <string name="add_item_to_shop_list_button">+ Add item to list</string>
     <string-array name="meal_types">
         <item>Breakfast</item>
         <item>Lunch</item>
