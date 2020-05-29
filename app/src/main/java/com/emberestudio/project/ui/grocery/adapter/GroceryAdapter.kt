@@ -10,6 +10,7 @@ class GroceryAdapter(var list: MutableList<GroceryItem>, var callback : GroceryA
     interface GroceryAdapterActions{
         fun onAddGroceryItem(position: Int)
         fun onDeleteGroceryItem(position : Int)
+        fun onCheckedGroceryItem(isChecked: Boolean, position: Int)
     }
 
     var focusPosition = -1
@@ -26,8 +27,7 @@ class GroceryAdapter(var list: MutableList<GroceryItem>, var callback : GroceryA
         holder.bind(list[position], focusPosition)
         holder.callback = object : GroceryItemViewHolder.GroceryListActions{
             override fun onGroceryItemDelete(position : Int) {
-                list.removeAt(position)
-                notifyItemRemoved(position)
+                callback?.onDeleteGroceryItem(position)
             }
 
             override fun onGroceryItemChanged(text: CharSequence?, position: Int) {
@@ -36,6 +36,20 @@ class GroceryAdapter(var list: MutableList<GroceryItem>, var callback : GroceryA
 
             override fun onKeyboardEnterPressed(position: Int) {
                 callback?.onAddGroceryItem(position + 1)
+            }
+
+            override fun setGroceryItemChecked(isChecked: Boolean, position: Int) {
+//                if(isChecked){
+//                    val checkedItem = list.removeAt(position)
+//                    checkedItem.lastKnownPosition = position
+//                    list.add(checkedItem)
+//                }else{
+//                    val uncheckedItem = list.removeAt(position)
+//                    list.add(uncheckedItem.lastKnownPosition, uncheckedItem)
+//                }
+
+                list[position].lastKnownPosition = if(isChecked) position else -1
+                callback?.onCheckedGroceryItem(isChecked, position)
             }
         }
     }

@@ -51,14 +51,28 @@ class GroceryShopListFragment : BaseFragment<GroceryShopListViewModel>(), Grocer
         addItemToShopList(position)
     }
 
-    private fun addItemToShopList(position : Int){
+    private fun addItemToShopList(position : Int, item: GroceryItem = GroceryItem()){
         groceryAdapter.focusPosition = position
-        viewModel.grocery.list?.add(position, GroceryItem())
+        viewModel.grocery.list?.add(position, item)
         groceryAdapter.notifyItemInserted(position)
         binding.rvGroceryList.smoothScrollToPosition(position)
     }
 
-    override fun onDeleteGroceryItem(position: Int) {
+    private fun addItemAtTheEndToShopList(item: GroceryItem){
+        viewModel.grocery.list?.add(item)
+    }
 
+    override fun onDeleteGroceryItem(position: Int) {
+        viewModel.grocery.list?.let {
+            it.removeAt(position)
+            groceryAdapter.notifyItemRemoved(position)
+        }
+    }
+
+    override fun onCheckedGroceryItem(isChecked: Boolean, position: Int) {
+        viewModel.grocery.list?.let {
+            it[position].checked = isChecked
+//            groceryAdapter.notifyItemChanged(position)
+        }
     }
 }

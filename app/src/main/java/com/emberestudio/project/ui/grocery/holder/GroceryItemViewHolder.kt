@@ -1,5 +1,6 @@
 package com.emberestudio.project.ui.grocery.holder
 
+import android.graphics.Paint
 import android.text.Editable
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ class GroceryItemViewHolder(val binding: ItemGroceryBinding) : RecyclerView.View
         fun onGroceryItemDelete(position : Int)
         fun onGroceryItemChanged(text: CharSequence?, position: Int)
         fun onKeyboardEnterPressed(position: Int)
+        fun setGroceryItemChecked(isChecked: Boolean, position: Int)
     }
 
     var callback: GroceryListActions? = null
@@ -31,19 +33,24 @@ class GroceryItemViewHolder(val binding: ItemGroceryBinding) : RecyclerView.View
     }
 
     fun bind(item: GroceryItem, focusPosition: Int){
-        binding.etGroceryItemContent.post {
-            if(focusPosition == adapterPosition) {
-                binding.etGroceryItemContent.requestFocus()
-            }
-        }
 
         binding.etGroceryItemContent.text = Editable.Factory.getInstance().newEditable(item.content)
+        binding.cbItemCheck.isChecked = item.checked
+
+
         binding.etGroceryItemContent.doAfterTextChanged { editable ->
             callback?.onGroceryItemChanged(editable.toString(), adapterPosition)
         }
         binding.etGroceryItemContent.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus) binding.ivDeleteGroceryItem.visible() else binding.ivDeleteGroceryItem.gone()
         }
+
+        binding.etGroceryItemContent.post {
+            if(focusPosition == adapterPosition) {
+                binding.etGroceryItemContent.requestFocus()
+            }
+        }
+
         binding.etGroceryItemContent.setOnEditorActionListener { view, actionId, event ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
@@ -53,10 +60,26 @@ class GroceryItemViewHolder(val binding: ItemGroceryBinding) : RecyclerView.View
                 else -> false
             }
         }
+
+        binding.cbItemCheck.setOnCheckedChangeListener { buttonView, isChecked ->
+            strikeThrough(isChecked)
+            callback?.setGroceryItemChecked(isChecked, adapterPosition)
+        }
+
         binding.ivDeleteGroceryItem.setOnClickListener {
             if(it.isVisible) callback?.onGroceryItemDelete(adapterPosition)
         }
     }
 
+    private fun strikeThrough(isChecked: Boolean){
+        if(isChecked) {
+            binding.etGroceryItemContent.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            binding.etGroceryItemContent.isEnabled = false
+        }
+        else {
+            binding.etGroceryItemContent.paintFlags = Paint.LINEAR_TEXT_FLAG
+            binding.etGroceryItemContent.isEnabled = true
+        }
+    }
 
 }
