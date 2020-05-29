@@ -31,8 +31,10 @@ class GroceryItemViewHolder(val binding: ItemGroceryBinding) : RecyclerView.View
     }
 
     fun bind(item: GroceryItem, focusPosition: Int){
-        if(focusPosition == adapterPosition) {
-            binding.etGroceryItemContent.requestFocus()
+        binding.etGroceryItemContent.post {
+            if(focusPosition == adapterPosition) {
+                binding.etGroceryItemContent.requestFocus()
+            }
         }
 
         binding.etGroceryItemContent.text = Editable.Factory.getInstance().newEditable(item.content)

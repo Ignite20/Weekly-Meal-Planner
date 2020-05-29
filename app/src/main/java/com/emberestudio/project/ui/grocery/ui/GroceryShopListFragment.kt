@@ -40,16 +40,20 @@ class GroceryShopListFragment : BaseFragment<GroceryShopListViewModel>(), Grocer
 
     private fun prepareAddGroceryItem(){
         binding.addGroceryItem.setOnClickListener {
-            viewModel.grocery.list?.add(GroceryItem())
-            groceryAdapter.focusPosition = groceryAdapter.itemCount - 1
-            groceryAdapter.notifyItemInserted(groceryAdapter.itemCount - 1)
-            binding.rvGroceryList.smoothScrollToPosition(groceryAdapter.itemCount - 1)
+            viewModel.grocery.list?.let {
+                addItemToShopList(it.lastIndex.plus(1))
+            }
+
         }
     }
 
     override fun onAddGroceryItem(position: Int) {
-        viewModel.grocery.list?.add(position, GroceryItem())
+        addItemToShopList(position)
+    }
+
+    private fun addItemToShopList(position : Int){
         groceryAdapter.focusPosition = position
+        viewModel.grocery.list?.add(position, GroceryItem())
         groceryAdapter.notifyItemInserted(position)
         binding.rvGroceryList.smoothScrollToPosition(position)
     }
